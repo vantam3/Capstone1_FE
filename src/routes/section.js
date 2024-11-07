@@ -1,11 +1,11 @@
 import { Outlet, useRoutes } from "react-router-dom";
 // import Layout from "../layouts/index";
-import HomePage from "../page/HomePage";
-import Login from "../page/Login";
-import RegisterForm from "../page/register";
+import HomePage from "../page/Home/HomePage";
+import Login from "../page/Login/Login";
+import Register from "../page/Register/Register";
 import Recover from "../page/recover";
-import Seccess_Login from "../page/seccess_login";
-import Seccess_Signin from "../page/seccess_signin";
+import SeccessLogin from "../page/seccess_login";
+import SeccessSignin from "../page/seccess_signin";
 export default function Router() {
   const routes = useRoutes([
     {
@@ -15,12 +15,12 @@ export default function Router() {
         // </Layout>
       ),
       children: [
-        { path: "/HomePage", element: <HomePage />, index: true },
+        { path: "/", element: <HomePage />, index: true },
         { path: "/login", element: <Login />, index: true },
-        { path: "/register", element: <RegisterForm />, index: true },
+        { path: "/register", element: <Register />, index: true },
         { path: "/recover", element: <Recover />, index: true },
-        { path: "/Seccess_Login", element: <Seccess_Login />, index: true },
-        { path: "/Seccess_Signin", element: <Seccess_Signin/>, index: true },
+        { path: "/Seccess_Login", element: <SeccessLogin />, index: true },
+        { path: "/Seccess_Signin", element: <SeccessSignin />, index: true },
       ],
     },
   ]);
