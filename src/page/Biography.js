@@ -14,8 +14,6 @@ const HomePage = () => {
         
         
       </div>
-      <h1>Science Fiction Books</h1>
-      <p>Welcome to the Science Fiction section. Explore our selection of sci-fi books!</p>
 
       
     </div>

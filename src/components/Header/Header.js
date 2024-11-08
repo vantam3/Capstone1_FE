@@ -3,73 +3,65 @@ import { FaBookOpen, FaLightbulb } from "react-icons/fa";
 import "./Header.css";
 const Header = () => {
   return (
-    <div className="section-container" style={{ backgroundColor: "#ffebcd" }}>
-      <div>
-       
-        <header className="header">
-          <div className="logo">
-            <img src={"../../assets/images/LOGO_BOOKQUEST.png"} alt="Logo" />
-          </div>
-          <nav>
-            <ul className="all">
+    <header className="header">
+      <div className="logo">
+        <img src={"../../assets/images/LOGO_BOOKQUEST.png"} alt="Logo" />
+      </div>
+      <nav>
+        <ul className="all">
+          <li>
+            <a href="#home">HOME</a>
+          </li>
+          <li>
+            <a href="#introduce">INTRODUCE</a>
+          </li>
+          <li className="dropdown">
+            <a href="#books-library">BOOKS LIBRARY</a>
+            <ul className="dropdown-content">
               <li>
-                <a href="#home">HOME</a>
+                <a href="/Science_Fiction">Science Fiction</a>
               </li>
               <li>
-                <a href="#introduce">INTRODUCE</a>
-              </li>
-              <li className="dropdown">
-                <a href="#books-library">BOOKS LIBRARY</a>
-                <ul className="dropdown-content">
-                  <li>
-                    <a href="/Science_Fiction">Science Fiction</a>
-                  </li>
-                  <li>
-                    <a href="#non-fiction">Romance</a>
-                  </li>
-                  <li>
-                    <a href="#fantasy">Mystery</a>
-                  </li>
-                  <li>
-                    <a href="#science">Fantasy</a>
-                  </li>
-                  <li>
-                    <a href="#science">Biography</a>
-                  </li>
-                  <li>
-                    <a href="#science">History</a>
-                  </li>
-                  <li>
-                    <a href="#science">Seft-Help</a>
-                  </li>
-                  <li>
-                    <a href="#science">Children’s Books</a>
-                  </li>
-                </ul>
+                <a href="/Romance">Romance</a>
               </li>
               <li>
-                <a href="#readers-feelings">READER'S FEELINGS</a>
+                <a href="/Mystery">Mystery</a>
+              </li>
+              <li>
+                <a href="/Fantasy">Fantasy</a>
+              </li>
+              <li>
+                <a href="/Biography">Biography</a>
+              </li>
+              <li>
+                <a href="/History">History</a>
+              </li>
+              <li>
+                <a href="/Seft-Help">Seft-Help</a>
+              </li>
+              <li>
+                <a href="/ChildBooks">Children’s Books</a>
               </li>
             </ul>
-          </nav>
-          <div className="auth-buttons">
-            <a href="/login" className="Home_login">
-              Sign In
-            </a>
-            <a href="/register" className="Home_signup">
-              Sign Up
-            </a>
-          </div>
-          <div className="search-bar">
-            <input type="text" placeholder="Search..." />
-            <button>🔍</button>
-          </div>
-        </header>
-
-
+          </li>
+          <li>
+            <a href="#readers-feelings">READER'S FEELINGS</a>
+          </li>
+        </ul>
+      </nav>
+      <div className="auth-buttons">
+        <a href="/login" className="Home_login">
+          Sign In
+        </a>
+        <a href="/register" className="Home_signup">
+          Sign Up
+        </a>
       </div>
-      
-    </div>
+      <div className="search-bar">
+        <input type="text" placeholder="Search..." />
+        <button>🔍</button>
+      </div>
+    </header>
   );
 };
 

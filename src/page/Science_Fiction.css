@@ -1,0 +1,14 @@
+.science-fiction-container {
+    padding: 20px;
+    background-color: #ffe5b4; 
+    text-align: center;
+  }
+  
+  .science-fiction-container h1 {
+    color: #333;
+    text-align: left;
+  }
+  
+  .science-fiction-container p {
+    color: #666;
+  }

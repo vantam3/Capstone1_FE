@@ -71,7 +71,6 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-
 button {
   background-color: #007bff;
   padding: 10px 20px;
@@ -84,6 +83,3 @@ button {
 button:hover {
   background-color: #2e3a4b;
 }
-
-
-

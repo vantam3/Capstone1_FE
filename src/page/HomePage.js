@@ -6,7 +6,6 @@ const HomePage = () => {
   return (
     <div className="section-container" style={{ backgroundColor: "#ffebcd" }}>
       <div>
-        
         {/* <header className="header">
           <div className="logo">
             <img src={"../../assets/images/LOGO_BOOKQUEST.png"} alt="Logo" />
@@ -66,7 +65,7 @@ const HomePage = () => {
             <button>🔍</button>
           </div>
         </header> */}
-        <Header/>
+        <Header />
       </div>
       <div className="body">
         <h1>
@@ -77,24 +76,12 @@ const HomePage = () => {
           books....
         </p>
         <div className="book-covers">
+          <img src={"../../assets/images/Chuchim.png"} alt="Chú chim tí hon" />
+          <img src={"../../assets/images/Doivannam.jpg"} alt="Đợi vãn năm" />
+          <img src={"../../assets/images/Macdep.png"} alt="Thao Túng Tâm Lý" />
+          <img src={"../../assets/images/Thanhgiong.jpg"} alt="Thánh Gióng" />
           <img
-            src={'../../assets/images/Chuchim.png'}
-            alt="Chú chim tí hon"
-          />
-          <img
-            src={'../../assets/images/Doivannam.jpg'}
-            alt="Đợi vãn năm"
-          />
-          <img
-            src={'../../assets/images/Macdep.png'}
-            alt="Thao Túng Tâm Lý"
-          />
-          <img
-            src={'../../assets/images/Thanhgiong.jpg'}
-            alt="Thánh Gióng"
-          />
-          <img
-            src={'../../assets/images/Dieukydieu.jpg'}
+            src={"../../assets/images/Dieukydieu.jpg"}
             alt="Điều kì diệu của tiệm tạp hóa NAMIYA"
           />
         </div>
