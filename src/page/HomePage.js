@@ -4,7 +4,7 @@ import "./HomePage.css";
 import Header from "../components/Header/Header";
 const HomePage = () => {
   return (
-    <div className="section-container" style={{ backgroundColor: "#ffebcd" }}>
+    <div className="section-container" style={{ backgroundColor: "#cae2f3" }}>
       <div>
         {/* <header className="header">
           <div className="logo">

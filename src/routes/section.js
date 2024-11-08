@@ -15,6 +15,7 @@ import History from "../page/History";
 import Seft_Help from "../page/Seft-Help";
 import ChildBooks from "../page/Children’s_Books";
 
+
 export default function Router() {
   const routes = useRoutes([
     {
@@ -24,20 +25,21 @@ export default function Router() {
         // </Layout>
       ),
       children: [
-        { path: "/HomePage", element: <HomePage />, index: true },
+        { path: "/homepage", element: <HomePage />, index: true },
         { path: "/login", element: <Login />, index: true },
         { path: "/register", element: <RegisterForm />, index: true },
         { path: "/recover", element: <Recover />, index: true },
-        { path: "/Seccess_Login", element: <Seccess_Login />, index: true },
-        { path: "/Seccess_Signin", element: <Seccess_Signin />, index: true },
-        { path: "/Science_Fiction", element: <Science_Fiction />, index: true },
-        { path: "/Romance", element: <Romance />, index: true },
-        { path: "/Mystery", element: <Mystery />, index: true },
-        { path: "/Fantasy", element: <Fantasy />, index: true },
-        { path: "/Biography", element: <Biography />, index: true },
-        { path: "/History", element: <History />, index: true },
-        { path: "/Seft-Help", element: <Seft_Help />, index: true },
-        { path: "/ChildBooks", element: <ChildBooks />, index: true },
+        { path: "/seccesslogin", element: <Seccess_Login />, index: true },
+        { path: "/seccesssignin", element: <Seccess_Signin />, index: true },
+        { path: "/sciencefiction", element: <Science_Fiction />, index: true },
+        { path: "/romance", element: <Romance />, index: true },
+        { path: "/mystery", element: <Mystery />, index: true },
+        { path: "/fantasy", element: <Fantasy />, index: true },
+        { path: "/biography", element: <Biography />, index: true },
+        { path: "/history", element: <History />, index: true },
+        { path: "/sefthelp", element: <Seft_Help />, index: true },
+        { path: "/childbooks", element: <ChildBooks />, index: true },
+        
       ],
     },
   ]);

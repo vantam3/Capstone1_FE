@@ -1,16 +1,17 @@
 import React from "react";
 import { FaBookOpen, FaLightbulb } from "react-icons/fa";
 import "./Header.css";
+
 const Header = () => {
   return (
-    <header className="header">
-      <div className="logo">
-        <img src={"../../assets/images/LOGO_BOOKQUEST.png"} alt="Logo" />
+    <header className="demo">
+      <div className="header-logo">
+        <img src="../../assets/images/LOGO_BOOKQUEST.png" alt="Logo" />
       </div>
-      <nav>
-        <ul className="all">
+      <nav className="header-nav">
+        <ul className="nav-links">
           <li>
-            <a href="#home">HOME</a>
+            <a href="/HomePage">HOME</a>
           </li>
           <li>
             <a href="#introduce">INTRODUCE</a>
@@ -19,28 +20,28 @@ const Header = () => {
             <a href="#books-library">BOOKS LIBRARY</a>
             <ul className="dropdown-content">
               <li>
-                <a href="/Science_Fiction">Science Fiction</a>
+                <a href="/sciencefiction">Science Fiction</a>
               </li>
               <li>
-                <a href="/Romance">Romance</a>
+                <a href="/romance">Romance</a>
               </li>
               <li>
-                <a href="/Mystery">Mystery</a>
+                <a href="/mystery">Mystery</a>
               </li>
               <li>
-                <a href="/Fantasy">Fantasy</a>
+                <a href="/fantasy">Fantasy</a>
               </li>
               <li>
-                <a href="/Biography">Biography</a>
+                <a href="/biography">Biography</a>
               </li>
               <li>
-                <a href="/History">History</a>
+                <a href="/history">History</a>
               </li>
               <li>
-                <a href="/Seft-Help">Seft-Help</a>
+                <a href="/sefthelp">Seft-Help</a>
               </li>
               <li>
-                <a href="/ChildBooks">Children’s Books</a>
+                <a href="/children’sbooks">Children’s Books</a>
               </li>
             </ul>
           </li>
@@ -49,16 +50,16 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className="auth-buttons">
-        <a href="/login" className="Home_login">
+      <div className="demo-buttons">
+        <a href="/login" className="demo_login">
           Sign In
         </a>
-        <a href="/register" className="Home_signup">
+        <a href="/register" className="demo_signup">
           Sign Up
         </a>
       </div>
-      <div className="search-bar">
-        <input type="text" placeholder="Search..." />
+      <div className="demosearch-bar">
+        <input className="demo-bar" type="text" placeholder="Search..." />
         <button>🔍</button>
       </div>
     </header>

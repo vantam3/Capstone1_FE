@@ -1,5 +1,5 @@
 .section-container {
-  background-color: #ffebcd;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,15 +17,7 @@
   gap: 10px;
   align-items: center;
 }
-.Home_login {
-  background-color: #dc143c;
-  color: white;
-}
 
-.Home_signup {
-  background-color: #d3d3d3;
-  color: black;
-}
 .body h1 {
   font-size: 2.25rem;
   color: #333;
