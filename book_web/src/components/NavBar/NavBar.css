@@ -1,0 +1,61 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px; /* Chiều cao của navbar */
+    background-color: rgb(242, 243, 245);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000; /* Đảm bảo navbar nằm trên các phần tử khác */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Căn chỉnh logo ở bên trái */
+.nav-logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-logo a {
+    color: hsla(0, 89%, 4%, 0.774);
+    text-decoration: none;
+}
+
+/* Căn chỉnh các liên kết điều hướng ở giữa */
+.nav-links {
+    display: flex;
+    gap: 15px;
+    flex: 1; /* Để đẩy thanh tìm kiếm về bên phải */
+    justify-content: center;
+    margin-right: 20px; /* Thêm khoảng cách bên phải */
+}
+
+.nav-links a {
+    color: #111010;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Thanh tìm kiếm ở bên phải */
+.nav-search-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px; /* Thêm khoảng cách bên trái cho thanh tìm kiếm */
+}
+
+.nav-search {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 16px;
+    width: 250px; /* Độ rộng của thanh tìm kiếm */
+}

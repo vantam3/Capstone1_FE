@@ -1,0 +1,90 @@
+/* Section 1 và 2 CSS - Đã có từ trước */
+
+.section-1 {
+    background-color: #89b5ef; /* Nền xanh dương */
+    color: #ffffff; /* Màu chữ phù hợp với nền xanh */
+}
+
+.section-2 {
+    background-color: #fff9db; /* Nền vàng nhạt */
+    color: #333333; /* Màu chữ tối phù hợp với nền vàng nhạt */
+}
+
+/* Section 3 CSS */
+.section-3 {
+    background-color: #ffe6f0; /* Nền hồng nhạt */
+    color: #333333; /* Màu chữ tối phù hợp với nền hồng nhạt */
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Chiều cao toàn màn hình để giữ hiệu ứng fullpage */
+    padding: 40px;
+    gap: 30px; /* Khoảng cách giữa ảnh và nội dung */
+}
+
+/* Bố cục ngang cho Section 3 với ảnh bên trái và nội dung bên phải */
+.section-left {
+    flex-direction: row; /* Bố cục ngang, ảnh bên trái và nội dung bên phải */
+}
+
+/* Định dạng phần hình ảnh trong Section 3 */
+.images {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột đều nhau */
+    grid-template-rows: auto auto; /* 2 hàng tự động */
+    gap: 20px;
+    width: 50%; /* Đặt chiều rộng cố định để tạo bố cục cân đối */
+}
+
+.images img {
+    width: 40%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+}
+
+/* Định dạng cho phần nội dung */
+.content {
+    width: 50%;
+    text-align: left;
+}
+
+.content h2 {
+    font-size: 2.5rem;
+    color: #333333; /* Màu chữ tối hơn trên nền hồng nhạt */
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 1.2rem;
+    color: #555555; /* Màu chữ xám đậm */
+    margin-bottom: 20px;
+}
+
+/* Định dạng cho nút button */
+.section-button {
+    display: inline-block;
+}
+
+.section-button button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #c50b0bd6; /* Màu hồng đậm phù hợp với nền hồng nhạt */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.section-button button:hover {
+    background-color: #f50057; /* Màu hồng đậm hơn khi hover */
+}
+/* bo the mac dinh fullpage */
+.fp-overflow {
+    display: contents;
+}
+
