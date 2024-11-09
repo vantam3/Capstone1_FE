@@ -13,7 +13,7 @@ function Navbar() {
                 <Link to="/library">Thư viện</Link>
                 <Link to="/create">Tạo sách</Link>
                 <Link to="/login">Đăng nhập</Link>
-                <Link to="/signup">Đăng ký</Link>
+                <Link to="/Register">Đăng ký</Link>
             </div>
             <div className="nav-search-container">
                 <input type="text" className="nav-search" placeholder="Tìm kiếm sách..." />
