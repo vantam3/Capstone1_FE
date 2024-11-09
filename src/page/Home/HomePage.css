@@ -1,32 +1,27 @@
-.section-container {
-  background-color: #ffebcd;
+.body-container {
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 500px;
-  height: 100vh;
+  /* padding: 500px; */
+  /* height: 100vh; */
   box-sizing: border-box;
   overflow: hidden;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
-.auth-search-container {
+.body-container .body {
   display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.Home_login {
-  background-color: #dc143c;
-  color: white;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.Home_signup {
-  background-color: #d3d3d3;
-  color: black;
+.body .body-title{
+  display: flex;
+  flex-direction: column;
 }
-.body h1 {
+.body-title h1 {
   font-size: 2.25rem;
   color: #333;
   display: flex;
@@ -46,7 +41,7 @@
   }
 }
 
-.body p {
+.body-title p {
   font-size: 1.5rem;
   margin: 20px 0 30px;
   color: #666;
@@ -71,8 +66,7 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-
-button {
+.footer button {
   background-color: #007bff;
   padding: 10px 20px;
   border: none;
@@ -81,9 +75,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.footer button:hover {
   background-color: #2e3a4b;
 }
-
-
-

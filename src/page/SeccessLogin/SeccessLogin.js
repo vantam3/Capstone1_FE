@@ -1,16 +1,16 @@
 import React from "react";
-import "./seccess_signin.css";
+import "./SeccessLogin.css";
 
-function Seccess_Signin() {
+function SeccessLogin() {
   return (
     <div className="login-success">
       <div className="success-icon">
         <i className="checkmark">&#10003;</i>
       </div>
-      <p className="success-message">Registered Successfully</p>
+      <p className="success-message">Login Successfully</p>
       <button className="ok-button">OK</button>
     </div>
   );
 }
 
-export default Seccess_Signin;
+export default SeccessLogin;

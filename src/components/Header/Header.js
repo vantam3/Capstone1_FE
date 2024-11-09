@@ -1,45 +1,74 @@
 import React from "react";
 import "./Header.css";
+
 const Header = () => {
   return (
-    <header className="header">
-      <div className="logo">
-        <img src={"../../assets/images/LOGO_BOOKQUEST.png"} alt="Logo" />
+    <header className="demo">
+      <div className="header-logo">
+        <a href="/">
+          <img src="../../assets/images/LOGO_BOOKQUEST.png" alt="Logo" />
+        </a>
       </div>
-      <nav>
-        <ul className="all">
-          <li>
-            <a href="#home">HOME</a>
-          </li>
+      <nav className="header-nav">
+        <ul className="nav-links">
+          {/* <li>
+            <a href="/">HOME</a>
+          </li> */}
           <li>
             <a href="#introduce">INTRODUCE</a>
           </li>
           <li className="dropdown">
-            <a href="/">BOOKS LIBRARY</a>
+            <p>BOOKS LIBRARY</p>
             <ul className="dropdown-content">
-              <li>
-                <a href="/Science_Fiction">Science Fiction</a>
+              <li className="dropdown-ebook">
+                {/* <a className="ebooc-link" href="/sciencefiction"> */}
+                <p className="ebooc-link"> Sách điện tử</p>
+                {/* </a> */}
+                <div className="dropdown-ebook-list">
+                  <div className="ebook-list-item">
+                    <div>
+                      <a href="/versebook">Thơ -Tản văn</a>
+                      <a href="/thovan">Tài chính cá nhân</a>
+                      <a href="/thovan">Tâm lý giới tính</a>
+                    </div>
+                    <div>
+                      <a href="/thovan">Thơ -Tản văn</a>
+                      <a href="/thovan">Tài chính cá nhân</a>
+                      <a href="/thovan">Tâm lý giới tính</a>
+                    </div>
+                    <div>
+                      <a href="/thovan">Thơ -Tản văn</a>
+                      <a href="/thovan">Tài chính cá nhân</a>
+                      <a href="/thovan">Tâm lý giới tính</a>
+                    </div>
+                    <div>
+                      <a href="/thovan">Thơ -Tản văn</a>
+                      <a href="/thovan">Tài chính cá nhân</a>
+                      <a href="/thovan">Tâm lý giới tính</a>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li>
-                <a href="#non-fiction">Romance</a>
+                <a href="/romance">Romance</a>
               </li>
               <li>
-                <a href="#fantasy">Mystery</a>
+                <a href="/mystery">Mystery</a>
               </li>
               <li>
-                <a href="#science">Fantasy</a>
+                <a href="/fantasy">Fantasy</a>
               </li>
               <li>
-                <a href="#science">Biography</a>
+                <a href="/biography">Biography</a>
               </li>
               <li>
-                <a href="#science">History</a>
+                <a href="/history">History</a>
               </li>
               <li>
-                <a href="#science">Seft-Help</a>
+                <a href="/sefthelp">Seft-Help</a>
               </li>
               <li>
-                <a href="#science">Children’s Books</a>
+                <a href="/children’sbooks">Children’s Books</a>
               </li>
             </ul>
           </li>
@@ -48,16 +77,18 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <div className="auth-buttons">
-        <a href="/login" className="Home_login">
+
+      <div className="demo-buttons">
+        <a href="/login" className="demo_login">
           Sign In
         </a>
-        <a href="/register" className="Home_signup">
+        <a href="/register" className="demo_signup">
           Sign Up
         </a>
       </div>
-      <div className="search-bar">
-        <input type="text" placeholder="Search..." />
+      <div className="demosearch-bar">
+        <input className="demo-bar" type="text" placeholder="Search..." />
+
         <button>🔍</button>
       </div>
     </header>
