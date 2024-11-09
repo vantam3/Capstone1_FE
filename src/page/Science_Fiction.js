@@ -9,9 +9,11 @@ const Science_Fiction = () => {
         <Header />
       </div>
       <div className="body">
-      <img src={"../../assets/images/Dautruong.jpeg"} alt="Đấu trường sinh tử" />
-          <img src={"../../assets/images/Thegioi.webp"} alt="Một thế giới dũng cảm" /> 
-          <img src={"../../assets/images/Nepgap.jpeg"} alt="Nếp gấp thời gian" />
+      <div className="body-items">
+      <img src={"../../assets/images/Dautruong.jpeg"} alt="Đấu trường sinh tử" /> <h3>Đấu trường sinh tử</h3>
+          <img src={"../../assets/images/Thegioi.webp"} alt="Một thế giới dũng cảm" /> <h3>Một thế giới dũng cảm</h3>
+          <img src={"../../assets/images/Nepgap.jpeg"} alt="Nếp gấp thời gian" /> <h3>Nếp gấp thời gian</h3>
+      </div>
           
           
         

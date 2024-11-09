@@ -21,22 +21,37 @@
     color: #666;
   }
   .body {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 25px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+  .body-items{
+    background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 100px;
+  height: auto;
+  text-align: center;
   }
   .body img {
-    width: 150px;
+    width: 180px; /* Điều chỉnh kích thước theo ý muốn */
     height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    transition: transform 0.3s ease;
   }
   
   .body img:hover {
     transform: scale(1.15) rotate(3deg);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  .body h3{
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
   }
   
  
