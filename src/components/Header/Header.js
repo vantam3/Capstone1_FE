@@ -29,7 +29,7 @@ const Header = () => {
       </nav>
       {formLogin === true ? (
         <img
-          src={"../../assets/images/Chuchim.png"}
+          src={"../../assets/images/images.png"}
           alt="logo"
           className="logo-name"
         />
