@@ -23,7 +23,6 @@ const Header = () => {
             <a href="#readers-feelings">CREATE BOOKS</a>
           </li>
           <li>
-            
             <a href="#readers-feelings">ABOUT</a>
           </li>
         </ul>
