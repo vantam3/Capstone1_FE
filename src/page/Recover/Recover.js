@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import './recover.css'; 
+import React, { useState } from "react";
+import "./Recover.css";
 
-const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+const Recover = () => {
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Email:', email);
+    console.log("Email:", email);
   };
 
   return (
@@ -34,7 +34,9 @@ const ForgotPassword = () => {
               />
             </div>
           </div>
-          <button type="submit" className="submit-button">Send</button>
+          <button type="submit" className="submit-button">
+            Send
+          </button>
         </form>
         <p className="signin-text">
           Already have an account? <a href="/login">SIGN IN</a>
@@ -44,4 +46,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default Recover;

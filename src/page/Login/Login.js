@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
-
+import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,12 +10,11 @@ const LoginForm = () => {
     console.log("Email:", email);
     console.log("Password:", password);
   };
+  
 
   return (
     <div className="login">
-      <div className="breadcrumb_login">
-        <a href="/HomePage">HomePage</a> {'<'} 
-      </div>
+      
       <div className="login-box">
         <h2>LOG IN</h2>
         <p>Please enter your email and password!</p>

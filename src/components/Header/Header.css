@@ -7,13 +7,13 @@
   background-color: white;
   padding: 10px 20px;
   color: white;
-  position: fixed;
+  /* position: fixed;
   top: 0;
-  left: 0;
+  left: 0; */
   z-index: 1000;
   box-sizing: border-box;
 }
-.header-logo img {
+.header-logo a img {
   height: 100px;
 }
 
@@ -26,6 +26,7 @@
   margin: 0;
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .demo li {
@@ -37,13 +38,25 @@
   text-decoration: none;
   padding: 10px;
   font-weight: bold;
+  font-size: 18px;
 }
 .demo-buttons {
   display: flex;
   gap: 10px;
   align-items: center;
 }
-
+.dropdown p {
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: bold;
+  margin: 0;
+  font-size: 18px;
+  cursor: pointer;
+}
+.dropdown p:hover {
+  color: #4395e1;
+}
 .demo-buttons a {
   padding: 5px 6px;
   border-radius: 5px;
@@ -62,25 +75,25 @@
 }
 .demo-bar {
   display: flex;
-align-items: center;
-border: 2px solid #ddd;
-border-radius: 35px;  
-overflow: hidden;
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-transition: box-shadow 0.3s ease, border 0.3s ease;
-padding: 10px 15px;
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 35px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, border 0.3s ease;
+  padding: 10px 15px;
 }
 
 .demo-bar input {
   border: none;
-padding: 8px 10px;
-outline: none;
-font-size: 14px;
-flex: 1;
+  padding: 8px 10px;
+  outline: none;
+  font-size: 14px;
+  flex: 1;
 }
 
 .demo-bar button {
-  background-color: #8ac6f2;  
+  background-color: #8ac6f2;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
@@ -92,8 +105,8 @@ flex: 1;
 }
 
 .demo-bar button:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
-border: 1px solid #8ac6f2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #8ac6f2;
 }
 .dropdown {
   position: relative;
@@ -151,4 +164,29 @@ border: 1px solid #8ac6f2;
 .demosearch-bar button:hover {
   background-color: #0056b3;
 }
+.dropdown-ebook {
+  position: relative;
+}
 
+.dropdown-ebook .dropdown-ebook-list {
+  display: none;
+}
+.dropdown-ebook:hover .dropdown-ebook-list {
+  display: block;
+  background-color: red;
+}
+.dropdown-ebook-list .ebook-list-item {
+  width: 700px;
+  position: absolute;
+  height: max-content;
+  background: #d0c9d8;
+  left: 161px;
+  top: 3px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.ebook-list-item div a {
+  font-size: 16px;
+  margin: 10px;
+  border-radius: 10px;
+}

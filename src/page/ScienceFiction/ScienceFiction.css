@@ -1,0 +1,43 @@
+.book-slider {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.book-card {
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.book-card img {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.book-card h3 {
+  font-size: 1.2em;
+  color: #0070f3;
+}
+
+.book-card p {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.see-more-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #eee;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.see-more-button:hover {
+  background-color: #ddd;
+}
+  
