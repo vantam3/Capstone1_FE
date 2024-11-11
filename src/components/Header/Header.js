@@ -1,7 +1,9 @@
 import React from "react";
 import "./Header.css";
+import { useGlobalContextLoin } from "../../layouts/useContext";
 
 const Header = () => {
+  const { formLogin } = useGlobalContextLoin();
   return (
     <header className="demo">
       <div className="header-logo">
@@ -25,15 +27,23 @@ const Header = () => {
           </li>
         </ul>
       </nav>
+      {formLogin === true ? (
+        <img
+          src={"../../assets/images/Chuchim.png"}
+          alt="logo"
+          className="logo-name"
+        />
+      ) : (
+        <div className="demo-buttons">
+          <a href="/login" className="demo_login">
+            Sign In
+          </a>
+          <a href="/register" className="demo_signup">
+            Sign Up
+          </a>
+        </div>
+      )}
 
-      <div className="demo-buttons">
-        <a href="/login" className="demo_login">
-          Sign In
-        </a>
-        <a href="/register" className="demo_signup">
-          Sign Up
-        </a>
-      </div>
       <div className="demosearch-bar">
         <input className="demo-bar" type="text" placeholder="Search..." />
 
