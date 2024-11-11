@@ -1,0 +1,90 @@
+/* Register.css */
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f5dc; /* Màu nền */
+}
+
+.register-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.register-box h2 {
+  font-size: 1.5rem;
+  color: #1a73e8; /* Màu tiêu đề */
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.gender {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.gender label {
+  font-size: 1rem;
+}
+
+.register-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1a73e8; /* Màu đỏ cho nút */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #6f9edd; /* Màu khi hover */
+}
+
+.or-divider {
+  margin: 20px 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+}
+
+.google-button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}

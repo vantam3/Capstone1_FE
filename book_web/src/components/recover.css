@@ -1,0 +1,85 @@
+.forgot-password-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #faf3dd;
+    padding: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.card img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 1.8rem;
+    color: #1a73e8;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.form-recover {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-recover label {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.form-recover input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0d47a1;
+}
+
+.signin-text {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.signin-text a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.signin-text a:hover {
+    text-decoration: underline;
+}

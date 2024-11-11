@@ -1,0 +1,70 @@
+.section3-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #9cb898; /* Màu nền */
+  text-align: center;
+}
+
+.section3-title {
+  font-size: 5em; 
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+.section3-description {
+  font-size: 1.3em;
+  color: #555;
+  margin-bottom: 10em; 
+}
+
+.section3-body button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.section3-body button:hover {
+  background-color: #007bfe;
+  color: white;
+}
+
+.section3-body button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.image-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Khoảng cách giữa các ảnh */
+  margin-top: 1.5em;
+}
+
+.image-gallery img {
+  width: 180px; 
+  height: 280px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+}
+
+.section3-footer {
+  margin-top: 1em;
+  font-size: 0.9em;
+  color: #777;
+}

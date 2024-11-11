@@ -1,0 +1,87 @@
+
+.library-container {
+  padding: 100px 20px 20px; /* 100px ở trên để tránh header */
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f9f9f9; /* Màu nền nhẹ nhàng để làm nổi bật nội dung */
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #2c3e50; /* Màu sắc đậm để tạo sự tương phản */
+}
+
+.category-section {
+  margin-bottom: 40px;
+}
+
+.category-section h2 {
+  font-size: 1.8rem;
+  text-align: left;
+  margin: 20px 0;
+  color: #34495e; /* Màu sắc đậm hơn để nổi bật */
+}
+
+.book-list {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.book-card {
+  min-width: 300px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng khi hover */
+}
+
+.book-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.book-info {
+  padding: 15px;
+  text-align: left;
+}
+
+.book-info h3 {
+  font-size: 1.2rem;
+  color: #1a73e8; /* Màu xanh để tiêu đề nổi bật */
+  margin: 10px 0;
+}
+
+.book-info p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.see-more-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #e7eaf3;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.see-more-button:hover {
+  background-color: #d0d4de; /* Thay đổi màu khi hover */
+  color: #333;
+}
