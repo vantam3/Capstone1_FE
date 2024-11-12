@@ -10,13 +10,16 @@ function Navbar() {
             </div>
             <div className="nav-links">
                 <Link to="/">Home</Link>
-                <Link to="/library">Thư viện</Link>
-                <Link to="/create">Tạo sách</Link>
-                <Link to="/login">Đăng nhập</Link>
-                <Link to="/Register">Đăng ký</Link>
+                <Link to="/library">Library</Link>
+                <Link to="/create">Create Books</Link>
+                <Link to="/about">About</Link>
             </div>
-            <div className="nav-search-container">
-                <input type="text" className="nav-search" placeholder="Tìm kiếm sách..." />
+            <div className="nav-right">
+                <div className="nav-search-container">
+                    <input type="text" className="nav-search" placeholder="Tìm kiếm sách..." />
+                </div>
+                <Link to="/login" className="nav-sign">Sign In</Link>
+                <Link to="/register" className="nav-sign">Sign Up</Link>
             </div>
         </nav>
     );

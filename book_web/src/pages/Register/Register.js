@@ -1,108 +1,95 @@
-import React, { useState } from 'react';
-import './Register.css';
 
-function Register() {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+import React, { useState } from "react";
+import "./Register.css";
+
+const RegisterForm = () => {
+  const [formData, setFormData] = useState({
+    lastName: '',
+    firstName: '',
+    email: '',
+    confirmPassword: '',
+});
+const [password, setPassword] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
-    const [error, setError] = useState('');
+  };
 
-    // Xử lý thay đổi input
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data:", formData);
+  };
 
-    // Xử lý submit form
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Kiểm tra nếu mật khẩu và nhập lại mật khẩu khớp nhau
-        if (formData.password !== formData.confirmPassword) {
-            setError('Mật khẩu không khớp');
-            return;
-        }
-
-        setError('');
-        // Gửi dữ liệu đăng ký (có thể gọi API tại đây)
-        console.log('User registered:', formData);
-    };
-
-    // Xử lý đăng nhập với Google
-    const handleGoogleSignIn = () => {
-        // Thực hiện logic đăng nhập với Google (tùy vào tích hợp API Google)
-        console.log('Signing in with Google...');
-    };
-
-    return (
-        <div className="register-container">
-            <h1>Đăng Ký</h1>
-            <form onSubmit={handleSubmit} className="register-form">
-                <label>
-                    Họ:
-                    <input 
-                        type="text" 
-                        name="firstName" 
-                        value={formData.firstName} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </label>
-                <label>
-                    Tên:
-                    <input 
-                        type="text" 
-                        name="lastName" 
-                        value={formData.lastName} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </label>
-                <label>
-                    Email:
-                    <input 
-                        type="email" 
-                        name="email" 
-                        value={formData.email} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </label>
-                <label>
-                    Mật khẩu:
-                    <input 
-                        type="password" 
-                        name="password" 
-                        value={formData.password} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </label>
-                <label>
-                    Nhập lại mật khẩu:
-                    <input 
-                        type="password" 
-                        name="confirmPassword" 
-                        value={formData.confirmPassword} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </label>
-                {error && <p className="error">{error}</p>}
-                <button type="submit" className="register-button">Đăng Ký</button>
-            </form>
-            <p>Hoặc tiếp tục với</p>
-            <button onClick={handleGoogleSignIn} className="google-signin-button">
-                Google
-            </button>
+  return (
+    <div className="register-container">
+      <div className="register-box">
+        <h2>CREATE ACCOUNT</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="name">
+            <input
+              type="text"
+              name="lastName"
+              placeholder="FirstName:"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="name">
+            <input
+              type="text"
+              name="LastName"
+              placeholder="LastName:"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="email">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email:"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="pass_register">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="Password:"
+            />
+          </div>
+          <div className="confirmPass">
+            <input
+              type="Password"
+              name="confirmPassword"
+              placeholder="ConfirmPassword:"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="Dangky">
+            Sign Up
+          </button>
+        </form>
+        <div className="backlogin">
+          <p>
+            You have an account? <a href="/login">Back to SignIn</a>
+          </p>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
-export default Register;
+export default RegisterForm;
