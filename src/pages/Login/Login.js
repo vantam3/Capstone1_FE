@@ -50,8 +50,17 @@ const LoginForm = () => {
             Submit
           </button>
         </form>
+        <div className="ketnoi">
+          <p>
+            Are you a new customer? <a href="/register">Create a new account</a>
+          </p>
+          <p>
+            Forgot password? <a href="/recover">Password recovery</a>
+          </p>
+        </div>
       </div>
-    </div>
+      </div>
+   
   );
 };
 
