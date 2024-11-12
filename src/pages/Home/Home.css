@@ -1,181 +1,167 @@
 /* Section 1 CSS */
 
-
 .section-1 {
-    background-color: #41699d;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    height: 100vh;
-    box-sizing: border-box;
-    
+  background-color: #41699d;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  height: 100vh;
+  box-sizing: border-box;
 }
 .section-1.section-left {
-    flex-direction: row;
-    gap: 150px;
+  flex-direction: row;
+  gap: 150px;
 }
-.section-1 .content{
-    width: 50%;
-    background-color: #c6ced8;
-    color: #ffffff;
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.section-1 .content {
+  width: 50%;
+  background-color: #c6ced8;
+  color: #ffffff;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Section 2 CSS */
 .section-2 {
-    background-color: #ce74bf;
-    color: #333333;
-    display: flex;
-    flex-direction:row ; /* Đảo ngược thứ tự: nội dung bên trái, ảnh bên phải */
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px;
+  background-color: #ce74bf;
+  color: #333333;
+  display: flex;
+  flex-direction: row; /* Đảo ngược thứ tự: nội dung bên trái, ảnh bên phải */
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
 }
 .section-2 .single-image img {
-    width: 100%; /* Chiều rộng đầy đủ của phần tử chứa */
-    border-radius: 8px; /* Bo tròn góc cho ảnh */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ cho ảnh */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
-    background-size: cover; /* Ảnh phủ đầy khung */
-
+  width: 100%; /* Chiều rộng đầy đủ của phần tử chứa */
+  border-radius: 8px; /* Bo tròn góc cho ảnh */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ cho ảnh */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
+  background-size: cover; /* Ảnh phủ đầy khung */
 }
 .section-2 .content {
-    width: 50%;
-    background-color: #f9f5f5;
-    color: #ffffff;
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  background-color: #f9f5f5;
+  color: #ffffff;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .section-2 .content h2 {
-    font-size: 2.5rem;
-    color: #110101;
-    margin-bottom: 15px;
+  font-size: 2.5rem;
+  color: #110101;
+  margin-bottom: 15px;
 }
 
 /* Tùy chỉnh đoạn văn trong phần nội dung của Section 2 */
 .section-2 .content p {
-    font-size: 1.2rem;
-    color: #0e0101;
-    margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #0e0101;
+  margin-bottom: 20px;
 }
 
 /* Section 3 CSS */
 /* Section 3 CSS */
 .section-3 {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Chiều cao toàn màn hình */
-    width: 100vw; /* Chiều rộng toàn màn hình */
-    background-color: #0e0b04f4;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Chiều cao toàn màn hình */
+  width: 100vw; /* Chiều rộng toàn màn hình */
+  background-color: #0e0b04f4;
 }
 
 /* Phần hình ảnh chiếm 50% chiều cao màn hình */
 .section-3 .images {
-    display: flex;
-    justify-content: space-around; /* Khoảng cách đều giữa các ảnh */
-    align-items: center;
-    height: 50%; /* Chiếm nửa trên của màn hình */
-    width: 100%;
-    padding: 0 20px;
-    background-color: #ececec; /* Nền để làm nổi bật phần ảnh */
+  display: flex;
+  justify-content: space-around; /* Khoảng cách đều giữa các ảnh */
+  align-items: center;
+  height: 50%; /* Chiếm nửa trên của màn hình */
+  width: 100%;
+  padding: 0 20px;
+  background-color: #ececec; /* Nền để làm nổi bật phần ảnh */
 }
 
 /* CSS riêng cho từng ảnh trong phần images */
 
 .section-3 .images img:nth-child(1) {
-    width: 55%; /* Chiều rộng ảnh */
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng cho ảnh */
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Cho phép tùy chỉnh vị trí */
-    top: 25px; /* Di chuyển ảnh lên trên 10px */
-    left: -45px; /* Di chuyển ảnh sang trái 20px */
+  width: 55%; /* Chiều rộng ảnh */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng cho ảnh */
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* Cho phép tùy chỉnh vị trí */
+  top: 25px; /* Di chuyển ảnh lên trên 10px */
+  left: -45px; /* Di chuyển ảnh sang trái 20px */
 }
 
 .section-3 .images img:nth-child(2) {
-    width: 55%; /* Chiều rộng ảnh */
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Cho phép tùy chỉnh vị trí */
-    top: 25px; /* Di chuyển ảnh xuống dưới 15px */
-    left: -45px; /* Di chuyển ảnh sang phải 20px */
+  width: 55%; /* Chiều rộng ảnh */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* Cho phép tùy chỉnh vị trí */
+  top: 25px; /* Di chuyển ảnh xuống dưới 15px */
+  left: -45px; /* Di chuyển ảnh sang phải 20px */
 }
 
 /* Hiệu ứng khi hover vào ảnh */
 
 /* Phần nội dung chiếm 50% chiều cao màn hình */
 .section-3 .content {
-    flex: 1; /* Chiếm nửa dưới của màn hình */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    /* background-color: #f9f5f5; */
-    color: #110101;
+  flex: 1; /* Chiếm nửa dưới của màn hình */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  /* background-color: #f9f5f5; */
+  color: #110101;
 }
 
 .section-3 .content h1 {
-    font-size: 2.5rem;
-    color: #f2ebeb;
-    margin-bottom: 15px;
+  font-size: 2.5rem;
+  color: #f2ebeb;
+  margin-bottom: 15px;
 }
 
 .section-3 .content p {
-    font-size: 1.2rem;
-    color: #f8f5f5;
-    margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #f8f5f5;
+  margin-bottom: 20px;
 }
 
 /* Định dạng nút trong phần nội dung của Section 3 */
 .section-3 .section-button button {
-    background-color: #f2ecec;
-    color: #120404;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #f2ecec;
+  color: #120404;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .section-3 .section-button button:hover {
-    background-color: #c50b0bd6;
+  background-color: #c50b0bd6;
 }
-
-
-
-
-
-
-
-
-
 
 /* Định dạng chung cho Section */
 .section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    padding: 40px;
-    gap: 50px;
-    box-sizing: border-box;
-    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
-    position: relative; /* Giữ các phần tử trong giới hạn của session */
-    
-    
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 40px;
+  gap: 50px;
+  box-sizing: border-box;
+  overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+  position: relative; /* Giữ các phần tử trong giới hạn của session */
 }
 
 /* Bố cục ngang cho Section */
@@ -186,85 +172,82 @@
 
 /* Định dạng phần hình ảnh với vị trí tùy chỉnh */
 .images {
-    position: relative; /* Cho phép vị trí tùy chỉnh */
-    width: 50%;
-    height: auto;
+  position: relative; /* Cho phép vị trí tùy chỉnh */
+  width: 50%;
+  height: auto;
 }
 
 /* Kiểu dáng cho từng bìa sách với vị trí tùy chỉnh */
 .images img {
-    position: absolute; /* Cho phép tùy chỉnh vị trí từng ảnh */
-    width: 160px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: absolute; /* Cho phép tùy chỉnh vị trí từng ảnh */
+  width: 160px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Hiệu ứng 3D khi hover vào ảnh */
 .section-1 .images img:hover {
-    transform: scale(1.2) rotateY(10deg);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.2) rotateY(10deg);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Vị trí tùy chỉnh cho từng ảnh */
 .images img:nth-child(1) {
-    top: 15px;
-    left: 50%;
+  top: 15px;
+  left: 50%;
 }
 
 .images img:nth-child(2) {
-    top: -140px;
-    left: 120px;
+  top: -140px;
+  left: 120px;
 }
 
 .images img:nth-child(3) {
-    bottom: 10px;
-    left: 50%;
+  bottom: 10px;
+  left: 50%;
 }
 /* Định dạng cho phần nội dung */
 .content {
-    width: 50%;
-    text-align: left;
+  width: 50%;
+  text-align: left;
 }
 
 .content h2 {
-    font-size: 2.5rem;
-    color: #333333;
-    margin-bottom: 10px;
+  font-size: 2.5rem;
+  color: #333333;
+  margin-bottom: 10px;
 }
 
 .content p {
-    font-size: 1.2rem;
-    color: #555555;
-    margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #555555;
+  margin-bottom: 20px;
 }
 
 /* Định dạng cho nút button */
 .section-button {
-    display: inline-block;
+  display: inline-block;
 }
 
 .section-button button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #dd0606e2;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #dd0606e2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .section-button button:hover {
-    background-color: #f50057;
+  background-color: #f50057;
 }
 
 /* Bỏ hiệu ứng fullpage */
 .fp-overflow {
-    display: contents;
+  display: contents;
 }
-
-
-
