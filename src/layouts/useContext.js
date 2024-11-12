@@ -2,9 +2,9 @@ import { createContext, useContext, useState } from "react";
 
 export const formLoginContext = createContext({
   formLogin: false,
-  setFormLogin: () => { },
+  setFormLogin: () => {},
   user: null,
-  setUser: () => { },
+  setUser: () => {},
 });
 
 export const FormLoginProvider = ({ children }) => {
@@ -12,7 +12,9 @@ export const FormLoginProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   return (
-    <formLoginContext.Provider value={{ formLogin, setFormLogin, user, setUser }}>
+    <formLoginContext.Provider
+      value={{ formLogin, setFormLogin, user, setUser }}
+    >
       {children}
     </formLoginContext.Provider>
   );

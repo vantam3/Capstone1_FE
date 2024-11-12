@@ -12,12 +12,14 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-   
-    const loggedInUser = { name: "Tên người dùng", avatar: "/path/to/avatar.jpg" };
+    const loggedInUser = {
+      name: "Tên người dùng",
+      avatar: "/path/to/avatar.jpg",
+    };
 
-    setUser(loggedInUser);  
-    setFormLogin(true);     
-    navigate("/");          
+    setUser(loggedInUser);
+    setFormLogin(true);
+    navigate("/");
   };
 
   return (
@@ -44,7 +46,9 @@ const LoginForm = () => {
               placeholder="Password:"
             />
           </div>
-          <button type="submit" className="button_login">Submit</button>
+          <button type="submit" className="button_login">
+            Submit
+          </button>
         </form>
       </div>
     </div>
