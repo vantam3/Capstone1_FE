@@ -1,0 +1,140 @@
+
+.navbar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    z-index: 1000; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.content {
+    padding-top: 80px; 
+}
+
+
+.nav-logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    justify-content: center; 
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #bb0a0a;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+
+.nav-search-container {
+    position: relative;
+    width: 200px;
+    margin-right: 70px;
+}
+
+.nav-search {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.logout-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 100px;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+    
+}
+
+.nav-search::placeholder {
+    color: #aaa;
+}
+
+.nav-search:focus {
+    border-color: #740909c6;
+    box-shadow: 0 0 5px rgba(245, 0, 87, 0.3);
+}
+
+
+.nav-sign {
+    padding: 8px 20px;
+    color: #ffffff;
+    background-color: #0c0c0cdf; 
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-right: 50px;
+    margin-left: -50px; 
+
+}
+
+.nav-sign:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-sign:last-child {
+    background-color: #c00812;
+}
+
+.nav-sign:last-child:hover {
+    background-color: #c50b0bd6;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.user-name {
+    color: #000;
+    margin-right: 50px;
+}
