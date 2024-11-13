@@ -1,5 +1,5 @@
-
 import React, { useState } from "react";
+import axios from "axios";
 import "./Register.css";
 
 const RegisterForm = () => {
@@ -8,8 +8,9 @@ const RegisterForm = () => {
     firstName: '',
     email: '',
     confirmPassword: '',
-});
-const [password, setPassword] = useState('');
+  });
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -18,9 +19,25 @@ const [password, setPassword] = useState('');
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    try {
+      const response = await axios.post("http://localhost:8000/api/register/", {
+        username: formData.email,
+        email: formData.email,
+        password: password,
+        confirm_password: formData.confirmPassword,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      });
+      setMessage("Registration successful!");
+    } catch (error) {
+      if (error.response) {
+        setMessage("Registration failed: " + JSON.stringify(error.response.data));
+      } else {
+        setMessage("Connection error!");
+      }
+    }
   };
 
   return (
@@ -31,9 +48,9 @@ const [password, setPassword] = useState('');
           <div className="name">
             <input
               type="text"
-              name="lastName"
+              name="firstName"
               placeholder="FirstName:"
-              value={formData.lastName}
+              value={formData.firstName}
               onChange={handleChange}
               required
             />
@@ -41,14 +58,13 @@ const [password, setPassword] = useState('');
           <div className="name">
             <input
               type="text"
-              name="LastName"
+              name="lastName"
               placeholder="LastName:"
-              value={formData.firstName}
+              value={formData.lastName}
               onChange={handleChange}
               required
             />
           </div>
-          
           <div className="email">
             <input
               type="email"
@@ -70,9 +86,9 @@ const [password, setPassword] = useState('');
           </div>
           <div className="confirmPass">
             <input
-              type="Password"
+              type="password"
               name="confirmPassword"
-              placeholder="ConfirmPassword:"
+              placeholder="Confirm Password:"
               value={formData.confirmPassword}
               onChange={handleChange}
               required
@@ -82,9 +98,10 @@ const [password, setPassword] = useState('');
             Sign Up
           </button>
         </form>
+        <div>{message}</div>
         <div className="backlogin">
           <p>
-            You have an account? <a href="/login">Back to SignIn</a>
+            You have an account? <a href="/login">Back to Sign In</a>
           </p>
         </div>
       </div>
