@@ -5,4 +5,4 @@ export const formLoginContext = createContext({
   setFormLogin: () => {},
 });
 
-export const useGlobalContextLoin = () => useContext(formLoginContext);
+export const useGlobalContextLogin  = () => useContext(formLoginContext);

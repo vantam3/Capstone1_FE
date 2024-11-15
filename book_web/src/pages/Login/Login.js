@@ -1,19 +1,36 @@
-
 import React, { useState } from "react";
-import "./Login.css";
-import { useGlobalContextLoin } from "../../layouts/useContext";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContextLogin } from "../../layouts/useContext";
+import axios from "axios";
+import "./Login.css";
+
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setFormLogin } = useGlobalContextLoin();
+  const { setFormLogin, setUser } = useGlobalContextLogin();
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
-    navigate("/");
-    setFormLogin(true);
+
+    try {
+      const response = await axios.post("http://localhost:8000/api/login/", {
+        email: email,
+        password: password,
+      });
+
+      // Lưu token vào localStorage 
+      localStorage.setItem("token", response.data.token);
+
+      // Thiết lập thông tin người dùng
+      setUser({ name: response.data.username, avatar: "/path/to/avatar.jpg" });
+      setFormLogin(true);
+      navigate("/");  
+    } catch (err) {
+      console.log(err.response);
+      setError("Incorrect email or password");
+    }
   };
 
   return (
@@ -40,18 +57,11 @@ const LoginForm = () => {
               placeholder="Password:"
             />
           </div>
+          {error && <p className="error-message">{error}</p>}
           <button type="submit" className="button_login">
             Submit
           </button>
         </form>
-        <div className="ketnoi">
-          <p>
-            Are you a new customer? <a href="/register">Create a new account</a>
-          </p>
-          <p>
-            Forgot password? <a href="/recover">Password recovery</a>
-          </p>
-        </div>
       </div>
     </div>
   );
