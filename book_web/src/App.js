@@ -26,7 +26,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/category/:categoryName" element={<CategoryDetail />} />
                     <Route path="/book/:bookId" element={<BookDetail />} /> {/* Route cho BookDetail */}
-                    <Route path="/read/:bookId" element={<ReadBook />} /> {/* Route cho ReadBook */}
+                    <Route path="/read/:bookId" element={<ReadBook />} />
                     
 
                 </Routes>
