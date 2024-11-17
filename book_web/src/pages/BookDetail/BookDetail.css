@@ -99,3 +99,11 @@
 .review-form button:hover {
     background-color: #218838;
 }
+.review-item strong {
+    font-weight: bold;
+}
+
+.stars {
+    color: gold; /* Màu vàng cho ngôi sao */
+    font-size: 1.2rem; /* Kích thước ngôi sao */
+}
