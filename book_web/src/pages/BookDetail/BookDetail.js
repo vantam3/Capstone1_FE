@@ -31,27 +31,43 @@ function BookDetail() {
         
         fetchBookDetails();
     }, [bookId]);
-
+  
     // Hàm xử lý khi người dùng thêm đánh giá mới
     const handleAddReview = async (e) => {
         e.preventDefault();
-        if (newReview.rating && newReview.comment) {
-            try {
-                const response = await axios.post(`http://localhost:8000/api/books/${bookId}/add_review/`, newReview, {
+    
+        // Kiểm tra dữ liệu hợp lệ
+        if (!newReview.rating || !newReview.comment) {
+            alert("Please provide a rating and a comment.");
+            return;
+        }
+        console.log("Sending review data:", newReview);
+        console.log("Book ID:", bookId);
+        try {
+            const response = await axios.post(
+                `http://localhost:8000/api/books/${bookId}/add_review/`,
+                newReview,
+                {
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Nếu cần xác thực
                     },
-                });
-                setReviews([...reviews, response.data]); // Cập nhật danh sách đánh giá
-                setNewReview({ rating: '', comment: '' }); // Xóa form
-            } catch (error) {
-                console.error("Error adding review:", error);
-                setError("Failed to add review. Please try again.");
-            }
-        } else {
-            setError("Please fill in both rating and comment.");
+                }
+            );
+    
+            // Cập nhật danh sách đánh giá
+            setReviews((prevReviews) => [...prevReviews, response.data]);
+    
+            // Reset form
+            setNewReview({ rating: '', comment: '' });
+        } catch (error) {
+            console.error("Error adding review:", error.response?.data || error.message);
+            alert("Failed to add review. Please try again.");
         }
     };
+
+        
+    
 
     // Hiển thị loading khi dữ liệu đang được tải
     if (loading) {
@@ -62,6 +78,15 @@ function BookDetail() {
     if (error) {
         return <p>{error}</p>;
     }
+    const renderStars = (rating) => {
+        const fullStar = '★'; // Ngôi sao đầy
+        const emptyStar = '☆'; // Ngôi sao rỗng
+        const stars = Array(5)
+            .fill(emptyStar)
+            .map((star, index) => (index < rating ? fullStar : star));
+        return stars.join('');
+    };
+    
 
     return (
         <div className="book-detail-container">
@@ -96,7 +121,8 @@ function BookDetail() {
                 {reviews.length > 0 ? (
                     reviews.map((review, index) => (
                         <div key={index} className="review-item">
-                            <p><strong>Rating:</strong> {review.rating}/5</p>
+                            <p><strong>User:</strong> {review.user || "Anonymous"}</p> {/* Hiển thị tên người dùng */}
+                            <p><strong>Rating:</strong> {renderStars(review.rating)}</p> {/* Hiển thị ngôi sao */}
                             <p>{review.comment}</p>
                             <p><em>{review.created_at || new Date().toLocaleDateString()}</em></p>
                         </div>
@@ -106,30 +132,30 @@ function BookDetail() {
                 )}
 
                 {/* Form để thêm đánh giá mới */}
-                <form onSubmit={handleAddReview} className="review-form">
-                    <label>
-                        Rating:
-                        <select 
-                            value={newReview.rating} 
-                            onChange={(e) => setNewReview({ ...newReview, rating: e.target.value })}
-                        >
-                            <option value="">Select rating</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </label>
-                    <label>
-                        Comment:
-                        <textarea 
-                            value={newReview.comment} 
-                            onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                        />
-                    </label>
-                    <button type="submit">Add Review</button>
-                </form>
+                        <form onSubmit={handleAddReview} className="review-form">
+                <label>
+                    Rating:
+                    <select 
+                        value={newReview.rating} 
+                        onChange={(e) => setNewReview({ ...newReview, rating: e.target.value })}
+                    >
+                        <option value="">Select rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </label>
+                <label>
+                    Comment:
+                    <textarea 
+                        value={newReview.comment} 
+                        onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                    />
+                </label>
+                <button type="submit">Add Review</button>
+            </form>
             </div>
         </div>
     );
