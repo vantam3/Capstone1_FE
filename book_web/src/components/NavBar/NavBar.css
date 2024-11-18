@@ -110,4 +110,69 @@
 .nav-sign:last-child:hover {
     background-color: #c50b0bd6;
 }
+/* Phần hiển thị thông tin người dùng */
+.nav-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa avatar, tên, và nút logout */
+    margin-right: 0; /* Không để thêm khoảng cách bên phải */
+  }
+  
+  .nav-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+  }
+  
+  .nav-user-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    text-transform: capitalize;
+  }
+  
+  .nav-logout-button {
+    padding: 5px 12px;
+    background-color: #c00812;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-left: auto; /* Đẩy nút Logout sát bên phải */
+  }
+  
+  .nav-logout-button:hover {
+    background-color: #a0070e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+/* Căn chỉnh lại phần bên phải (Sign In, Sign Up hoặc thông tin người dùng) */
+.nav-right {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end; 
+    gap: 15px; 
+    padding-right: 50px; 
+    flex-wrap: wrap;
+  }
+
+.nav-user-info .nav-logout-button {
+    margin-left: 10px; /* Tạo khoảng cách giữa tên người dùng và nút Logout */
+}
+
+/* Đảm bảo tất cả phần tử hiển thị tốt trên các màn hình nhỏ */
+@media (max-width: 768px) {
+    .nav-right {
+        flex-direction: column;
+        gap: 15px; /* Tăng khoảng cách giữa các phần tử khi thu nhỏ màn hình */
+    }
+
+    .nav-search-container {
+        margin-right: 0;
+    }
+}
 
