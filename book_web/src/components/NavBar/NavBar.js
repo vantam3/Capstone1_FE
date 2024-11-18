@@ -16,7 +16,7 @@ function Navbar() {
             </div>
             <div className="nav-right">
                 <div className="nav-search-container">
-                    <input type="text" className="nav-search" placeholder="Tìm kiếm sách..." />
+                    <input type="text" className="nav-search" placeholder="Search..." />
                 </div>
                 <Link to="/login" className="nav-sign">Sign In</Link>
                 <Link to="/register" className="nav-sign">Sign Up</Link>
