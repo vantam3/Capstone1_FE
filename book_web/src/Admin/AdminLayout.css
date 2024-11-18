@@ -1,0 +1,50 @@
+.admin-layout {
+    display: flex;
+    height: 92vh; 
+}
+
+.admin-sidebar {
+    width: 250px;
+    background-color: #0B0340; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.admin-sidebar h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.admin-sidebar a {
+    text-decoration: none;
+    color: #ccc;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-sidebar a:hover {
+    background-color: #9DBAD5;
+    color: #fff;
+}
+
+.active-link {
+    background-color: #9DBAD5;
+    color: #fff;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f5f5f5; /* Nền xám nhạt */
+    overflow-y: auto; /* Cuộn dọc nếu nội dung quá dài */
+}
