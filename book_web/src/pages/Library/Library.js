@@ -1,125 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Library.css';
 import { useNavigate } from 'react-router-dom';
-
-// Dữ liệu mẫu cho các sách, phân loại theo thể loại
-const libraryData = [
-    {
-        category: "Fiction",
-        books: [
-            {
-                id: 1,
-                title: "The Great Gatsby",
-                description: "Classic American novel",
-                image: "/images/book1.jpg",
-            },
-            {
-                id: 2,
-                title: "To Kill a Mockingbird",
-                description: "Novel on racial injustice",
-                image: "/images/book2.jpg",
-            },
-            {
-                id: 3,
-                title: "1984",
-                description: "Dystopian future",
-                image: "/images/book3.jpg",
-            },
-            {
-                id: 3,
-                title: "1984",
-                description: "Dystopian future",
-                image: "/images/book3.jpg",
-            },
-            {
-                id: 3,
-                title: "1984",
-                description: "Dystopian future",
-                image: "/images/book3.jpg",
-            },
-        ],
-    },
-    {
-        category: "Science",
-        books: [
-            {
-                id: 4,
-                title: "A Brief History of Time",
-                description: "Understanding the universe",
-                image: "/images/book1.jpg",
-            },
-            {
-                id: 5,
-                title: "Cosmos",
-                description: "Exploration of the universe",
-                image: "/images/book1.jpg",
-            },
-            {
-                id: 6,
-                title: "The Selfish Gene",
-                description: "Genetics and evolution",
-                image: "/images/book1.jpg",
-            },
-            {
-                id: 6,
-                title: "The Selfish Gene",
-                description: "Genetics and evolution",
-                image: "/images/book1.jpg",
-            },
-        ],
-    },
-    {
-        category: "Science",
-        books: [
-            {
-                id: 4,
-                title: "A Brief History of Time",
-                description: "Understanding the universe",
-                image: "/images/science1.jpg",
-            },
-            {
-                id: 5,
-                title: "Cosmos",
-                description: "Exploration of the universe",
-                image: "/images/science2.jpg",
-            },
-            {
-                id: 6,
-                title: "The Selfish Gene",
-                description: "Genetics and evolution",
-                image: "/images/science3.jpg",
-            },
-        ],
-    },
-    {
-        category: "Science",
-        books: [
-            {
-                id: 4,
-                title: "A Brief History of Time",
-                description: "Understanding the universe",
-                image: "/images/science1.jpg",
-            },
-            {
-                id: 5,
-                title: "Cosmos",
-                description: "Exploration of the universe",
-                image: "/images/science2.jpg",
-            },
-            {
-                id: 6,
-                title: "The Selfish Gene",
-                description: "Genetics and evolution",
-                image: "/images/science3.jpg",
-            },
-        ],
-    },
-    
-    // Thêm nhiều thể loại khác nếu muốn
-];
+import axios from 'axios';
 
 function Library() {
+    const [libraryData, setLibraryData] = useState([]); // State để lưu trữ dữ liệu sách
     const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
+
+    useEffect(() => {
+        // Gọi API để lấy dữ liệu sách
+        const fetchBooks = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/books/');
+                const books = response.data;
+                
+                // Phân loại sách theo thể loại (giả sử mỗi sách có trường `category`)
+                const categorizedBooks = books.reduce((acc, book) => {
+                    const category = book.category || "Uncategorized";
+                    if (!acc[category]) {
+                        acc[category] = [];
+                    }
+                    acc[category].push(book);
+                    return acc;
+                }, {});
+
+                // Định dạng lại dữ liệu cho phù hợp với `libraryData`
+                const formattedData = Object.entries(categorizedBooks).map(([category, books]) => ({
+                    category,
+                    books,
+                }));
+                
+                setLibraryData(formattedData); // Lưu dữ liệu vào state
+            } catch (error) {
+                console.error("Có lỗi xảy ra khi lấy dữ liệu sách:", error);
+            }
+        };
+
+        fetchBooks(); // Gọi hàm fetchBooks khi component được render
+    }, []);
+
     return (
         <div className="library-container">
             <h1>Explore Book Categories</h1>
@@ -136,6 +55,7 @@ function Library() {
                                 <div className="book-info">
                                     <h3>{book.title}</h3>
                                     <p>{book.description}</p>
+                                    <p></p>
                                 </div>
                             </div>
                         ))}
