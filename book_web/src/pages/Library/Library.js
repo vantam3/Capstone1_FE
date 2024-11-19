@@ -85,7 +85,7 @@ function Library() {
                                 <div className="book-info">
                                     <h3>{book.title}</h3>
                                     <p><strong>Author:</strong> {book.author || "Unknown Author"}</p>
-                                    <p><strong>Summary:</strong> {book.summary || "No description available."}</p>
+                                    {/* <p><strong>Summary:</strong> {book.summary || "No description available."}</p> */}
                                 </div>
                             </div>
                         ))}
