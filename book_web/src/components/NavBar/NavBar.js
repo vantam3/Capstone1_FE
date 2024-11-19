@@ -1,32 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
-import { useGlobalContextLogin } from "../../layouts/useContext"; // Import context để quản lý trạng thái đăng nhập
-import axios from "axios"; // Import axios để gọi API logout
+import { useGlobalContextLogin } from "../../layouts/useContext";
 
-function Navbar() {
-  const { user, setFormLogin, setUser } = useGlobalContextLogin(); // Lấy thông tin từ context
+const Navbar = () => {
+  const { user, setFormLogin, setUser } = useGlobalContextLogin();
+  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
+  const [message, setMessage] = useState(""); // Nội dung thông báo
 
-  const handleLogout = async () => {
-    try {
-      // Gọi API logout tới backend
-      const refreshToken = localStorage.getItem("refresh_token");
-      if (refreshToken) {
-        await axios.post("http://localhost:8000/api/logout/", {
-          refresh_token: refreshToken,
-        });
-      }
+  const handleLogout = () => {
+    // Xóa token khỏi LocalStorage
+    localStorage.removeItem("token");
 
-      // Xóa token khỏi LocalStorage
-      localStorage.removeItem("token");
-      localStorage.removeItem("refresh_token");
+    // Đặt trạng thái đăng xuất
+    setUser(null);
+    setFormLogin(false);
 
-      // Đặt trạng thái đăng xuất
-      setUser(null);
-      setFormLogin(false);
-    } catch (err) {
-      console.error("Logout error:", err);
-    }
+    // Hiển thị modal thông báo đăng xuất thành công
+    setMessage("Logout successful!");
+    setShowModal(true);
+
+    // Tự động đóng modal sau 1 giây
+    setTimeout(() => {
+      setShowModal(false);
+    }, 1000);
   };
 
   return (
@@ -41,14 +38,10 @@ function Navbar() {
         <Link to="/about">About</Link>
       </div>
       <div className="nav-right">
-        <div className="nav-search-container">
-          <input type="text" className="nav-search" placeholder="Tìm kiếm sách..." />
-        </div>
         {user ? (
-          // Khi đã đăng nhập, hiển thị thông tin người dùng và nút Logout
           <div className="nav-user-info">
             <img
-              src="/images/user.png" // Ảnh mặc định cho người dùng
+              src="/images/user.png"
               alt="User Avatar"
               className="nav-user-avatar"
             />
@@ -60,15 +53,24 @@ function Navbar() {
             </button>
           </div>
         ) : (
-          // Khi chưa đăng nhập, hiển thị nút Sign In và Sign Up
           <>
             <Link to="/login" className="nav-sign">Sign In</Link>
             <Link to="/register" className="nav-sign">Sign Up</Link>
           </>
         )}
       </div>
+
+      {/* Modal hiển thị đăng xuất thành công */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal success">
+            <h3>Success</h3>
+            <p>{message}</p>
+          </div>
+        </div>
+      )}
     </nav>
   );
-}
+};
 
 export default Navbar;

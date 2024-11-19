@@ -11,6 +11,8 @@ const RegisterForm = () => {
   });
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false); // Trạng thái thành công
+  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
 
   const handleChange = (e) => {
     setFormData({
@@ -31,13 +33,22 @@ const RegisterForm = () => {
         last_name: formData.lastName,
       });
       setMessage("Registration successful!");
+      setIsSuccess(true);
+      setShowModal(true); // Hiển thị modal thông báo thành công
     } catch (error) {
-      if (error.response) {
-        setMessage("Registration failed: " + JSON.stringify(error.response.data));
+      if (error.response && error.response.data.error) {
+        // Trích xuất thông báo lỗi rõ ràng từ backend
+        setMessage(error.response.data.error);
       } else {
-        setMessage("Connection error!");
+        setMessage("Connection error! Please try again.");
       }
+      setIsSuccess(false);
+      setShowModal(true); // Hiển thị modal thông báo lỗi
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Đóng modal
   };
 
   return (
@@ -98,13 +109,25 @@ const RegisterForm = () => {
             Sign Up
           </button>
         </form>
-        <div>{message}</div>
         <div className="backlogin">
           <p>
             You have an account? <a href="/login">Back to Sign In</a>
           </p>
         </div>
       </div>
+
+      {/* Modal thông báo */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className={`modal ${isSuccess ? 'success' : 'error'}`}>
+            <h3>{isSuccess ? "Success" : "Error"}</h3>
+            <p>{message}</p>
+            <button className="close-modal-button" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

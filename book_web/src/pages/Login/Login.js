@@ -1,36 +1,56 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContextLogin } from "../../layouts/useContext";
-import axiosInstance, { setAuthToken } from "../../utils/axiosConfig";
+import axios from "axios";
 import "./Login.css";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
+  const [message, setMessage] = useState(""); // Thông báo modal
   const { setFormLogin, setUser } = useGlobalContextLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-  
+
     try {
-      const response = await axiosInstance.post("/login/", { email, password });
+      const response = await axios.post("http://localhost:8000/api/login/", {
+        email,
+        password,
+      });
+
       const { token, user } = response.data;
-  
+
+      // Lưu token vào localStorage
       localStorage.setItem("token", token);
-      setAuthToken(token);
-  
+
+      // Cấu hình axios để gửi token trong header
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      // Cập nhật context
       setUser(user);
       setFormLogin(true);
-      navigate("/");
+
+      // Hiển thị modal thông báo thành công
+      setMessage("Login successful!");
+      setShowModal(true);
+
+      // Chuyển hướng sau khi đóng modal
+      setTimeout(() => {
+        setShowModal(false);
+        navigate("/");
+      }, 1000);
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      const errorMsg =
+        err.response?.data?.message ||
+        "Login failed. Please try again.";
+      setError(errorMsg);
     }
   };
-
-  
 
   return (
     <div className="login">
@@ -62,6 +82,16 @@ const LoginForm = () => {
           </button>
         </form>
       </div>
+
+      {/* Modal hiển thị đăng nhập thành công */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal success">
+            <h3>Success</h3>
+            <p>{message}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
