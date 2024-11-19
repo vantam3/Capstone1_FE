@@ -1,75 +1,214 @@
-.view-reports-container {
+/* View Report Container */
+.view-report {
+    background: #ffffff; /* White background for the card */
     padding: 20px;
-    background-color: #f5f5f5;
-    min-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 20px auto;
+    max-width: 900px; /* Constrain width for better readability */
+    font-family: 'Arial', sans-serif;
 }
 
-.view-reports-container h2 {
-    font-size: 2rem;
+/* Title Styling */
+.view-report h2 {
+    text-align: center;
+    color: #2b579a; /* Professional blue color */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Filters Section */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px; /* Add spacing between filter items */
+    margin-bottom: 20px;
+}
+
+.filters label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
     color: #333;
 }
 
-.view-reports-container p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.filter-buttons {
-    margin-bottom: 20px;
-}
-
-.filter-buttons button {
-    background-color: #0B0340;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.filter-buttons button:hover {
-    background-color: #79ACD9;
-}
-
-.reports-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.reports-table th, .reports-table td {
-    text-align: left;
-    padding: 10px;
+.filters select,
+.filters input {
+    padding: 8px;
+    font-size: 14px;
     border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
 }
 
-.reports-table th {
-    background-color: #0B0340;
-    color: white;
+.filters select:focus,
+.filters input:focus {
+    border-color: #2b579a; /* Highlight inputs when focused */
+    outline: none;
 }
 
-.reports-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.reports-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-.view-button {
-    background-color: #28a745;
+/* Clear Filters Button */
+.clear-filters {
+    background-color: #2b579a;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 8px 15px;
+    font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    align-self: center; /* Align the button with the filters */
+    transition: all 0.3s ease;
 }
 
-.view-button:hover {
-    background-color: #218838;
+.clear-filters:hover {
+    background-color: #1d3d7a;
+}
+
+/* Report Results */
+.report-results ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.report-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.no-results {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filters label,
+    .clear-filters {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
+/* View Report Container */
+.view-report {
+    background: #f4f6f9; /* Light gray background for the card */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for depth */
+    margin: 20px auto;
+    max-width: 1100px; /* Adjusted width for larger screens */
+    font-family: 'Segoe UI', sans-serif; /* Modern font choice */
+}
+
+/* Title Styling */
+.view-report h2 {
+    text-align: center;
+    color: #1d3557; /* Dark navy blue */
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Filters Section */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px; /* More spacing between filter items */
+    margin-bottom: 25px;
+}
+
+.filters label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px; /* Slightly larger font for better readability */
+    color: #495057; /* Neutral gray color for text */
+}
+
+.filters select,
+.filters input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #adb5bd; /* Subtle gray border */
+    border-radius: 6px;
+    margin-top: 8px;
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.filters select:focus,
+.filters input:focus {
+    border-color: #457b9d; /* Highlight with blue border */
+    outline: none;
+}
+
+/* Clear Filters Button */
+.clear-filters {
+    background-color: #457b9d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: center; /* Aligns the button with the filters */
+    transition: all 0.3s ease;
+}
+
+.clear-filters:hover {
+    background-color: #1d3557; /* Darker blue for hover */
+}
+
+/* Report Results */
+.report-results ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.report-item {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 18px; /* Slightly larger font for emphasis */
+    color: #343a40; /* Darker text color for contrast */
+}
+
+.report-item strong {
+    color: #1d3557; /* Highlighted metric text */
+}
+
+.no-results {
+    text-align: center;
+    color: #6c757d;
+    font-size: 18px;
+    margin-top: 30px;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filters label,
+    .clear-filters {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    .clear-filters {
+        margin-top: 10px;
+    }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/NavBar/NavBar';
 import Home from './pages/Home/Home';
 import Library from './pages/Library/Library';
@@ -20,11 +20,23 @@ import ManageProducts from './Admin/ManageProducts';
 import ViewReports from './Admin/ViewReports';
 import Logout from './Admin/Logout';
 
+// Component Wrapper để kiểm tra và hiển thị Navbar
+const LayoutWrapper = ({ children }) => {
+    const location = useLocation();
+    // Kiểm tra nếu đường dẫn bắt đầu bằng '/admin', ẩn Navbar
+    const hideNavbar = location.pathname.startsWith('/admin');
+    return (
+        <>
+            {!hideNavbar && <Navbar />}
+            <div className="app-container">{children}</div>
+        </>
+    );
+};
+
 function App() {
     return (
         <Router>
-            <Navbar />
-            <div className="app-container">
+            <LayoutWrapper>
                 <Routes>
                     {/* Các route chính */}
                     <Route path="/" element={<Home />} />
@@ -47,7 +59,7 @@ function App() {
                         <Route path="logout" element={<Logout />} />
                     </Route>
                 </Routes>
-            </div>
+            </LayoutWrapper>
         </Router>
     );
 }
