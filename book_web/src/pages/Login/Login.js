@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContextLogin } from "../../layouts/useContext";
-import axiosInstance, { setAuthToken } from "../../utils/axiosConfig";
+import axios from "axios";
+import Modal from "../../components/Modal/Modal"; 
 import "./Login.css";
 
 const LoginForm = () => {
@@ -9,29 +10,43 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { setFormLogin, setUser } = useGlobalContextLogin();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-  
+    setModalMessage("");
+
     try {
-      const response = await axiosInstance.post("/login/", { email, password });
+      const response = await axios.post("http://localhost:8000/api/login/", { email, password });
       const { token, user } = response.data;
-  
+
       localStorage.setItem("token", token);
-      setAuthToken(token);
-  
+
       setUser(user);
       setFormLogin(true);
-      navigate("/");
+      setModalMessage("Login successful!");
+      setModalType("success");
+      setTimeout(() => {
+        setModalMessage("");
+        navigate("/");
+      }, 1000);
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      setModalMessage(err.response?.data?.message || "Login failed. Please try again.");
+      setModalType("error");
     }
   };
 
   return (
     <div className="login">
+      {modalMessage && (
+        <Modal
+          title={modalType === "success" ? "Success" : "Error"}
+          message={modalMessage}
+          onClose={() => setModalMessage("")}
+          type={modalType}
+        />
+      )}
       <div className="login-box">
         <h2>LOG IN</h2>
         <p>Please enter your email and password!</p>
@@ -54,7 +69,6 @@ const LoginForm = () => {
               placeholder="Password:"
             />
           </div>
-          {error && <p className="error-message">{error}</p>}
           <button type="submit" className="button_login">
             Submit
           </button>

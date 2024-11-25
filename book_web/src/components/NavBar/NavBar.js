@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import { useGlobalContextLogin } from "../../layouts/useContext"; // Import context để quản lý trạng thái đăng nhập
 import axios from "axios"; // Import axios để gọi API logout
+import Modal from "../../components/Modal/Modal"; // Import Modal
 
 function Navbar() {
   const { user, setFormLogin, setUser } = useGlobalContextLogin(); // Lấy thông tin từ context
+  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
+  const [modalContent, setModalContent] = useState({
+    title: "",
+    message: "",
+    type: "success",
+  }); // Nội dung của modal
 
   const handleLogout = async () => {
     try {
@@ -24,9 +31,27 @@ function Navbar() {
       // Đặt trạng thái đăng xuất
       setUser(null);
       setFormLogin(false);
+
+      // Hiển thị modal thông báo đăng xuất thành công
+      setModalContent({
+        title: "Success",
+        message: "You have successfully logged out!",
+        type: "success",
+      });
+      setShowModal(true);
     } catch (err) {
       console.error("Logout error:", err);
+      setModalContent({
+        title: "Error",
+        message: "Error occurred during logout. Please try again.",
+        type: "error",
+      });
+      setShowModal(true);
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Đóng modal
   };
 
   return (
@@ -67,6 +92,16 @@ function Navbar() {
           </>
         )}
       </div>
+
+      {/* Sử dụng Modal */}
+      {showModal && (
+        <Modal
+          title={modalContent.title}
+          message={modalContent.message}
+          onClose={closeModal}
+          type={modalContent.type}
+        />
+      )}
     </nav>
   );
 }
