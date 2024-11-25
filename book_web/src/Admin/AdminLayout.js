@@ -8,7 +8,7 @@ const AdminLayout = () => {
         <div className="admin-layout">
             <AdminSidebar />
             <div className="admin-content">
-                <Outlet /> {/* Nội dung sẽ thay đổi dựa trên route */}
+                <Outlet /> 
             </div>
         </div>
     );
