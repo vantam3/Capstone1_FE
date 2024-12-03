@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Navbar from './components/NavBar/NavBar';
 import Home from './pages/Home/Home';
 import Library from './pages/Library/Library';
@@ -20,7 +20,42 @@ import ManageProducts from './Admin/ManageProducts';
 import ViewReports from './Admin/ViewReports';
 import Logout from './Admin/Logout';
 
+// Import Modal cho thông báo lỗi
+import ErrorModal from './Admin/ErrorModal';
+
 function App() {
+    const [isSuperuser, setIsSuperuser] = useState(false);
+    const [authChecked, setAuthChecked] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            // Gửi yêu cầu kiểm tra quyền admin
+            fetch('http://localhost:8000/api/admin_dashboard/', {
+                method: 'GET',
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.message === 'Welcome Admin!') {
+                        setIsSuperuser(true);
+                    } else {
+                        setErrorMessage(data.error || 'Unauthorized access.');
+                        setIsSuperuser(false);
+                    }
+                })
+                .catch(() => setErrorMessage('Unable to verify admin status.'))
+                .finally(() => setAuthChecked(true));
+        } else {
+            setAuthChecked(true);
+        }
+    }, []);
+
+    if (!authChecked) {
+        return null; 
+    }
+
     return (
         <Router>
             <Navbar />
@@ -39,7 +74,19 @@ function App() {
                     <Route path="/about" element={<About />} />
 
                     {/* Route admin */}
-                    <Route path="/admin/*" element={<AdminLayout />}>
+                    <Route
+                        path="/admin/*"
+                        element={
+                            isSuperuser ? (
+                                <AdminLayout />
+                            ) : (
+                                <ErrorModal
+                                    message={errorMessage || 'You are not authorized to access the admin area.'}
+                                    redirectTo="/"
+                                />
+                            )
+                        }
+                    >
                         <Route path="dashboard" element={<AdminDashboard />} />
                         <Route path="manage-users" element={<ManageUsers />} />
                         <Route path="manage-products" element={<ManageProducts />} />

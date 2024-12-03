@@ -1,21 +1,52 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
+    const sectionRefs = useRef([]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            },
+            { threshold: 0.3 } // Kích hoạt khi 30% của section nằm trong khung nhìn
+        );
+
+        sectionRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            sectionRefs.current.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+            });
+        };
+    }, []);
+
     return (
         <ReactFullpage
             scrollingSpeed={1000}
-            render={({ state, fullpageApi }) => {
+            render={() => {
                 return (
                     <ReactFullpage.Wrapper>
-                        {/* Section 1 - Hình ảnh bên trái, nội dung bên phải */}
-                        <div className="section section-1 section-left">
+                        {/* Section 1 */}
+                        <div
+                            ref={(el) => (sectionRefs.current[0] = el)}
+                            className="section section-1 section-left"
+                        >
                             <div className="images">
-                                <img src="/images/book1.jpg" alt="Image 1" />
-                                <img src="/images/book2.jpg" alt="Image 2" />
-                                <img src="/images/book3.jpg" alt="Image 3" />
+                                <img src="/images/book1.jpg" alt="Book 1" />
+                                <img src="/images/book2.jpg" alt="Book 2" />
+                                <img src="/images/book3.jpg" alt="Book 3" />
+                                <img src="/images/sach4.jpg" alt="Book 4" />
                             </div>
                             <div className="content">
                                 <h2>Explore the World of Books</h2>
@@ -26,8 +57,11 @@ function Home() {
                             </div>
                         </div>
 
-                        {/* Section 2 - Nội dung bên trái, ảnh bên phải */}
-                        <div className="section section-2 section-right">
+                        {/* Section 2 */}
+                        <div
+                            ref={(el) => (sectionRefs.current[1] = el)}
+                            className="section section-2 section-right"
+                        >
                             <div className="content">
                                 <h2>Books Recommended Just for You</h2>
                                 <p>Discover books that match your tastes with personalized recommendations from our collection.</p>
@@ -40,7 +74,7 @@ function Home() {
                             </div>
                         </div>
 
-                        {/* Section 3 - Hình ảnh bên trái, nội dung bên phải */}
+                        {/* Section 3 */}
                         <div className="section section-3 section-left">
                             <div className="images">
                                 <img src="/images/book6.jpg" alt="Image 5" />
