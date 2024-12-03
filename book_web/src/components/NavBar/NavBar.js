@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { useGlobalContextLogin } from "../../layouts/useContext"; // Import context để quản lý trạng thái đăng nhập
-import axios from "axios"; // Import axios để gọi API logout
+import axios from "axios"; // Import axios để gọi API
 import Modal from "../../components/Modal/Modal"; // Import Modal
 
 function Navbar() {
@@ -13,6 +13,25 @@ function Navbar() {
     message: "",
     type: "success",
   }); // Nội dung của modal
+  const [searchResults, setSearchResults] = useState([]); // Lưu kết quả tìm kiếm
+  const [searchQuery, setSearchQuery] = useState(""); // Lưu từ khóa tìm kiếm
+  const navigate = useNavigate();
+  const searchRef = useRef(null); // Dùng để xử lý ẩn kết quả khi click ra ngoài
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchResults([]); // Ẩn danh sách kết quả khi click ra ngoài
+        setShowModal(false); // Ẩn modal nếu đang hiển thị
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -50,12 +69,38 @@ function Navbar() {
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false); // Đóng modal
+  const handleSearch = async (e) => {
+    if (e.key !== "Enter") return; // Chỉ kích hoạt tìm kiếm khi nhấn Enter
+    e.preventDefault();
+
+    if (!searchQuery.trim()) {
+      setModalContent({
+        title: "Error",
+        message: "Please enter a keyword to search.",
+        type: "error",
+      });
+      setShowModal(true);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/search-books/?q=${searchQuery}`
+      );
+      setSearchResults(response.data); // Lưu kết quả tìm kiếm
+    } catch (error) {
+      setModalContent({
+        title: "Not Found",
+        message: "No books or authors match your search query.",
+        type: "error",
+      });
+      setShowModal(true);
+      setSearchResults([]); // Đặt kết quả tìm kiếm rỗng nếu không tìm thấy
+    }
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" ref={searchRef}>
       <div className="nav-logo">
         <Link to="/">BookQuest</Link>
       </div>
@@ -67,8 +112,26 @@ function Navbar() {
       </div>
       <div className="nav-right">
         <div className="nav-search-container">
-          <input type="text" className="nav-search" placeholder="Tìm kiếm sách..." />
+          <input
+            type="text"
+            className="nav-search"
+            placeholder="Search books or authors..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleSearch} // Xử lý tìm kiếm khi nhấn Enter
+          />
         </div>
+        {searchResults.length > 0 && (
+          <div className="search-results">
+            <ul>
+              {searchResults.map((book) => (
+                <li key={book.id}>
+                  <Link to={`/book/${book.id}`}>{book.title} by {book.author}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {user ? (
           // Khi đã đăng nhập, hiển thị thông tin người dùng và nút Logout
           <div className="nav-user-info">
@@ -98,7 +161,7 @@ function Navbar() {
         <Modal
           title={modalContent.title}
           message={modalContent.message}
-          onClose={closeModal}
+          onClose={() => setShowModal(false)}
           type={modalContent.type}
         />
       )}
