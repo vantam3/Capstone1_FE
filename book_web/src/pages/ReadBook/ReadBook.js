@@ -42,7 +42,8 @@ function ReadBook() {
 
     return (
         <div className="read-book-container">
-            <h1>Book Content</h1>
+            {/* <h1>Book Content</h1> */}
+            <br></br>
             <div className="book-content1" dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
     );

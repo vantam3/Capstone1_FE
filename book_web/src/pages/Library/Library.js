@@ -93,7 +93,7 @@ function Library() {
                     <button 
                         className="see-more-button" 
                         onClick={() => navigate(`/genre/${genreData.genre.toLowerCase()}`)}
-                    >
+                        >
                         See More
                     </button>
                 </div>

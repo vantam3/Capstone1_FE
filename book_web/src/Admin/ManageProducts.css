@@ -14,6 +14,27 @@
     color: #555;
     margin-bottom: 20px;
 }
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-message {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+}
 
 .add-product-button {
     background-color: #0B0340;
@@ -37,6 +58,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .products-table th, .products-table td {
     text-align: left;
     padding: 10px;
@@ -51,6 +73,12 @@
 .products-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+.products-table th.title-column, 
+.products-table td.title-column {
+    width: 150px !important; /* Sử dụng !important nếu cần ưu tiên */
+
+}
+
 
 .products-table tr:hover {
     background-color: #f1f1f1;
@@ -82,3 +110,31 @@
 .delete-button:hover {
     background-color: #c82333;
 }
+.add-book-controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.genre-input, .size-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.add-product-button {
+    background-color: #0B0340;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-product-button:hover {
+    background-color: #79ACD9;
+}
+

@@ -33,7 +33,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/recover" element={<Recover />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/category/:categoryName" element={<CategoryDetail />} />
+                    <Route path="/genre/:categoryName" element={<CategoryDetail />} />
                     <Route path="/book/:bookId" element={<BookDetail />} /> 
                     <Route path="/read/:bookId" element={<ReadBook />} />
                     <Route path="/about" element={<About />} />

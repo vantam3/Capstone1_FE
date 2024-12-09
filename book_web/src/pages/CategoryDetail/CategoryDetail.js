@@ -1,82 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './CategoryDetail.css';
-// Dữ liệu mẫu cho các sách, tương tự như dữ liệu trong Library.js
-const libraryData = [
-    {
-        category: "fiction",
-        books: [
-            {
-                id: 1,
-                title: "The Great Gatsby",
-                description: "Classic American novel",
-                image: "/images/book1.jpg",
-            },
-            {
-                id: 2,
-                title: "To Kill a Mockingbird",
-                description: "Novel on racial injustice",
-                image: "/images/book2.jpg",
-            },
-            {
-                id: 3,
-                title: "1984",
-                description: "Dystopian future",
-                image: "/images/book3.jpg",
-            },
-        ],
-    },
-    {
-        category: "science",
-        books: [
-            {
-                id: 4,
-                title: "A Brief History of Time",
-                description: "Understanding the universe",
-                image: "/images/science1.jpg",
-            },
-            {
-                id: 5,
-                title: "Cosmos",
-                description: "Exploration of the universe",
-                image: "/images/science2.jpg",
-            },
-            {
-                id: 6,
-                title: "The Selfish Gene",
-                description: "Genetics and evolution",
-                image: "/images/science3.jpg",
-            },
-        ],
-    },
-    // Thêm nhiều thể loại khác nếu cần
-];
 
 function CategoryDetail() {
     const { categoryName } = useParams(); // Lấy tên thể loại từ URL
-    const navigate = useNavigate(); // Khởi tạo navigate với useNavigate()
+    const navigate = useNavigate(); // Điều hướng
+    const [categoryBooks, setCategoryBooks] = useState([]); // Dữ liệu sách theo thể loại
+    const [loading, setLoading] = useState(true); // Trạng thái loading
+    const [error, setError] = useState(null); // Trạng thái lỗi
 
-    const categoryData = libraryData.find(
-        (category) => category.category.toLowerCase() === categoryName.toLowerCase()
-    );
+    useEffect(() => {
+        const fetchCategoryBooks = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/books/');
+                const books = response.data;
 
-    if (!categoryData) {
-        return <p>Category not found</p>;
+                // Lọc sách thuộc thể loại hiện tại
+                const filteredBooks = books.filter((book) =>
+                    book.genres.some((genre) => genre.toLowerCase() === categoryName.toLowerCase())
+                );
+
+                if (filteredBooks.length === 0) {
+                    setError('No books found for this category.');
+                } else {
+                    setCategoryBooks(filteredBooks);
+                }
+            } catch (error) {
+                console.error('Error fetching category books:', error);
+                setError('Failed to fetch books for this category.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCategoryBooks();
+    }, [categoryName]);
+
+    if (loading) {
+        return <div className="loading">Loading books...</div>;
+    }
+
+    if (error) {
+        return <div className="error">{error}</div>;
     }
 
     return (
         <div className="category-detail-container">
-            <h1>{categoryData.category} Books</h1>
+            <h1>{categoryName} books</h1>
             <div className="book-list">
-                {categoryData.books.map((book) => (
-                    <div key={book.id}
-                         className="book-card"
-                         onClick={() => navigate(`/book/${book.id}`)} // Điều hướng đến trang chi tiết sách
+                {categoryBooks.map((book) => (
+                    <div 
+                        key={book.id}
+                        className="book-card"
+                        onClick={() => navigate(`/book/${book.id}`)} // Điều hướng đến trang chi tiết sách
                     >
                         <img src={book.image} alt={book.title} className="book-image" />
                         <div className="book-info">
                             <h3>{book.title}</h3>
-                            <p>{book.description}</p>
+                            <p><strong>Author:</strong> {book.author || 'Unknown Author'}</p>
+                            <p>{book.summary || 'No description available.'}</p>
                         </div>
                     </div>
                 ))}
