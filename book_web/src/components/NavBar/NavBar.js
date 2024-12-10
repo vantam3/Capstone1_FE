@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./NavBar.css";
-import { useGlobalContextLogin } from "../../layouts/useContext";
-
-const Navbar = () => {
-  const { user, setFormLogin, setUser } = useGlobalContextLogin();
-  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
-  const [message, setMessage] = useState(""); // Nội dung thông báo
-=======
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.css";
@@ -43,26 +32,21 @@ function Navbar() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
->>>>>>> e234713109be83c1ae66487202dd4088f2a3ce7b
 
-  const handleLogout = () => {
-    // Xóa token khỏi LocalStorage
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    try {
+      // Gọi API logout tới backend
+      const refreshToken = localStorage.getItem("refresh_token");
+      if (refreshToken) {
+        await axios.post("http://localhost:8000/api/logout/", {
+          refresh_token: refreshToken,
+        });
+      }
 
-    // Đặt trạng thái đăng xuất
-    setUser(null);
-    setFormLogin(false);
+      // Xóa token khỏi LocalStorage
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
 
-<<<<<<< HEAD
-    // Hiển thị modal thông báo đăng xuất thành công
-    setMessage("Logout successful!");
-    setShowModal(true);
-
-    // Tự động đóng modal sau 1 giây
-    setTimeout(() => {
-      setShowModal(false);
-    }, 1000);
-=======
       // Đặt trạng thái đăng xuất
       setUser(null);
       setFormLogin(false);
@@ -113,7 +97,6 @@ function Navbar() {
       setShowModal(true);
       setSearchResults([]); // Đặt kết quả tìm kiếm rỗng nếu không tìm thấy
     }
->>>>>>> e234713109be83c1ae66487202dd4088f2a3ce7b
   };
 
   return (
@@ -128,8 +111,6 @@ function Navbar() {
         <Link to="/about">About</Link>
       </div>
       <div className="nav-right">
-<<<<<<< HEAD
-=======
         <div className="nav-search-container">
           <input
             type="text"
@@ -151,11 +132,11 @@ function Navbar() {
             </ul>
           </div>
         )}
->>>>>>> e234713109be83c1ae66487202dd4088f2a3ce7b
         {user ? (
+          // Khi đã đăng nhập, hiển thị thông tin người dùng và nút Logout
           <div className="nav-user-info">
             <img
-              src="/images/user.png"
+              src="/images/user.png" // Ảnh mặc định cho người dùng
               alt="User Avatar"
               className="nav-user-avatar"
             />
@@ -167,6 +148,7 @@ function Navbar() {
             </button>
           </div>
         ) : (
+          // Khi chưa đăng nhập, hiển thị nút Sign In và Sign Up
           <>
             <Link to="/login" className="nav-sign">Sign In</Link>
             <Link to="/register" className="nav-sign">Sign Up</Link>
@@ -174,16 +156,6 @@ function Navbar() {
         )}
       </div>
 
-<<<<<<< HEAD
-      {/* Modal hiển thị đăng xuất thành công */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal success">
-            <h3>Success</h3>
-            <p>{message}</p>
-          </div>
-        </div>
-=======
       {/* Sử dụng Modal */}
       {showModal && (
         <Modal
@@ -192,10 +164,9 @@ function Navbar() {
           onClose={() => setShowModal(false)}
           type={modalContent.type}
         />
->>>>>>> e234713109be83c1ae66487202dd4088f2a3ce7b
       )}
     </nav>
   );
-};
+}
 
 export default Navbar;
