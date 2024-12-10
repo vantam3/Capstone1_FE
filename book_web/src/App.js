@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import Navbar from './components/NavBar/NavBar';
 import Home from './pages/Home/Home';
 import Library from './pages/Library/Library';
+import Recommend from './pages/Recommend/Recommend';
 import CreateBook from './pages/CreateBook/CreateBook';
 import Login from './pages/Login/Login';
 import Recover from './pages/Recover/Recover';
@@ -56,7 +57,7 @@ function App() {
     if (!authChecked) {
         return null; 
     }
-
+    
     return (
         <Router>
             <Navbar />
@@ -65,6 +66,7 @@ function App() {
                     {/* Các route chính */}
                     <Route path="/" element={<Home />} />
                     <Route path="/library" element={<Library />} />
+                    <Route path="/Recommendations" element={<Recommend />} />
                     <Route path="/create" element={<CreateBook />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/recover" element={<Recover />} />
