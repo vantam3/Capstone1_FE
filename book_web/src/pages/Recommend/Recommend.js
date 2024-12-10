@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./RecommendationsPage.css";
+import "./Recommend.css";
 
-const RecommendationsPage = () => {
+  const RecommendationsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [topBooks, setTopBooks] = useState([]);
