@@ -11,6 +11,7 @@ import CategoryDetail from './pages/CategoryDetail/CategoryDetail';
 import BookDetail from './pages/BookDetail/BookDetail'; 
 import ReadBook from './pages/ReadBook/ReadBook'; 
 import About from './pages/About/About'; 
+import Recommend from './pages/Recommend/Recommend'; 
 
 // Import Admin layout và các trang admin
 import AdminLayout from './Admin/AdminLayout';
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/book/:bookId" element={<BookDetail />} /> 
                     <Route path="/read/:bookId" element={<ReadBook />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/recommend" element={<Recommend />} /> 
 
                     {/* Route admin */}
                     <Route path="/admin/*" element={<AdminLayout />}>

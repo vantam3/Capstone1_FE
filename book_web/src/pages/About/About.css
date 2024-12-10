@@ -2,7 +2,7 @@
     padding: 20px;
     text-align: center;
     background-color: #f9f9f9; /* Nền xám nhạt */
-    height: 85vh; /* Chiều cao toàn màn hình */
+    height: 90vh; /* Chiều cao toàn màn hình */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

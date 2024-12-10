@@ -1,23 +1,21 @@
 /* CSS cho Navbar */
-
 .navbar {
-    /* position: sticky; */
-    position: fixed; /* Cố định thanh điều hướng ở trên cùng */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Chiều rộng toàn bộ màn hình */
-    z-index: 1000; /* Đảm bảo Navbar nằm trên các phần tử khác */
+    width: 100%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: #f5f5f5 ;
+    background-color: #f5f5f5;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Đảm bảo khoảng cách từ nội dung đến Navbar */
+/* Khoảng cách từ nội dung đến Navbar */
 .content {
-    padding-top: 80px; /* Đặt khoảng cách đệm cho nội dung để tránh bị Navbar che */
+    padding-top: 80px;
 }
 
 /* Logo của Navbar */
@@ -28,37 +26,51 @@
     text-decoration: none;
 }
 
-/* Các liên kết chính của Navbar */
+/* Liên kết trong Navbar */
 .nav-links {
     display: flex;
     gap: 15px;
     flex: 1;
-    justify-content: center; /* Căn giữa các liên kết chính */
+    justify-content: center;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #333;
+    color: #333; /* Màu chữ mặc định */
     font-size: 1rem;
+    font-weight: normal; /* Kiểu chữ không đậm */
     padding: 8px 15px;
     border-radius: 8px;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Hiệu ứng hover */
 .nav-links a:hover {
-    background-color: #bb0a0a;
-    color: #ffffff;
+    background-color: #bb0a0a; /* Màu nền đỏ khi hover */
+    color: #ffffff; /* Màu chữ trắng khi hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Nhóm thanh tìm kiếm và Sign In, Sign Up ở bên phải */
+/* CSS riêng cho Recommend Book */
+.nav-links a[href="/recommend"] {
+    font-weight: normal;
+    background-color: transparent;
+}
+
+/* Đảm bảo hiệu ứng hover của Recommend Book đồng nhất */
+.nav-links a[href="/recommend"]:hover {
+    background-color: #bb0a0a; /* Màu nền đỏ khi hover */
+    color: #ffffff; /* Màu chữ trắng khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* CSS nhóm Sign In và Sign Up */
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 25px; /* Khoảng cách giữa thanh tìm kiếm và các nút */
+    gap: 25px;
 }
 
-/* CSS riêng cho thanh tìm kiếm */
 .nav-search-container {
     position: relative;
     width: 200px;
@@ -84,18 +96,16 @@
     box-shadow: 0 0 5px rgba(245, 0, 87, 0.3);
 }
 
-/* CSS cho Sign In và Sign Up */
 .nav-sign {
     padding: 8px 20px;
     color: #ffffff;
-    background-color: #0c0c0cdf; /* Màu nền cho Sign In và Sign Up */
+    background-color: #0c0c0cdf;
     border-radius: 8px;
     text-decoration: none;
     font-size: 1rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     margin-right: 50px;
-    margin-left: -50px; /* Giảm khoảng cách giữa Sign In và Sign Up */
-
+    margin-left: -50px;
 }
 
 .nav-sign:hover {
@@ -111,3 +121,16 @@
     background-color: #c50b0bd6;
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        font-size: 1rem;
+        text-align: center;
+    }
+}

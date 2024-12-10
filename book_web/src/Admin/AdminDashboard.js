@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
-import { Bar, Pie, Line } from 'react-chartjs-2';
+import { Pie, Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,20 +9,20 @@ import {
   BarElement,
   ArcElement,
   LineElement,
-  PointElement, // Đăng ký PointElement
+  PointElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
 
-// Đăng ký tất cả các thành phần cần thiết
+// Đăng ký các phần tử cần thiết của Chart.js
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
   ArcElement,
   LineElement,
-  PointElement, // Thêm PointElement
+  PointElement,
   Title,
   Tooltip,
   Legend
@@ -31,17 +31,20 @@ ChartJS.register(
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
-  const productData = {
-    labels: ['Books', 'Magazines', 'E-Books'],
+  // Dữ liệu biểu đồ hình tròn cho số lượng sách theo thể loại
+  const bookCategoryData = {
+    labels: ['Fiction', 'Non-fiction', 'Science', 'Fantasy', 'History', 'Biography'], // Các thể loại sách
     datasets: [
       {
-        label: 'Products',
-        data: [50, 30, 20],
-        backgroundColor: ['#79ACD9', '#F5A623', '#FF6F61'],
+        label: 'Number of Books',
+        data: [45, 30, 20, 15, 10, 25], // Số lượng sách theo thể loại
+        backgroundColor: ['#79ACD9', '#F5A623', '#FF6F61', '#4CAF50', '#8E44AD', '#3498DB'], // Màu sắc cho các phần biểu đồ
+        hoverOffset: 4, // Khoảng cách khi di chuột qua
       },
     ],
   };
 
+  // Dữ liệu biểu đồ cho người dùng
   const userData = {
     labels: ['Users', 'Moderators', 'Admins'],
     datasets: [
@@ -53,6 +56,7 @@ const AdminDashboard = () => {
     ],
   };
 
+  // Dữ liệu báo cáo với đánh giá phản hồi
   const reportData = {
     labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
     datasets: [
@@ -71,18 +75,21 @@ const AdminDashboard = () => {
       <h1>Welcome Back, Admin</h1>
       <p>Manage your system effectively from here.</p>
       <div className="dashboard-cards">
+        {/* Thẻ biểu đồ hình tròn cho Manage Products */}
         <div className="dashboard-card">
           <h2>Manage Products</h2>
-          <Bar data={productData} />
+          <Pie data={bookCategoryData} />
           <button onClick={() => navigate('/admin/manage-products')}>View Products</button>
         </div>
 
+        {/* Thẻ biểu đồ Pie cho Manage Users */}
         <div className="dashboard-card">
           <h2>Manage Users</h2>
           <Pie data={userData} />
           <button onClick={() => navigate('/admin/manage-users')}>View Users</button>
         </div>
 
+        {/* Thẻ biểu đồ Line cho View Reports */}
         <div className="dashboard-card">
           <h2>View Reports</h2>
           <Line data={reportData} />
