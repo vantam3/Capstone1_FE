@@ -6,59 +6,45 @@ const RecommendationsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [topBooks, setTopBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Fetch books data from API
   useEffect(() => {
-    const mockBooks = [
-      {
-        id: 1,
-        title: "Book 1",
-        author: "Author 1",
-        description: "This is a great book loved by readers.",
-        image: "https://via.placeholder.com/150",
-        rating: 4.8,
-      },
-      {
-        id: 2,
-        title: "Book 2",
-        author: "Author 2",
-        description: "Highly rated book with engaging content.",
-        image: "https://via.placeholder.com/150",
-        rating: 4.7,
-      },
-      {
-        id: 3,
-        title: "Book 3",
-        author: "Author 3",
-        description: "A masterpiece that captures the audience.",
-        image: "https://via.placeholder.com/150",
-        rating: 4.5,
-      },
-      {
-        id: 4,
-        title: "Book 4",
-        author: "Author 4",
-        description: "An excellent book for enthusiasts.",
-        image: "https://via.placeholder.com/150",
-        rating: 4.3,
-      },
-    ];
+    const fetchBooks = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/api/books");
+        const data = await response.json();
+        setFilteredBooks(data); // Default set to all books
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch books:", error);
+        setIsLoading(false);
+      }
+    };
 
-    // Lặp danh sách để đạt 20 cuốn sách
-    const repeatedBooks = Array.from({ length: 5 }, () => mockBooks).flat();
-    setTopBooks(repeatedBooks);
+    const fetchTopBooks = async () => {
+      try {
+        const response = await fetch("/api/top-books");
+        const data = await response.json();
+        setTopBooks(data);
+      } catch (error) {
+        console.error("Failed to fetch top favorite books:", error);
+      }
+    };
+
+    fetchBooks();
+    fetchTopBooks();
   }, []);
 
-  const books = [
-    { id: 1, title: "Journey to the Unknown", author: "John Doe", genre: "Adventure", image: "/images/book1.jpg", summary: "An epic journey filled with mysteries and challenges." },
-    { id: 2, title: "Love in the Air", author: "Jane Austen", genre: "Romance", image: "/images/book2.jpg", summary: "A heartwarming tale of love and relationships." },
-    { id: 3, title: "The Future Chronicles", author: "Isaac Asimov", genre: "Sci-fi", image: "/images/book3.jpg", summary: "Exploring the depths of science and technology." },
-    { id: 4, title: "The Hidden Magic", author: "J.K. Rowling", genre: "Fantasy", image: "/images/book3.jpg", summary: "A magical journey through enchanted lands." },
-    { id: 5, title: "The Art of Mindfulness", author: "Thich Nhat Hanh", genre: "Non-fiction", image: "/images/book3.jpg", summary: "A guide to living in the present moment." },
-  ];
-
   const handleSearch = () => {
-    const filtered = books.filter((book) =>
+    if (!searchTerm) {
+      return setFilteredBooks([]);
+    }
+
+    // Filter books based on search term
+    const filtered = filteredBooks.filter((book) =>
       [book.title, book.author, book.summary].some((field) =>
         field.toLowerCase().includes(searchTerm.toLowerCase())
       )
@@ -75,7 +61,7 @@ const RecommendationsPage = () => {
       <h1 className="recommendations-title">Find Books Based on Your Preferences</h1>
       <p>Describe your preferences, and we'll find books you'll love!</p>
 
-      {/* Thanh nhập mô tả */}
+      {/* Search Bar */}
       <div className="search-bar">
         <textarea
           placeholder="Enter your preferences..."
@@ -86,9 +72,11 @@ const RecommendationsPage = () => {
         <button onClick={handleSearch}>Find Books</button>
       </div>
 
-      {/* Danh sách kết quả tìm kiếm */}
+      {/* Book List */}
       <div className="book-list">
-        {filteredBooks.length > 0 ? (
+        {isLoading ? (
+          <p>Loading books...</p>
+        ) : filteredBooks.length > 0 ? (
           filteredBooks.map((book) => (
             <div key={book.id} className="book-card">
               <img
@@ -119,17 +107,16 @@ const RecommendationsPage = () => {
 
       {/* Top Favorite Books */}
       <div className="top-favorites-container">
-      <h1 className="top-favorites-title">Top Favorite Books</h1>
+        <h1 className="top-favorites-title">Top Favorite Books</h1>
         <p className="introduction">
           This section highlights the most loved books by readers. These books are highly rated for their exceptional content and impact. Explore the top-rated books and discover your next favorite read!
         </p>
 
-        {/* Hiển thị danh sách Top Favorites */}
         <div className="book-carousel-wrapper">
           <div className="book-carousel">
-            {topBooks.map((book, index) => (
+            {topBooks.map((book) => (
               <div
-                key={index}
+                key={book.id}
                 className="book-card"
                 onClick={() => navigate(`/book/${book.id}`)}
               >
