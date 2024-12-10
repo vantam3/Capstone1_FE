@@ -1,8 +1,9 @@
 /* Section 1 CSS */
-
-
 .section-1 {
-    background-color: #41699d;
+    background: rgb(96,180,200); 
+    background: radial-gradient(circle, rgba(96,180,200,1) 40%, rgba(206,136,199,1) 100%);
+    background-size: 400% 400%;
+    animation: gradient-background 15s ease infinite; 
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -10,112 +11,350 @@
     padding: 40px;
     height: 100vh;
     box-sizing: border-box;
-    
+    overflow: hidden;
+    opacity: 0; 
+    transform: translateY(50px);
+    animation: fade-in-section 1s ease-out forwards; 
 }
+
+/* Animation gradient chuyển động nền */
+@keyframes gradient-background {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animation xuất hiện khi cuộn */
+@keyframes fade-in-section {
+    to {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+
+
+/* Bố cục bên trong section */
 .section-1.section-left {
     flex-direction: row;
     gap: 150px;
 }
-.section-1 .content{
+
+.section-1 .content {
     width: 50%;
     background-color: #c6ced8;
     color: #ffffff;
     padding: 20px 40px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0; 
+    transform: translateX(50px); 
+    animation: slide-in-content 1s ease-out forwards;
+    animation-delay: 1s; 
 }
 
-/* Section 2 CSS */
-.section-2 {
-    background-color: #ce74bf;
-    color: #333333;
-    display: flex;
-    flex-direction:row ; /* Đảo ngược thứ tự: nội dung bên trái, ảnh bên phải */
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px;
-}
-.section-2 .single-image img {
-    width: 100%; /* Chiều rộng đầy đủ của phần tử chứa */
-    border-radius: 8px; /* Bo tròn góc cho ảnh */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ cho ảnh */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
-    background-size: cover; /* Ảnh phủ đầy khung */
-
-}
-.section-2 .content {
+/* Container chứa ảnh */
+.images {
+    perspective: 1000px; 
+    position: relative;
     width: 50%;
-    background-color: #f9f5f5;
-    color: #ffffff;
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-.section-2 .content h2 {
-    font-size: 2.5rem;
-    color: #110101;
-    margin-bottom: 15px;
-}
-
-/* Tùy chỉnh đoạn văn trong phần nội dung của Section 2 */
-.section-2 .content p {
-    font-size: 1.2rem;
-    color: #0e0101;
-    margin-bottom: 20px;
-}
-
-/* Section 3 CSS */
-/* Section 3 CSS */
-.section-3 {
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Chiều cao toàn màn hình */
-    width: 100vw; /* Chiều rộng toàn màn hình */
-    background-color: #0e0b04f4;
-}
-
-/* Phần hình ảnh chiếm 50% chiều cao màn hình */
-.section-3 .images {
-    display: flex;
-    justify-content: space-around; /* Khoảng cách đều giữa các ảnh */
-    align-items: center;
-    height: 50%; /* Chiếm nửa trên của màn hình */
-    width: 100%;
-    padding: 0 20px;
-    background-color: #ececec; /* Nền để làm nổi bật phần ảnh */
-}
-
-/* CSS riêng cho từng ảnh trong phần images */
-
-.section-3 .images img:nth-child(1) {
-    width: 55%; /* Chiều rộng ảnh */
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Đổ bóng cho ảnh */
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Cho phép tùy chỉnh vị trí */
-    top: 25px; /* Di chuyển ảnh lên trên 10px */
-    left: -45px; /* Di chuyển ảnh sang trái 20px */
 }
 
-.section-3 .images img:nth-child(2) {
-    width: 55%; /* Chiều rộng ảnh */
+/* Kiểu dáng cho từng ảnh */
+.images img {
+    position: absolute; 
+    width: 160px;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     object-fit: cover;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Cho phép tùy chỉnh vị trí */
-    top: 25px; /* Di chuyển ảnh xuống dưới 15px */
-    left: -45px; /* Di chuyển ảnh sang phải 20px */
+    opacity: 0; 
+    transform: scale(0) translateY(50px); 
+    animation: expand-books 0.8s ease-out forwards;
 }
 
-/* Hiệu ứng khi hover vào ảnh */
+/* Vị trí từng ảnh */
+.images img:nth-child(1) {
+    top: 15px;
+    left: 50%;
+    animation-delay: 0.2s;
+}
 
-/* Phần nội dung chiếm 50% chiều cao màn hình */
+.images img:nth-child(2) {
+    top: -140px;
+    left: 120px;
+    animation-delay: 0.4s;
+}
+
+.images img:nth-child(3) {
+    bottom: 10px;
+    left: 50%;
+    animation-delay: 0.6s;
+}
+
+.images img:nth-child(4) {
+    top: -140px; 
+    left: 490px; 
+    animation-delay: 0.8s;
+}
+
+
+/* Hiệu ứng 3D khi hover vào ảnh */
+.section-1 .images img:hover {
+    transform: scale(1.5) translateZ(100px) rotateY(10deg); 
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
+    transition: transform 0.5s ease, box-shadow 0.5s ease; 
+}
+
+
+.section-1 .images img {
+    transition: transform 0.5s ease, box-shadow 0.5s ease; 
+}
+/* Định nghĩa animation cho sách */
+@keyframes expand-books {
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0); 
+    }
+}
+
+/* Hiệu ứng cho khung Explore the World of Books */
+@keyframes slide-in-content {
+    to {
+        opacity: 1;
+        transform: translateX(0); 
+    }
+}
+
+/* Animation gradient chuyển động nền */
+@keyframes gradient-background {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animation khi cuộn đến section */
+@keyframes fade-in-section {
+    to {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+
+
+
+/* Section 2 CSS */
+.section-2 {
+    background: rgb(96,180,200); 
+    background: radial-gradient(circle, rgb(108, 175, 192) 40%, rgba(206,136,199,1) 100%);
+    color: #333333;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    height: 100vh;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fade-in-section 1s ease-out forwards;
+}
+
+.section-2 .content {
+    width: 50%;
+    background-color: #f9f5f5;
+    color: #333333;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slide-in-content 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.section-2 .single-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-2 .single-image img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation xuất hiện nội dung */
+@keyframes fade-in-section {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-content {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+
+/* Animation khi cuộn đến section */
+@keyframes fade-in-section {
+    to {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+
+.section-2 .content {
+    width: 50%;
+    background-color: rgba(255, 255, 255, 0.9); 
+    color: #333333;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    opacity: 0; 
+    transform: translateX(50px); 
+    animation: slide-in-content 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.section-2 .content h2 {
+    font-size: 2.5rem;
+    color: #110101;
+    margin-bottom: 15px;
+    opacity: 0; 
+    animation: fade-in-text 0.8s ease-out forwards;
+    animation-delay: 1s;
+}
+
+/* Tùy chỉnh đoạn văn */
+.section-2 .content p {
+    font-size: 1.2rem;
+    color: #110101;
+    margin-bottom: 20px;
+    opacity: 0; 
+    animation: fade-in-text 0.8s ease-out forwards;
+    animation-delay: 1.2s;
+}
+
+/* Animation cho nội dung */
+@keyframes slide-in-content {
+    to {
+        opacity: 1;
+        transform: translateX(0); 
+    }
+}
+
+@keyframes fade-in-text {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Hiệu ứng cho ảnh */
+.section-2 .single-image img {
+    width: 100%; 
+    border-radius: 8px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    transform: scale(1); 
+    opacity: 0;
+    transform: scale(0.8) translateY(50px); 
+    animation: expand-image 1s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+/* Hiệu ứng zoom khi hover */
+.section-2 .single-image img:hover {
+    transform: scale(1.1) rotate(2deg); 
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); 
+}
+
+/* Animation cho ảnh */
+@keyframes expand-image {
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0); 
+    }
+}
+
+
+
+/* Section 3 CSS */
+.section-3 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: #0e0b04f4;
+}
+
+
+.section-3 .images {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    padding: 0 20px;
+    background-color: #ececec;
+}
+
+/* CSS riêng cho từng ảnh trong phần images */
+
+.section-3 .images img:nth-child(1) {
+    width: 55%;
+    /* Chiều rộng ảnh */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    /* Đổ bóng cho ảnh */
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    /* Cho phép tùy chỉnh vị trí */
+    top: 25px;
+    /* Di chuyển ảnh lên trên 10px */
+    left: -45px;
+    /* Di chuyển ảnh sang trái 20px */
+}
+
+.section-3 .images img:nth-child(2) {
+    width: 55%;
+    /* Chiều rộng ảnh */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    /* Cho phép tùy chỉnh vị trí */
+    top: 25px;
+    /* Di chuyển ảnh xuống dưới 15px */
+    left: -45px;
+    /* Di chuyển ảnh sang phải 20px */
+}
+
 .section-3 .content {
-    flex: 1; /* Chiếm nửa dưới của màn hình */
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -156,13 +395,6 @@
 
 
 
-
-
-
-
-
-
-
 /* Định dạng chung cho Section */
 .section {
     display: flex;
@@ -174,25 +406,23 @@
     box-sizing: border-box;
     overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
     position: relative; /* Giữ các phần tử trong giới hạn của session */
-    
-    
-}
-
-/* Bố cục ngang cho Section */
-/* .section-left {
-    flex-direction: row;
-    gap: 150px;
-} */
-
-/* Định dạng phần hình ảnh với vị trí tùy chỉnh */
-.images {
+  }
+  
+  /* Bố cục ngang cho Section */
+  /* .section-left {
+      flex-direction: row;
+      gap: 150px;
+  } */
+  
+  /* Định dạng phần hình ảnh với vị trí tùy chỉnh */
+  .images {
     position: relative; /* Cho phép vị trí tùy chỉnh */
     width: 50%;
     height: auto;
-}
-
-/* Kiểu dáng cho từng bìa sách với vị trí tùy chỉnh */
-.images img {
+  }
+  
+  /* Kiểu dáng cho từng bìa sách với vị trí tùy chỉnh */
+  .images img {
     position: absolute; /* Cho phép tùy chỉnh vị trí từng ảnh */
     width: 160px;
     height: auto;
@@ -200,53 +430,53 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     object-fit: cover;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Hiệu ứng 3D khi hover vào ảnh */
-.section-1 .images img:hover {
+  }
+  
+  /* Hiệu ứng 3D khi hover vào ảnh */
+  .section-1 .images img:hover {
     transform: scale(1.2) rotateY(10deg);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* Vị trí tùy chỉnh cho từng ảnh */
-.images img:nth-child(1) {
+  }
+  
+  /* Vị trí tùy chỉnh cho từng ảnh */
+  .images img:nth-child(1) {
     top: 15px;
     left: 50%;
-}
-
-.images img:nth-child(2) {
+  }
+  
+  .images img:nth-child(2) {
     top: -140px;
     left: 120px;
-}
-
-.images img:nth-child(3) {
+  }
+  
+  .images img:nth-child(3) {
     bottom: 10px;
     left: 50%;
-}
-/* Định dạng cho phần nội dung */
-.content {
+  }
+  /* Định dạng cho phần nội dung */
+  .content {
     width: 50%;
     text-align: left;
-}
-
-.content h2 {
+  }
+  
+  .content h2 {
     font-size: 2.5rem;
     color: #333333;
     margin-bottom: 10px;
-}
-
-.content p {
+  }
+  
+  .content p {
     font-size: 1.2rem;
     color: #555555;
     margin-bottom: 20px;
-}
-
-/* Định dạng cho nút button */
-.section-button {
+  }
+  
+  /* Định dạng cho nút button */
+  .section-button {
     display: inline-block;
-}
-
-.section-button button {
+  }
+  
+  .section-button button {
     padding: 10px 20px;
     font-size: 16px;
     color: #ffffff;
@@ -255,16 +485,13 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.section-button button:hover {
+  }
+  
+  .section-button button:hover {
     background-color: #f50057;
-}
-
-/* Bỏ hiệu ứng fullpage */
-.fp-overflow {
+  }
+  
+  /* Bỏ hiệu ứng fullpage */
+  .fp-overflow {
     display: contents;
-}
-
-
-
+  }

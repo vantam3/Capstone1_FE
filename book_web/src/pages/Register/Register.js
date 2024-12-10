@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Modal from "../../components/Modal/Modal";
 import "./Register.css";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
-    lastName: '',
-    firstName: '',
-    email: '',
-    confirmPassword: '',
+    lastName: "",
+    firstName: "",
+    email: "",
+    confirmPassword: "",
   });
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false); // Trạng thái thành công
-  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
 
   const handleChange = (e) => {
     setFormData({
@@ -23,8 +22,10 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setModalMessage("");
+
     try {
-      const response = await axios.post("http://localhost:8000/api/register/", {
+      await axios.post("http://localhost:8000/api/register/", {
         username: formData.email,
         email: formData.email,
         password: password,
@@ -33,17 +34,12 @@ const RegisterForm = () => {
         last_name: formData.lastName,
       });
       setMessage("Registration successful!");
-      setIsSuccess(true);
-      setShowModal(true); // Hiển thị modal thông báo thành công
     } catch (error) {
-      if (error.response && error.response.data.error) {
-        // Trích xuất thông báo lỗi rõ ràng từ backend
-        setMessage(error.response.data.error);
+      if (error.response) {
+        setMessage("Registration failed: " + JSON.stringify(error.response.data));
       } else {
-        setMessage("Connection error! Please try again.");
+        setMessage("Connection error!");
       }
-      setIsSuccess(false);
-      setShowModal(true); // Hiển thị modal thông báo lỗi
     }
   };
 
@@ -53,6 +49,14 @@ const RegisterForm = () => {
 
   return (
     <div className="register-container">
+      {modalMessage && (
+        <Modal
+          title={modalType === "success" ? "Success" : "Error"}
+          message={modalMessage}
+          onClose={() => setModalMessage("")}
+          type={modalType}
+        />
+      )}
       <div className="register-box">
         <h2>CREATE ACCOUNT</h2>
         <form onSubmit={handleSubmit}>
@@ -109,6 +113,7 @@ const RegisterForm = () => {
             Sign Up
           </button>
         </form>
+        <div>{message}</div>
         <div className="backlogin">
           <p>
             You have an account? <a href="/login">Back to Sign In</a>

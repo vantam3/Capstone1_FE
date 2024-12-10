@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContextLogin } from "../../layouts/useContext";
 import axios from "axios";
+import Modal from "../../components/Modal/Modal"; 
 import "./Login.css";
 
 const LoginForm = () => {
@@ -12,48 +13,43 @@ const LoginForm = () => {
   const [message, setMessage] = useState(""); // Thông báo modal
   const { setFormLogin, setUser } = useGlobalContextLogin();
   const navigate = useNavigate();
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setModalMessage("");
 
     try {
-      const response = await axios.post("http://localhost:8000/api/login/", {
-        email,
-        password,
-      });
-
+      const response = await axios.post("http://localhost:8000/api/login/", { email, password });
       const { token, user } = response.data;
 
-      // Lưu token vào localStorage
       localStorage.setItem("token", token);
 
-      // Cấu hình axios để gửi token trong header
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      // Cập nhật context
       setUser(user);
       setFormLogin(true);
-
-      // Hiển thị modal thông báo thành công
-      setMessage("Login successful!");
-      setShowModal(true);
-
-      // Chuyển hướng sau khi đóng modal
+      setModalMessage("Login successful!");
+      setModalType("success");
       setTimeout(() => {
-        setShowModal(false);
+        setModalMessage("");
         navigate("/");
       }, 1000);
     } catch (err) {
-      const errorMsg =
-        err.response?.data?.message ||
-        "Login failed. Please try again.";
-      setError(errorMsg);
+      setModalMessage(err.response?.data?.message || "Login failed. Please try again.");
+      setModalType("error");
     }
   };
 
   return (
     <div className="login">
+      {modalMessage && (
+        <Modal
+          title={modalType === "success" ? "Success" : "Error"}
+          message={modalMessage}
+          onClose={() => setModalMessage("")}
+          type={modalType}
+        />
+      )}
       <div className="login-box">
         <h2>LOGIN</h2>
         <p>Please enter your email and password!</p>

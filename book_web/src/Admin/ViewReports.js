@@ -1,72 +1,102 @@
 import React, { useState } from 'react';
 import './ViewReports.css';
 
-const ViewReports = () => {
-    const [reports, setReports] = useState([
-        { id: 1, title: 'Feedback Report', type: 'Feedback', status: 'Pending', date: '2024-11-17' },
-        { id: 2, title: 'Performance Analysis', type: 'Analysis', status: 'Completed', date: '2024-11-16' },
-        { id: 3, title: 'User Satisfaction Survey', type: 'Survey', status: 'In Progress', date: '2024-11-15' },
+const ViewReport = () => {
+    const [filters, setFilters] = useState({ category: '', startDate: '', endDate: '' });
+    const [reports] = useState([
+        { category: 'active-users', metric: 'Active Users', value: 120, date: '2024-11-01' },
+        { category: 'book-ratings', metric: 'Average Ratings', value: 4.5, date: '2024-11-02' },
+        { category: 'interaction-rates', metric: 'Interaction Rate', value: 75, date: '2024-11-03' },
+        { category: 'revenue-statistics', metric: 'Total Revenue', value: 1500, date: '2024-11-04' },
     ]);
 
-    const handleViewDetails = (id) => {
-        alert(`View details of report ID: ${id}`);
-    };
+    const categories = [
+        { id: 'active-users', name: 'Active Users' },
+        { id: 'book-ratings', name: 'Book Ratings' },
+        { id: 'interaction-rates', name: 'Interaction Rates' },
+        { id: 'revenue-statistics', name: 'Revenue Statistics' },
+        { id: 'top-borrowed-books', name: 'Top Borrowed Books' },
+        { id: 'inactive-users', name: 'Inactive Users' },
+        { id: 'feedback-suggestions', name: 'Feedback and Suggestions' },
+    ];
 
-    const handleFilter = (type) => {
-        alert(`Filter reports by type: ${type}`);
+    // Filter reports based on filters
+    const filteredReports = reports.filter((report) => {
+        const matchesCategory = filters.category ? report.category === filters.category : true;
+        const matchesStartDate = filters.startDate
+            ? new Date(report.date) >= new Date(filters.startDate)
+            : true;
+        const matchesEndDate = filters.endDate
+            ? new Date(report.date) <= new Date(filters.endDate)
+            : true;
+
+        return matchesCategory && matchesStartDate && matchesEndDate;
+    });
+
+    const clearFilters = () => {
+        setFilters({ category: '', startDate: '', endDate: '' });
     };
 
     return (
-        <div className="view-reports-container">
+        <div className="view-report">
             <h2>View Reports</h2>
-            <p>Analyze user feedback and trends here to improve your services.</p>
-            <div className="filter-buttons">
-                <button onClick={() => handleFilter('Feedback')}>Feedback</button>
-                <button onClick={() => handleFilter('Analysis')}>Analysis</button>
-                <button onClick={() => handleFilter('Survey')}>Survey</button>
-                <button onClick={() => setReports([])}>Clear Filters</button>
+            <div className="filters">
+                <label>
+                    Category:
+                    <select
+                        name="category"
+                        value={filters.category}
+                        onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                        aria-label="Filter by category"
+                    >
+                        <option value="">Select a category</option>
+                        {categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    Start Date:
+                    <input
+                        type="date"
+                        name="startDate"
+                        value={filters.startDate}
+                        onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+                        aria-label="Filter by start date"
+                    />
+                </label>
+                <label>
+                    End Date:
+                    <input
+                        type="date"
+                        name="endDate"
+                        value={filters.endDate}
+                        onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+                        aria-label="Filter by end date"
+                    />
+                </label>
+                <button onClick={clearFilters} className="clear-filters">
+                    Clear Filters
+                </button>
             </div>
-            <table className="reports-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {reports.length > 0 ? (
-                        reports.map((report) => (
-                            <tr key={report.id}>
-                                <td>{report.id}</td>
-                                <td>{report.title}</td>
-                                <td>{report.type}</td>
-                                <td>{report.status}</td>
-                                <td>{report.date}</td>
-                                <td>
-                                    <button
-                                        className="view-button"
-                                        onClick={() => handleViewDetails(report.id)}
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="6" style={{ textAlign: 'center' }}>
-                                No reports to display
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+
+            <div className="report-results">
+                {filteredReports.length > 0 ? (
+                    <ul>
+                        {filteredReports.map((report, index) => (
+                            <li key={index} className="report-item">
+                                <strong>{report.metric}</strong>: {report.value} ({report.date})
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="no-results">No reports found for the selected filters.</p>
+                )}
+            </div>
         </div>
     );
 };
 
-export default ViewReports;
+export default ViewReport;
