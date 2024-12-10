@@ -97,4 +97,67 @@
   .ketnoi a:hover {
     text-decoration: underline;
   }
-  
+  /* Forgot Password Box */
+.forgot-password-box {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.forgot-password-box h2 {
+  margin-bottom: 10px;
+}
+
+.forgot-password-box p {
+  margin-bottom: 20px;
+}
+
+.forgot-password-box input {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.forgot-password-box .button_forgot {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.forgot-password-box .button_forgot:hover {
+  background-color: #0056b3;
+}
+
+.forgot-password-box .button_cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.forgot-password-box .button_cancel:hover {
+  background-color: #5a6268;
+}
+
+.forgot-password-link .link-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.forgot-password-link .link-button:hover {
+  color: #0056b3;
+}

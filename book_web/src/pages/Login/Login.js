@@ -12,6 +12,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [modalMessage, setModalMessage] = useState("");
   const [modalType, setModalType] = useState(""); 
+  const [showForgotPassword, setShowForgotPassword] = useState(false); // Toggle forgot password form
+  const [forgotEmail, setForgotEmail] = useState(""); // Email for forgot password
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +39,25 @@ const LoginForm = () => {
     }
   };
 
+  const handleForgotPasswordSubmit = async (e) => {
+    e.preventDefault();
+    setModalMessage("Submitting request...");
+    setModalType("success");
+
+    try {
+      const response = await axios.post("http://localhost:8000/api/forgot-password/", {
+        email: forgotEmail,
+      });
+      setModalMessage("Password reset email sent successfully!");
+      setModalType("success");
+      setForgotEmail(""); // Clear email field after successful submission
+      setShowForgotPassword(false); // Return to login form
+    } catch (error) {
+      setModalMessage(error.response?.data?.error || "Failed to send password reset email.");
+      setModalType("error");
+    }
+  };
+
   return (
     <div className="login">
       {modalMessage && (
@@ -47,33 +68,61 @@ const LoginForm = () => {
           type={modalType}
         />
       )}
-      <div className="login-box">
-        <h2>LOG IN</h2>
-        <p>Please enter your email and password!</p>
-        <form onSubmit={handleSubmit}>
-          <div className="email_login">
+
+      {showForgotPassword ? (
+        <div className="forgot-password-box">
+          <h2>Forgot Password</h2>
+          <p>Please enter your email to reset your password:</p>
+          <form onSubmit={handleForgotPasswordSubmit}>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={forgotEmail}
+              onChange={(e) => setForgotEmail(e.target.value)}
               required
               placeholder="Email:"
             />
-          </div>
-          <div className="pass_login">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Password:"
-            />
-          </div>
-          <button type="submit" className="button_login">
-            Submit
+            <button type="submit" className="button_forgot">
+              Submit
+            </button>
+          </form>
+          <button onClick={() => setShowForgotPassword(false)} className="button_cancel">
+            Back to Login
           </button>
-        </form>
-      </div>
+        </div>
+      ) : (
+        <div className="login-box">
+          <h2>LOG IN</h2>
+          <p>Please enter your email and password!</p>
+          <form onSubmit={handleSubmit}>
+            <div className="email_login">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="Email:"
+              />
+            </div>
+            <div className="pass_login">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Password:"
+              />
+            </div>
+            <button type="submit" className="button_login">
+              Submit
+            </button>
+          </form>
+          <p className="forgot-password-link">
+            <button onClick={() => setShowForgotPassword(true)} className="link-button">
+              Forgot password?
+            </button>
+          </p>
+        </div>
+      )}
     </div>
   );
 };
