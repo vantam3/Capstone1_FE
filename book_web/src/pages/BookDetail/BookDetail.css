@@ -1,109 +1,179 @@
+/* Container chính */
 .book-detail-container {
-    padding: 20px;
     max-width: 800px;
     margin: 0 auto;
-    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Thẻ hiển thị chi tiết sách */
+.book-detail-card {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .book-detail-image {
-    width: 100%;
-    max-width: 200px;
+    width: 200px;
     height: auto;
-    border-radius: 8px;
-    margin: 20px 0;
+    object-fit: cover;
+    border-right: 1px solid #ddd;
 }
 
 .book-detail-info {
-    text-align: left;
+    padding: 20px;
+    flex: 1;
 }
 
-.book-detail-info h2 {
-    font-size: 1.5rem;
-    color: #333;
+.book-detail-info h1 {
+    font-size: 24px;
     margin-bottom: 10px;
+    color: #333;
 }
 
 .book-detail-info p {
-    font-size: 1rem;
+    font-size: 16px;
+    margin-bottom: 8px;
     color: #555;
-    line-height: 1.6;
-    margin-bottom: 10px;
 }
-.read-book-button {
+
+.rating-stars .star {
+    font-size: 20px;
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+.rating-stars .star.filled {
+    color: #f5c518;
+}
+
+.read-now-button {
+    margin-top: 15px;
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 16px;
+    background: #1a73e8;
     color: #fff;
-    background-color: #1a73e8;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.read-book-button:hover {
-    background-color: #155ab2;
-}
-.reviews-section {
-    margin-top: 40px;
-    text-align: left;
-}
-
-.reviews-section h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-}
-
-.review-item {
-    background-color: #f9f9f9;
     border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.review-item p {
-    margin: 5px 0;
+.read-now-button:hover {
+    background: #155ab2;
+}
+
+/* Phần đánh giá và bình luận */
+.reviews-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .review-form {
+    margin-bottom: 30px;
+    width: 100%; /* Chiều rộng đầy đủ */
+    max-width: 100%; /* Bỏ giới hạn chiều rộng */
+}
+
+.rating-stars-input {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
 }
 
-.review-form label {
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.review-form select,
-.review-form textarea {
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-.review-form button {
-    padding: 10px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
+.rating-stars-input .star {
+    font-size: 32px;
+    color: #ddd;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.review-form button:hover {
-    background-color: #218838;
-}
-.review-item strong {
-    font-weight: bold;
+.rating-stars-input .star:hover {
+    color: #ffc107;
+    transform: scale(1.2);
 }
 
-.stars {
-    color: gold; /* Màu vàng cho ngôi sao */
-    font-size: 1.2rem; /* Kích thước ngôi sao */
+.rating-stars-input .star.filled {
+    color: #f5c518;
+}
+
+.review-textarea {
+    width: 100%; /* Chiều rộng đầy đủ */
+    height: 120px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: none;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-textarea:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+    outline: none;
+}
+
+.submit-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    width: 100%; /* Nút chiếm toàn bộ chiều ngang */
+    text-align: center;
+}
+
+.submit-button:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+
+/* Hiển thị danh sách đánh giá */
+.reviews-list h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.review-item {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.review-rating .star {
+    font-size: 20px;
+    color: #f5c518;
+}
+
+.review-comment {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.review-date {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
 }

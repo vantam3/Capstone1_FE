@@ -34,6 +34,7 @@ function Home() {
     return (
         <ReactFullpage
             scrollingSpeed={1000}
+            credits={{ enabled: false }} // Xóa dòng chữ "Made with fullPage.js"
             render={() => {
                 return (
                     <ReactFullpage.Wrapper>
@@ -46,11 +47,14 @@ function Home() {
                                 <img src="/images/book1.jpg" alt="Book 1" />
                                 <img src="/images/book2.jpg" alt="Book 2" />
                                 <img src="/images/book3.jpg" alt="Book 3" />
-                                <img src="/images/sach4.jpg" alt="Book 4" />
+                                <img src="/images/book4.jpg" alt="Book 4" />
                             </div>
                             <div className="content">
                                 <h2>Explore the World of Books</h2>
-                                <p>From timeless classics to the latest bestsellers, explore our vast collection tailored just for you.</p>
+                                <p>
+                                    From timeless classics to the latest bestsellers, explore our vast collection
+                                    tailored just for you.
+                                </p>
                                 <Link to="/Library" className="section-button">
                                     <button>Explore Now</button>
                                 </Link>
@@ -64,8 +68,11 @@ function Home() {
                         >
                             <div className="content">
                                 <h2>Books Recommended Just for You</h2>
-                                <p>Discover books that match your tastes with personalized recommendations from our collection.</p>
-                                <Link to="/Library" className="section-button">
+                                <p>
+                                    Discover books that match your tastes with personalized recommendations from our
+                                    collection.
+                                </p>
+                                <Link to="/recommend" className="section-button">
                                     <button>Get Recommendations</button>
                                 </Link>
                             </div>
@@ -75,14 +82,19 @@ function Home() {
                         </div>
 
                         {/* Section 3 */}
-                        <div className="section section-3 section-left">
+                        <div
+                            ref={(el) => (sectionRefs.current[2] = el)}
+                            className="section section-3 section-left"
+                        >
                             <div className="images">
-                                <img src="/images/book6.jpg" alt="Image 5" />
-                                <img src="/images/book6.jpg" alt="Image 6" />
+                                <img src="/images/book6.jpg" alt="Book 6" />
+                                <img src="/images/book6.jpg" alt="Book 6" />
                             </div>
                             <div className="content">
                                 <h1>Start Your Journey as an Author</h1>
-                                <p>Ready to share your story? Begin crafting your book with our easy-to-use tools.</p>
+                                <p>
+                                    Ready to share your story? Begin crafting your book with our easy-to-use tools.
+                                </p>
                                 <Link to="/create" className="section-button">
                                     <button>Create Your Book</button>
                                 </Link>
