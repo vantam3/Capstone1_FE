@@ -10,8 +10,9 @@ const RegisterForm = () => {
     email: "",
     confirmPassword: "",
   });
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [password, setPassword] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setModalType] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -33,18 +34,12 @@ const RegisterForm = () => {
         first_name: formData.firstName,
         last_name: formData.lastName,
       });
-      setMessage("Registration successful!");
+      setModalMessage("Registration successful!");
+      setModalType("success");
     } catch (error) {
-      if (error.response) {
-        setMessage("Registration failed: " + JSON.stringify(error.response.data));
-      } else {
-        setMessage("Connection error!");
-      }
+      setModalMessage(error.response?.data?.error || "Registration failed. Please try again.");
+      setModalType("error");
     }
-  };
-
-  const closeModal = () => {
-    setShowModal(false); // Đóng modal
   };
 
   return (
@@ -113,26 +108,7 @@ const RegisterForm = () => {
             Sign Up
           </button>
         </form>
-        <div>{message}</div>
-        <div className="backlogin">
-          <p>
-            You have an account? <a href="/login">Back to Sign In</a>
-          </p>
-        </div>
       </div>
-
-      {/* Modal thông báo */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className={`modal ${isSuccess ? 'success' : 'error'}`}>
-            <h3>{isSuccess ? "Success" : "Error"}</h3>
-            <p>{message}</p>
-            <button className="close-modal-button" onClick={closeModal}>
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
