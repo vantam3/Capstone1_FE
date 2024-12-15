@@ -1,7 +1,14 @@
 import React from 'react';
-import './ErrorModal.css'; 
+import './ErrorModal.css';
 
-const ErrorModal = ({ message }) => {
+const ErrorModal = ({ message, onClose }) => {
+    const handleClose = () => {
+        if (typeof onClose === 'function') {
+            onClose(); // Call the onClose function if provided
+        }
+        window.history.back(); // Navigate back to the previous page
+    };
+
     return (
         <div className="error-modal-overlay">
             <div className="error-modal">
@@ -9,11 +16,9 @@ const ErrorModal = ({ message }) => {
                 <p>{message}</p>
                 <button
                     className="error-modal-button"
-                    onClick={() => {
-                        window.location.href = '/'; 
-                    }}
+                    onClick={handleClose}
                 >
-                    Go Home
+                    Close
                 </button>
             </div>
         </div>
@@ -21,4 +26,3 @@ const ErrorModal = ({ message }) => {
 };
 
 export default ErrorModal;
-

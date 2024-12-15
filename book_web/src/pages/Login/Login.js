@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContextLogin } from "../../layouts/useContext";
 import axios from "axios";
-import Modal from "../../components/Modal/Modal"; 
+import Modal from "../../components/Modal/Modal";
 import "./Login.css";
 
 const LoginForm = () => {
@@ -11,9 +11,9 @@ const LoginForm = () => {
   const { setFormLogin, setUser } = useGlobalContextLogin();
   const navigate = useNavigate();
   const [modalMessage, setModalMessage] = useState("");
-  const [modalType, setModalType] = useState(""); 
-  const [showForgotPassword, setShowForgotPassword] = useState(false); // Toggle forgot password form
-  const [forgotEmail, setForgotEmail] = useState(""); // Email for forgot password
+  const [modalType, setModalType] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false); 
+  const [forgotEmail, setForgotEmail] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,15 +23,27 @@ const LoginForm = () => {
       const response = await axios.post("http://localhost:8000/api/login/", { email, password });
       const { token, user } = response.data;
 
+      // Lưu token vào localStorage
       localStorage.setItem("token", token);
 
       setUser(user);
       setFormLogin(true);
       setModalMessage("Login successful!");
       setModalType("success");
+
+      // Gọi API để kiểm tra quyền admin
+      const adminResponse = await axios.get("http://localhost:8000/api/admin_dashboard/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Điều hướng dựa trên phản hồi từ backend
       setTimeout(() => {
         setModalMessage("");
-        navigate("/");
+        if (adminResponse.status === 200 && adminResponse.data.message === "Welcome Admin!") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }, 1000);
     } catch (err) {
       setModalMessage(err.response?.data?.message || "Login failed. Please try again.");
