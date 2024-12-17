@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContextLogin } from "../../layouts/useContext";
 import axios from "axios";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal/Modal"; 
 import "./Login.css";
 
 const LoginForm = () => {
@@ -11,41 +11,37 @@ const LoginForm = () => {
   const { setFormLogin, setUser } = useGlobalContextLogin();
   const navigate = useNavigate();
   const [modalMessage, setModalMessage] = useState("");
-  const [modalType, setModalType] = useState("");
+  const [modalType, setModalType] = useState(""); 
   const [showForgotPassword, setShowForgotPassword] = useState(false); // Toggle forgot password form
   const [forgotEmail, setForgotEmail] = useState(""); // Email for forgot password
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setModalMessage("");
+    setModalMessage(""); // Reset message
 
     try {
       const response = await axios.post("http://localhost:8000/api/login/", { email, password });
       const { token, user } = response.data;
 
-      // Lưu token vào localStorage
+      // Lưu token và id vào localStorage
       localStorage.setItem("token", token);
+      localStorage.setItem("user_id", user.id); // Lưu user_id vào localStorage
 
+      // Cập nhật thông tin người dùng vào context
       setUser(user);
       setFormLogin(true);
+
+      // Hiển thị thông báo thành công
       setModalMessage("Login successful!");
       setModalType("success");
 
-      // Gọi API để kiểm tra quyền admin
-      const adminResponse = await axios.get("http://localhost:8000/api/admin_dashboard/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      // Điều hướng dựa trên phản hồi từ backend
+      // Điều hướng sau 1s
       setTimeout(() => {
         setModalMessage("");
-        if (adminResponse.status === 200 && adminResponse.data.message === "Welcome Admin!") {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/");
-        }
+        navigate("/"); // Quay về trang chủ hoặc trang bạn muốn
       }, 1000);
     } catch (err) {
+      // Hiển thị thông báo lỗi khi đăng nhập thất bại
       setModalMessage(err.response?.data?.message || "Login failed. Please try again.");
       setModalType("error");
     }
@@ -85,7 +81,7 @@ const LoginForm = () => {
         <div className="forgot-password-box">
           <h2>Forgot Password</h2>
           <p>Please enter your email to reset your password:</p>
-<form onSubmit={handleForgotPasswordSubmit}>
+          <form onSubmit={handleForgotPasswordSubmit}>
             <input
               type="email"
               value={forgotEmail}

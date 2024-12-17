@@ -65,7 +65,7 @@ function Home() {
                             <div className="content">
                                 <h2>Books Recommended Just for You</h2>
                                 <p>Discover books that match your tastes with personalized recommendations from our collection.</p>
-                                <Link to="/Library" className="section-button">
+                                <Link to="/Recommend" className="section-button">
                                     <button>Get Recommendations</button>
                                 </Link>
                             </div>

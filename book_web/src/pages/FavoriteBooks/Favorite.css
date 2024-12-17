@@ -1,0 +1,124 @@
+/* Overlay toàn màn hình */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Nền tối mờ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal chính */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 900px;
+  max-height: 70%;
+  overflow-y: auto; /* Thanh cuộn khi nội dung quá dài */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Nút Back */
+.back-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.chevron-left {
+  margin-right: 5px;
+}
+
+/* Danh sách sách yêu thích */
+.favorite-books-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Thẻ sách */
+.favorite-book-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.favorite-book-card:hover {
+  background-color: #e6f0ff; /* Hiệu ứng hover */
+}
+
+/* Ảnh sách */
+.book-image img {
+  width: 70px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Thông tin sách */
+.book-info {
+  flex: 1;
+  text-align: left;
+}
+
+.book-info h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.book-info p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Loading text */
+.loading-text,
+.no-favorites {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Nút Close */
+.cancel-button {
+  margin-top: 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}

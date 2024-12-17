@@ -1,0 +1,88 @@
+.reading-history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 400px; /* Giới hạn chiều cao với thanh cuộn */
+  overflow-y: auto; /* Hiển thị thanh cuộn khi cần */
+}
+
+.reading-history-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+}
+
+.reading-history-item:hover {
+  background-color: #e6f7ff; /* Màu nền khi hover */
+}
+
+.history-book-image {
+  width: 60px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+.history-book-details h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #333;
+}
+
+.history-book-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+}
+
+.back-button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.back-button:hover {
+  color: #0056b3;
+}
+
+.chevron-left {
+  margin-right: 5px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}

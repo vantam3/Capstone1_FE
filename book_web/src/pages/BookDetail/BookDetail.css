@@ -1,109 +1,140 @@
+/* BookDetail.css */
+
 .book-detail-container {
-    padding: 20px;
-    max-width: 800px;
+    padding: 60px 20px;
+    max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7fa;
+}
+
+.book-detail-card {
+    display: flex;
+    margin-bottom: 50px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .book-detail-image {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    border-radius: 8px;
-    margin: 20px 0;
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 16px 0 0 16px;
 }
 
 .book-detail-info {
-    text-align: left;
+    padding: 20px;
+    flex: 1;
 }
 
-.book-detail-info h2 {
-    font-size: 1.5rem;
+.book-detail-info h1 {
+    font-size: 2rem;
+    margin: 0;
     color: #333;
-    margin-bottom: 10px;
 }
 
 .book-detail-info p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #555;
-    line-height: 1.6;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
-.read-book-button {
-    padding: 10px 20px;
+
+.book-description {
     font-size: 1rem;
-    color: #fff;
-    background-color: #1a73e8;
+    margin-top: 20px;
+    color: #777;
+}
+
+.read-now-button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1rem;
     margin-top: 20px;
     transition: background-color 0.3s ease;
 }
 
-.read-book-button:hover {
-    background-color: #155ab2;
-}
-.reviews-section {
-    margin-top: 40px;
-    text-align: left;
+.read-now-button:hover {
+    background-color: #2980b9;
 }
 
-.reviews-section h2 {
-    font-size: 1.8rem;
+.reviews-section {
+    margin-top: 40px;
+}
+
+.review-form {
+    margin-bottom: 30px;
+}
+
+.rating-stars-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #bbb;
+    transition: color 0.3s ease;
+}
+
+.star.filled {
+    color: #f39c12;
+}
+
+.review-textarea {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
     margin-bottom: 20px;
+}
+
+.submit-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+.reviews-list {
+    margin-top: 30px;
 }
 
 .review-item {
     background-color: #f9f9f9;
     border-radius: 8px;
-    padding: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.review-rating {
     margin-bottom: 10px;
 }
 
-.review-item p {
-    margin: 5px 0;
-}
-
-.review-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.review-form label {
+.review-comment {
     font-size: 1rem;
-    font-weight: bold;
+    color: #555;
 }
 
-.review-form select,
-.review-form textarea {
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-.review-form button {
-    padding: 10px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.review-form button:hover {
-    background-color: #218838;
-}
-.review-item strong {
-    font-weight: bold;
-}
-
-.stars {
-    color: gold; /* Màu vàng cho ngôi sao */
-    font-size: 1.2rem; /* Kích thước ngôi sao */
+.review-date {
+    font-size: 0.9rem;
+    color: #999;
 }

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import './ManageUsers.css';
 
 const ManageUsers = () => {
-    const [users, setUsers] = useState([]); // State để lưu danh sách người dùng
-    const [loading, setLoading] = useState(true); // Trạng thái đang tải
-    const [error, setError] = useState(null); // Trạng thái lỗi
-    const [editingUserId, setEditingUserId] = useState(null); // ID người dùng đang chỉnh sửa
-    const [editingUserData, setEditingUserData] = useState(null); // Dữ liệu người dùng đang chỉnh sửa
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [editingUserId, setEditingUserId] = useState(null);
+    const [editingUserData, setEditingUserData] = useState(null);
 
-    // Gọi API để lấy danh sách người dùng
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('http://localhost:8000/api/admin/users/');
-                setUsers(response.data); // Lưu dữ liệu từ API vào state
+                setUsers(response.data);
             } catch (err) {
                 console.error('Error fetching users:', err);
                 setError('Failed to load users.');
@@ -26,7 +26,6 @@ const ManageUsers = () => {
         fetchUsers();
     }, []);
 
-    // Hàm xử lý cập nhật người dùng
     const handleSave = async () => {
         if (!editingUserData) return;
 
@@ -48,79 +47,88 @@ const ManageUsers = () => {
                     user.id === editingUserId ? { ...user, ...response.data } : user
                 )
             );
-            setEditingUserId(null); // Hủy chế độ chỉnh sửa
-            setEditingUserData(null); // Xóa dữ liệu chỉnh sửa
-            alert('User updated successfully.');
+            setEditingUserId(null);
+            setEditingUserData(null);
+            Swal.fire('Success', 'User updated successfully.', 'success');
         } catch (err) {
             console.error('Error updating user:', err);
-            alert('Failed to update user. Please try again.');
+            Swal.fire('Error', 'Failed to update user. Please try again.', 'error');
         }
     };
 
-    // Hàm xử lý hủy bỏ chỉnh sửa
     const handleCancelEdit = () => {
-        setEditingUserId(null); // Hủy chế độ chỉnh sửa
-        setEditingUserData(null); // Xóa dữ liệu chỉnh sửa
+        setEditingUserId(null);
+        setEditingUserData(null);
     };
 
-    // Hàm xử lý chỉnh sửa người dùng
     const handleEdit = (user) => {
-        setEditingUserId(user.id); // Đặt ID người dùng đang chỉnh sửa
-        setEditingUserData({ ...user }); // Sao chép dữ liệu người dùng để chỉnh sửa
+        setEditingUserId(user.id);
+        setEditingUserData({ ...user });
     };
 
-    // Hàm xử lý xóa người dùng
     const handleDelete = async (id) => {
-        const confirmed = window.confirm('Are you sure you want to delete this user?');
-        if (confirmed) {
-            try {
-                await axios.delete(`http://localhost:8000/api/admin/users/${id}/delete/`);
-                setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-                alert('User deleted successfully.');
-            } catch (err) {
-                console.error('Error deleting user:', err);
-                alert('Failed to delete user. Please try again.');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await axios.delete(`http://localhost:8000/api/admin/users/${id}/delete/`);
+                    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+                    Swal.fire('Deleted!', 'User deleted successfully.', 'success');
+                } catch (err) {
+                    console.error('Error deleting user:', err);
+                    Swal.fire('Error', 'Failed to delete user. Please try again.', 'error');
+                }
             }
-        }
+        });
     };
 
-    // Hiển thị loading khi dữ liệu đang được tải
     if (loading) {
-        return <p>Loading users...</p>;
+        return <p className="manage-users-error">Loading users...</p>;
     }
 
-    // Hiển thị lỗi nếu có lỗi xảy ra
     if (error) {
-        return <p>{error}</p>;
+        return <p className="manage-users-error">{error}</p>;
     }
 
     return (
         <div className="manage-users-container">
-            <h2>Manage Users</h2>
-            <p>Here you can view, edit, add, or delete users.</p>
+            <h2 className="manage-users-header">Manage Users</h2>
+            <p className="manage-users-description">Here you can view, edit, add, or delete users.</p>
             <button
-                className="add-user-button"
-                onClick={() => alert('Add User functionality')}
+                className="manage-users-add-button"
+                onClick={() => Swal.fire('Info', 'Add User functionality not implemented yet.', 'info')}
             >
                 Add User
             </button>
-            <table className="users-table">
+            <table className="manage-users-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
+                        <th className="manage-users-table-th">ID</th>
+                        <th className="manage-users-table-th">Username</th>
+                        <th className="manage-users-table-th">Email</th>
+                        <th className="manage-users-table-th">Role</th>
+                        <th className="manage-users-table-th">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                        <tr key={user.id}>
+                        <tr
+                            key={user.id}
+                            className={user.id % 2 === 0 ? 'manage-users-table-row-even' : ''}
+                        >
                             <td>{user.id}</td>
                             <td>
                                 {editingUserId === user.id ? (
                                     <input
+                                        className="manage-users-edit-input"
                                         type="text"
                                         value={editingUserData.username}
                                         onChange={(e) =>
@@ -134,6 +142,7 @@ const ManageUsers = () => {
                             <td>
                                 {editingUserId === user.id ? (
                                     <input
+                                        className="manage-users-edit-input"
                                         type="email"
                                         value={editingUserData.email}
                                         onChange={(e) =>
@@ -148,20 +157,20 @@ const ManageUsers = () => {
                             <td>
                                 {editingUserId === user.id ? (
                                     <>
-                                        <button className="save-button" onClick={handleSave}>
+                                        <button className="manage-users-save-button" onClick={handleSave}>
                                             Save
                                         </button>
-                                        <button className="cancel-button" onClick={handleCancelEdit}>
+                                        <button className="manage-users-cancel-button" onClick={handleCancelEdit}>
                                             Cancel
                                         </button>
                                     </>
                                 ) : (
                                     <>
-                                        <button className="edit-button" onClick={() => handleEdit(user)}>
+                                        <button className="manage-users-edit-button" onClick={() => handleEdit(user)}>
                                             Edit
                                         </button>
                                         <button
-                                            className="delete-button"
+                                            className="manage-users-delete-button"
                                             onClick={() => handleDelete(user.id)}
                                         >
                                             Delete

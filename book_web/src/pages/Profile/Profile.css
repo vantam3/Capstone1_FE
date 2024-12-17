@@ -1,0 +1,241 @@
+/* Profile.css */
+
+/* Chỉnh lại cho phần container của profile */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7; /* Tạo nền nhạt hơn */
+  }
+  
+  /* Modal Container */
+  .modal {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px; /* Đảm bảo cửa sổ nhỏ gọn và dễ nhìn */
+    transition: all 0.3s ease;
+    font-family: 'Roboto', sans-serif; /* Dùng font hiện đại */
+  }
+  
+  .modal h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333; /* Màu sắc tiêu đề nhẹ nhàng */
+    text-align: center;
+  }
+  
+  /* Định dạng các thông tin người dùng */
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .profile-info div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .profile-info strong {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .profile-info p,
+  .profile-info input {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .profile-info input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .profile-info input:focus {
+    border-color: #007bff; /* Viền input khi focus */
+  }
+  
+  /* Button styles */
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .save-button,
+  .cancel-button,
+  .edit-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #218838;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Overlay Styles */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Lớp nền nhẹ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  /* Nút quay lại */
+  .back-button {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  
+  .back-button:hover {
+    color: #0056b3;
+  }
+  
+  .chevron-left {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+  
+  /* Thêm chút tinh tế cho việc chỉnh sửa input */
+  input[type="text"],
+  input[type="email"] {
+    background-color: #fafafa;
+  }
+  
+  input:focus {
+    background-color: #fff;
+  }
+  
+  .actions button {
+    border-radius: 5px;
+  }
+  /* Định dạng phần thay đổi mật khẩu nhỏ gọn */
+.change-password-section {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .change-password-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .change-password-section div {
+    margin-bottom: 10px;
+  }
+  
+  .change-password-section label {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .change-password-section input {
+    width: 50%;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    box-sizing: border-box;
+  }
+  
+  .change-password-section button {
+    width: 50%;
+    padding: 8px;
+    font-size: 1rem;
+  }
+  
+  .change-password-section button.save-button {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .change-password-section button.save-button:hover {
+    background-color: #218838;
+  }
+  
+  .change-password-section button.cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .change-password-section button.cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Nút "Change Password" */
+  .change-password-section .change-password-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    width: 50%;
+    text-align: center;
+    margin-top: 0px;
+  }
+  
+  .change-password-section .change-password-button:hover {
+    background-color: #0056b3;
+  }
+  
