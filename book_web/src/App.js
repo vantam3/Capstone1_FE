@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import Navbar from './components/NavBar/NavBar';
 import Home from './pages/Home/Home';
 import Library from './pages/Library/Library';
+import Recommend from './pages/Recommend/Recommend';
 import CreateBook from './pages/CreateBook/CreateBook';
 import Login from './pages/Login/Login';
 import Recover from './pages/Recover/Recover';
@@ -11,6 +12,7 @@ import CategoryDetail from './pages/CategoryDetail/CategoryDetail';
 import BookDetail from './pages/BookDetail/BookDetail'; 
 import ReadBook from './pages/ReadBook/ReadBook'; 
 import About from './pages/About/About'; 
+import Recommend from './pages/Recommend/Recommend'; 
 
 // Import Admin layout và các trang admin
 import AdminLayout from './Admin/AdminLayout';
@@ -55,7 +57,7 @@ function App() {
     if (!authChecked) {
         return null; 
     }
-
+    
     return (
         <Router>
             <Navbar />
@@ -64,6 +66,7 @@ function App() {
                     {/* Các route chính */}
                     <Route path="/" element={<Home />} />
                     <Route path="/library" element={<Library />} />
+                    <Route path="/Recommendations" element={<Recommend />} />
                     <Route path="/create" element={<CreateBook />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/recover" element={<Recover />} />
@@ -72,6 +75,7 @@ function App() {
                     <Route path="/book/:bookId" element={<BookDetail />} /> 
                     <Route path="/read/:bookId" element={<ReadBook />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/recommend" element={<Recommend />} /> 
 
                     {/* Route admin */}
                     <Route

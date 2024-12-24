@@ -107,8 +107,10 @@ function Navbar() {
       <div className="nav-links">
         <Link to="/">Home</Link>
         <Link to="/library">Library</Link>
+        <Link to="/recommendations">Recommendations</Link>
         <Link to="/create">Create</Link>
         <Link to="/about">About</Link>
+        <Link to="/recommend">Recommend Book</Link>
       </div>
       <div className="nav-right">
         <div className="nav-search-container">

@@ -1,101 +1,98 @@
 import React, { useEffect, useState } from 'react';
 import './Library.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 function Library() {
-    const [libraryData, setLibraryData] = useState([]); // State để lưu trữ dữ liệu sách
-    const [loading, setLoading] = useState(true); // State để kiểm tra trạng thái loading
-    const [error, setError] = useState(null); // State để kiểm tra lỗi
-    const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
+    const [libraryData, setLibraryData] = useState([]); // Dữ liệu sách
+    const [favorites, setFavorites] = useState([]); // Danh sách yêu thích
+    const [selectedCategory, setSelectedCategory] = useState(''); // Thể loại được chọn
+    const navigate = useNavigate();
 
+    // Hàm gọi API lấy dữ liệu từ backend
     useEffect(() => {
-        // Gọi API để lấy dữ liệu sách
         const fetchBooks = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/books/');
-                const books = response.data;
+                const response = await fetch('https://your-api-endpoint.com/books'); // Đường dẫn API
+                const data = await response.json();
 
-                // Kiểm tra nếu API không trả về dữ liệu
-                if (!books || books.length === 0) {
-                    setError("No books found.");
-                    setLoading(false);
-                    return;
-                }
-
-                // Phân loại sách theo genres (thể loại)
-                const categorizedBooks = books.reduce((acc, book) => {
-                    const genres = book.genres.length > 0 ? book.genres : ["Uncategorized"]; // Dùng "Uncategorized" nếu không có genres
-                    genres.forEach((genre) => {
-                        if (!acc[genre]) {
-                            acc[genre] = [];
-                        }
-                        acc[genre].push(book);
-                    });
+                // Phân loại dữ liệu theo thể loại
+                const categorizedBooks = data.reduce((acc, book) => {
+                    const category = book.category || 'Uncategorized';
+                    if (!acc[category]) {
+                        acc[category] = [];
+                    }
+                    acc[category].push(book);
                     return acc;
                 }, {});
 
-                // Định dạng lại dữ liệu cho phù hợp với `libraryData`
-                const formattedData = Object.entries(categorizedBooks).map(([genre, books]) => ({
-                    genre,
+                const formattedData = Object.entries(categorizedBooks).map(([category, books]) => ({
+                    category,
                     books,
                 }));
 
-                setLibraryData(formattedData); // Lưu dữ liệu vào state
+                setLibraryData(formattedData);
             } catch (error) {
-                console.error("Có lỗi xảy ra khi lấy dữ liệu sách:", error);
-                setError("Failed to fetch books data.");
-            } finally {
-                setLoading(false);
+                console.error('Error fetching books:', error);
             }
         };
 
-        fetchBooks(); // Gọi hàm fetchBooks khi component được render
+        fetchBooks();
     }, []);
 
-    // Hiển thị loading khi dữ liệu đang được tải
-    if (loading) {
-        return <div className="loading">Loading books...</div>;
-    }
-
-    // Hiển thị lỗi nếu có lỗi xảy ra
-    if (error) {
-        return <div className="error">{error}</div>;
-    }
+    // Hàm bật/tắt yêu thích
+    const toggleFavorite = (bookId) => {
+        setFavorites((prevFavorites) =>
+            prevFavorites.includes(bookId)
+                ? prevFavorites.filter((id) => id !== bookId) // Xóa khỏi yêu thích nếu đã có
+                : [...prevFavorites, bookId] // Thêm vào yêu thích nếu chưa có
+        );
+    };
 
     return (
         <div className="library-container">
-            <h1>Explore Book Genres</h1>
-            {libraryData.map((genreData) => (
-                <div key={genreData.genre} className="genre-section">
-                    <h2 className="genre-title">{genreData.genre}</h2>
+            <h1 className="library-title">Explore Book Categories</h1>
+            <div className="search-bar">
+                <form className="search-form">
+                    <select
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        value={selectedCategory}
+                    >
+                        <option value="">All Categories</option>
+                        <option value="Fiction">Fiction</option>
+                        <option value="Non-fiction">Non-fiction</option>
+                        <option value="Science">Science</option>
+                        <option value="History">History</option>
+                        <option value="Philosophy">Philosophy</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Fantasy">Fantasy</option>
+                    </select>
+                </form>
+            </div>
+
+            {libraryData.map((categoryData) => (
+                <div key={categoryData.category} className="category-section">
+                    <h2>{categoryData.category}</h2>
                     <div className="book-list">
-                        {genreData.books.map((book) => (
-                            <div 
-                                key={book.id} 
-                                className="book-card"
-                                onClick={() => navigate(`/book/${book.id}`)} // Điều hướng đến trang chi tiết sách
-                            >   
-                                {/* Hiển thị ảnh sách nếu có */}
-                                {book.image ? (
-                                    <img src={book.image} alt={book.title} className="book-image" />
-                                ) : (
-                                    <div className="no-image">No Image Available</div>
-                                )}
+                        {categoryData.books.map((book) => (
+                            <div key={book.id} className="book-card">
+                                <img
+                                    src={book.image}
+                                    alt={book.title}
+                                    className="book-image"
+                                />
                                 <div className="book-info">
                                     <h3>{book.title}</h3>
-                                    <p><strong>Author:</strong> {book.author || "Unknown Author"}</p>
-                                    {/* <p><strong>Summary:</strong> {book.summary || "No description available."}</p> */}
+                                    <p>{book.description}</p>
+                                </div>
+                                <div
+                                    className={`favorite-icon ${favorites.includes(book.id) ? 'favorited' : ''}`}
+                                    onClick={() => toggleFavorite(book.id)}
+                                >
+                                    {favorites.includes(book.id) ? '❤️' : '🤍'}
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <button 
-                        className="see-more-button" 
-                        onClick={() => navigate(`/genre/${genreData.genre.toLowerCase()}`)}
-                        >
-                        See More
-                    </button>
                 </div>
             ))}
         </div>
