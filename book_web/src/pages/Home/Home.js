@@ -46,7 +46,7 @@ function Home() {
                                 <img src="/images/book1.jpg" alt="Book 1" />
                                 <img src="/images/book2.jpg" alt="Book 2" />
                                 <img src="/images/book3.jpg" alt="Book 3" />
-                                <img src="/images/sach4.jpg" alt="Book 4" />
+                                <img src="/images/book4.jpg" alt="Book 4" />
                             </div>
                             <div className="content">
                                 <h2>Explore the World of Books</h2>
