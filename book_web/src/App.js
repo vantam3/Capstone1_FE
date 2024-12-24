@@ -12,9 +12,9 @@ import BookDetail from './pages/BookDetail/BookDetail';
 import ReadBook from './pages/ReadBook/ReadBook'; 
 import About from './pages/About/About'; 
 import Recommend from './pages/Recommend/Recommend'; 
-// import Profile from "./pages/Profile/Profile";
-// import ReadingHistory from "./pages/ReadingHistory/ReadingHistory";
-// import FavoriteBooks from "./pages/FavoriteBooks/Favorite";
+import Profile from "./pages/Profile/Profile";
+import ReadingHistory from "./pages/ReadingHistory/ReadingHistory";
+import FavoriteBooks from "./pages/FavoriteBooks/Favorite";
 
 // Import Admin layout và các trang admin
 import AdminLayout from './Admin/AdminLayout';
@@ -78,9 +78,9 @@ function App() {
                     <Route path="/read/:bookId" element={<ReadBook />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/recommend" element={<Recommend />} /> 
-                    {/* <Route path="/user-profile" element={<Profile />} />
+                    <Route path="/user-profile" element={<Profile />} />
                     <Route path="/reading-history" element={<ReadingHistory />} />
-                    <Route path="/favorite-books" element={<FavoriteBooks />} /> */}
+                    <Route path="/favorite-books" element={<FavoriteBooks />} />
                     {/* Route admin */}
                     <Route
                         path="/admin/*"

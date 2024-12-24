@@ -1,26 +1,22 @@
-
+/* Tạo vùng bao phủ toàn bộ trang */
 .create-book-container {
-    font-size: 2.0rem;
-    color: #3f6780; 
-    margin-bottom: 10px;
-    animation: fadeIn 1.5s ease-in-out; /* Hiệu ứng chữ mờ dần */
     display: flex;
     flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-    height: 90vh; 
-    background-color: #f7f9fc; 
-    margin: 0; 
-    padding: 0; 
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+    align-items: center; /* Căn giữa nội dung theo chiều ngang */
+    height: 90vh; /* Chiếm toàn bộ chiều cao màn hình */
+    background-color: #f7f9fc; /* Màu nền nhẹ nhàng */
+    margin: 0; /* Xóa khoảng cách không cần thiết */
+    padding: 0; /* Xóa padding mặc định */
     box-sizing: border-box;
 }
 
 /* Style cho form */
 form {
     width: 90%;
-    max-width: 500px; 
-    background-color: #ffffff; 
-    border-radius: 10px; 
+    max-width: 500px; /* Giới hạn chiều rộng tối đa */
+    background-color: #ffffff; /* Màu nền trắng */
+    border-radius: 10px; /* Bo góc nhẹ */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Hiệu ứng đổ bóng */
     padding: 30px;
     box-sizing: border-box;
@@ -29,14 +25,14 @@ form {
 
 /* Hiệu ứng khi hover lên form */
 form:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-5px); /* Dịch chuyển nhẹ */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Tăng hiệu ứng đổ bóng */
 }
 
 /* Style cho tiêu đề */
 form h2 {
     font-size: 2rem;
-    color: #3f6780; 
+    color: #3f6780; /* Màu xanh dịu */
     margin-bottom: 15px;
     text-align: center;
 }
@@ -58,7 +54,7 @@ form textarea {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px; 
+    border-radius: 5px; /* Bo góc nhẹ */
     box-sizing: border-box;
     background-color: #f9f9f9;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -68,34 +64,34 @@ form textarea {
 form input:focus,
 form select:focus,
 form textarea:focus {
-    border-color: #3f6780; 
-    box-shadow: 0 0 5px rgba(63, 103, 128, 0.5); 
+    border-color: #3f6780; /* Đổi màu viền khi focus */
+    box-shadow: 0 0 5px rgba(63, 103, 128, 0.5); /* Hiệu ứng ánh sáng nhẹ */
     outline: none;
 }
 
 /* Style riêng cho textarea */
 form textarea {
-    resize: none; 
+    resize: none; /* Không cho resize */
     height: 100px;
 }
 
 /* Style cho nút bấm */
 form button {
-    background-color: #007bff; 
+    background-color: #007bff; /* Màu xanh dương nổi bật */
     color: white;
     border: none;
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: bold;
-    border-radius: 5px; 
+    border-radius: 5px; /* Bo góc nhẹ */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Hiệu ứng khi hover nút */
 form button:hover {
-    background-color: #0056b3; 
-    transform: scale(1.05);
+    background-color: #0056b3; /* Xanh đậm hơn */
+    transform: scale(1.05); /* Phóng to nhẹ */
 }
 
 /* Responsive cho màn hình nhỏ */

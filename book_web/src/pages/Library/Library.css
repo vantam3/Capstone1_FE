@@ -1,23 +1,11 @@
 .library-container {
-    font-size: 2.5rem;
-    color: #3f6780;
-    margin-bottom: 10px;
-    animation: fadeIn 1.5s ease-in-out;
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
     text-align: center;
-}
-.genre-title {
-    font-size: 1.8rem;
-    color: #3812e1; /* Màu chữ */
-    text-align: left; /* Căn lề trái */
-    margin: 10px 0 20px 0; /* Thêm khoảng cách trên và dưới */
-    padding-left: 15px; /* Thụt lề trái */
-    font-weight: bold; /* In đậm */
-    border-left: 4px solid #333; /* Tạo đường viền trái nếu cần */
-}
+    animation: fadeIn 1.5s ease-in-out;
 
+}
 .library-title {
     font-size: 2.5rem;
     color: #3f6780; 
@@ -25,153 +13,150 @@
     margin-bottom: 20px;
 }
 
+.library-h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
 
-/* Thanh tìm kiếm */
-.search-bar {
-    margin: 20px 0;
+.library-sort-container {
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
 }
 
-.search-form {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+.library-sort-container label {
+    font-size: 1.2rem;
+    margin-right: 10px;
 }
 
-.search-form select {
-    padding: 12px 15px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 2px solid #ccc;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    background: #f9f9f9;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.search-form select:hover {
-    border-color: #007BFF;
-    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-
-/* Kiểu dáng cho thẻ sách */
-.book-card {
-    min-width: 300px;
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    border-radius: 12px;
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.9);
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.book-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.8);
-}
-
-/* Kiểu dáng cho biểu tượng trái tim */
-
-.favorite-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    color: white; 
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.favorite-icon.favorited {
-    color: red; 
-}
-
-.favorite-icon:hover {
-    transform: scale(1.2);
-}
-
-/* Hình ảnh trong thẻ sách */
-.book-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 12px 12px 0 0;
-}
-
-/* Nội dung trong thẻ sách */
-.book-info {
-    padding: 20px;
-    text-align: left;
-    background: linear-gradient(145deg, #ffffff, #f8f8f8);
-    border-radius: 0 0 12px 12px;
-    box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.book-info h3 {
-    font-size: 1.4rem;
-    color: #333;
-    margin: 10px 0;
-}
-
-.book-info p {
+.library-genre-select {
+    padding: 8px 16px;
     font-size: 1rem;
-    color: #666;
-    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
 }
 
-/* Kiểu dáng tiêu đề */
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+.library-genre-select:hover {
+    border-color: #3812e1; /* Màu viền khi hover */
 }
 
-.category-section {
+.library-genre-select:focus {
+    outline: none;
+    border-color: #3812e1; /* Màu viền khi focus */
+}
+
+.library-category-section {
     margin-bottom: 40px;
 }
 
-.category-section h2 {
+.library-genre-title {
     font-size: 1.8rem;
+    color: #3812e1;
     text-align: left;
-    margin: 20px 0;
-    color: #3f6780;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin: 10px 0 20px 0;
+    padding-left: 15px;
+    font-weight: bold;
+    border-left: 4px solid #333;
 }
 
-/* Danh sách sách */
-.book-list {
+.library-book-list {
     display: flex;
     gap: 20px;
     overflow-x: auto;
     padding-bottom: 10px;
 }
 
-/* Nút "See More" */
-.see-more-button {
-    margin-top: 20px;
-    padding: 12px 20px;
-    font-size: 1rem;
-    color: white;
-    background: linear-gradient(145deg, #28a745, #1e7e34);
-    border: none;
+.library-book-card {
+    min-width: 300px;
+    background-color: #ffffff;
     border-radius: 12px;
-    cursor: pointer;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
 }
 
-.see-more-button:hover {
-    box-shadow: 0px 6px 12px rgba(40, 167, 69, 0.2);
-    transform: translateY(-2px);
-    background: linear-gradient(145deg, #1e7e34, #28a745);
+.library-book-card:hover {
+    transform: translateY(-5px);
 }
-.fp-watermark {
-    display: none !important;
+
+.library-book-image {
+    width: 50%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+.library-book-info {
+    padding: 15px;
+    text-align: left;
+}
+
+.library-book-info h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 10px 0;
+}
+
+.library-book-info p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.library-see-more-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.library-see-more-button:hover {
+    background-color: #e0e0e0;
+}
+
+.library-loading,
+.library-error {
+    font-size: 1.5rem;
+    color: #888;
+}
+
+.library-error {
+    color: red;
+}
+.favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.favorite-icon.favorited {
+    color: red; /* Màu đỏ khi đã yêu thích */
+}
+
+.library-book-card {
+    min-width: 300px;
+    height: 450px;                /* Đặt chiều cao cố định cho thẻ sách */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.library-book-card:hover {
+    transform: translateY(-5px);
 }

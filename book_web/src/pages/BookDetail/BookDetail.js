@@ -1,73 +1,120 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import './BookDetail.css';
-
-const mockBooks = [
-    {
-        id: 1,
-        title: 'Book 1',
-        author: 'Author 1',
-        image: 'https://via.placeholder.com/200x300',
-        description: 'This is a description of Book 1.',
-        rating: 4.5,
-        genres: ['Fiction', 'Adventure'],
-        views: 1200,
-        reviews: [
-            { rating: 5, comment: 'Amazing book!', createdAt: '2023-12-01' },
-            { rating: 4, comment: 'Quite engaging.', createdAt: '2023-12-02' },
-        ],
-    },
-    {
-        id: 2,
-        title: 'Book 2',
-        author: 'Author 2',
-        image: 'https://via.placeholder.com/200x300',
-        description: 'This is a description of Book 2.',
-        rating: 4.0,
-        genres: ['Non-fiction'],
-        views: 800,
-        reviews: [
-            { rating: 3, comment: 'Not my style.', createdAt: '2023-11-30' },
-        ],
-    },
-];
 
 function BookDetail() {
     const { bookId } = useParams();
+    const navigate = useNavigate();
+
     const [book, setBook] = useState(null);
     const [reviews, setReviews] = useState([]);
-    const [newReview, setNewReview] = useState('');
-    const [rating, setRating] = useState(0);
+    const [newReview, setNewReview] = useState({ rating: '', comment: '' });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    const token = localStorage.getItem('token');
+
+    // Fetch book details and reviews
     useEffect(() => {
-        const selectedBook = mockBooks.find((b) => b.id === parseInt(bookId));
-        if (selectedBook) {
-            setBook(selectedBook);
-            setReviews(selectedBook.reviews || []);
-        }
+        const fetchBookDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/api/books/${bookId}/`);
+                setBook(response.data);
+                setReviews(response.data.reviews || []);
+            } catch (error) {
+                console.error("Error fetching book details:", error);
+                setError("Failed to load book details.");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBookDetails();
     }, [bookId]);
 
-    const handleRating = (value) => {
-        setRating(value);
-    };
+    // Gửi lịch sử đọc sách đến backend
+    const handleReadNow = async () => {
+        if (!token) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Please log in to read this book',
+                confirmButtonText: 'OK',
+            });
+            navigate('/login');
+            return;
+        }
 
-    const handleReviewSubmit = (e) => {
-        e.preventDefault();
-        if (newReview && rating > 0) {
-            const newReviewData = {
-                rating,
-                comment: newReview,
-                createdAt: new Date().toLocaleDateString(),
-            };
-            setReviews([...reviews, newReviewData]);
-            setNewReview('');
-            setRating(0);
+        try {
+            // Gửi yêu cầu thêm vào lịch sử đọc
+            await axios.post(
+                'http://localhost:8000/api/reading-history/add/',
+                { book_id: bookId },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Reading History Updated!',
+                text: 'Happy reading!',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+
+            // Chuyển hướng người dùng đến trang đọc sách
+            navigate(`/read/${bookId}`);
+        } catch (error) {
+            console.error("Error adding to reading history:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Something went wrong!',
+                text: 'Failed to update reading history.',
+            });
         }
     };
 
-    if (!book) {
-        return <p>Loading book details...</p>;
-    }
+    // Thêm review mới
+    const handleAddReview = async (e) => {
+        e.preventDefault();
+
+        if (!newReview.rating || !newReview.comment) {
+            alert("Please provide a rating and a comment.");
+            return;
+        }
+
+        try {
+            const response = await axios.post(
+                `http://localhost:8000/api/books/${bookId}/add_review/`,
+                newReview,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setReviews((prevReviews) => [...prevReviews, response.data]);
+            setNewReview({ rating: '', comment: '' });
+        } catch (error) {
+            console.error("Error adding review:", error.response?.data || error.message);
+            alert("Failed to add review. Please try again.");
+        }
+    };
+
+    const renderStars = (rating) => {
+        return [1, 2, 3, 4, 5].map((star) => (
+            <span
+                key={star}
+                className={`star ${star <= rating ? 'filled' : ''}`}
+            >
+                ★
+            </span>
+        ));
+    };
+
+    if (loading) return <p>Loading book details...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div className="book-detail-container">
@@ -78,35 +125,30 @@ function BookDetail() {
                     <p><strong>Author:</strong> {book.author}</p>
                     <p><strong>Genres:</strong> {book.genres.join(', ')}</p>
                     <p><strong>Views:</strong> {book.views}</p>
-                    <p>
-                        <strong>Rating:</strong>{' '}
+                    <p><strong>Rating:</strong>
                         <span className="rating-stars">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <span
-                                    key={star}
-                                    className={`star ${star <= book.rating ? 'filled' : ''}`}
-                                >
-                                    ★
-                                </span>
-                            ))}
+                            {renderStars(book.average_rating)}
                         </span>
-                        ({book.rating}/5)
+                        ({book.average_rating}/5)
                     </p>
                     <p className="book-description"><strong>Description:</strong> {book.description}</p>
-                    <button className="read-now-button">Read Now</button>
+
+                    <button className="read-now-button" onClick={handleReadNow}>
+                        Read Now
+                    </button>
                 </div>
             </div>
 
             <div className="reviews-section">
                 <h2>Reviews & Comments</h2>
-                <form onSubmit={handleReviewSubmit} className="review-form">
+                <form onSubmit={handleAddReview} className="review-form">
                     <div className="rating-stars-input">
                         <h4>Your Rating:</h4>
                         {[1, 2, 3, 4, 5].map((star) => (
                             <span
                                 key={star}
-                                className={`star ${star <= rating ? 'filled' : ''}`}
-                                onClick={() => handleRating(star)}
+                                className={`star ${star <= newReview.rating ? 'filled' : ''}`}
+                                onClick={() => setNewReview({ ...newReview, rating: star })}
                             >
                                 ★
                             </span>
@@ -114,13 +156,11 @@ function BookDetail() {
                     </div>
                     <textarea
                         placeholder="Write your review..."
-                        value={newReview}
-                        onChange={(e) => setNewReview(e.target.value)}
+                        value={newReview.comment}
+                        onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
                         className="review-textarea"
                     />
-                    <button type="submit" className="submit-button">
-                        Submit Review
-                    </button>
+                    <button type="submit" className="submit-button">Submit Review</button>
                 </form>
 
                 <div className="reviews-list">
@@ -130,18 +170,9 @@ function BookDetail() {
                     ) : (
                         reviews.map((review, index) => (
                             <div key={index} className="review-item">
-                                <div className="review-rating">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            className={`star ${star <= review.rating ? 'filled' : ''}`}
-                                        >
-                                            ★
-                                        </span>
-                                    ))}
-                                </div>
+                                <div className="review-rating">{renderStars(review.rating)}</div>
                                 <p className="review-comment">{review.comment}</p>
-                                <p className="review-date">{review.createdAt}</p>
+                                <p className="review-date">{new Date(review.createdAt).toLocaleDateString()}</p>
                             </div>
                         ))
                     )}

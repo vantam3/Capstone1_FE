@@ -1,0 +1,44 @@
+/* UserDropdown.css */
+.user-dropdown {
+    position: absolute;
+    top: 60px; /* Điều chỉnh để dropdown xuất hiện dưới avatar */
+    right: 40px; /* Điều chỉnh vị trí dropdown */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 1000; /* Đảm bảo dropdown hiển thị trên các phần tử khác */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-dropdown-item {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  .user-dropdown-item a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .user-dropdown-item a:hover {
+    color: #007bff; /* Màu sắc khi hover */
+  }
+  
+  .logout-button {
+    background: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background: #ff2a2a; /* Màu sắc khi hover vào nút Logout */
+  }
+  

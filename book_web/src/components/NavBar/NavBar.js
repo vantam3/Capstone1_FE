@@ -4,10 +4,12 @@ import "./NavBar.css";
 import { useGlobalContextLogin } from "../../layouts/useContext"; // Import context để quản lý trạng thái đăng nhập
 import axios from "axios"; // Import axios để gọi API
 import Modal from "../../components/Modal/Modal"; // Import Modal
+import UserDropdown from "../../components/UserDropdown/UserDropdown"; // Thêm dòng này
 
 function Navbar() {
   const { user, setFormLogin, setUser } = useGlobalContextLogin(); // Lấy thông tin từ context
   const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Thêm dòng này
   const [modalContent, setModalContent] = useState({
     title: "",
     message: "",
@@ -17,12 +19,17 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState(""); // Lưu từ khóa tìm kiếm
   const navigate = useNavigate();
   const searchRef = useRef(null); // Dùng để xử lý ẩn kết quả khi click ra ngoài
-
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen); // Toggle trạng thái dropdown
+  };
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setSearchResults([]); // Ẩn danh sách kết quả khi click ra ngoài
         setShowModal(false); // Ẩn modal nếu đang hiển thị
+        setIsDropdownOpen(false); // Đóng dropdown khi click ngoài
+
       }
     };
 
@@ -107,10 +114,9 @@ function Navbar() {
       <div className="nav-links">
         <Link to="/">Home</Link>
         <Link to="/library">Library</Link>
-        <Link to="/recommendations">Recommendations</Link>
         <Link to="/create">Create</Link>
         <Link to="/about">About</Link>
-        <Link to="/recommend">Recommend Book</Link>
+        <Link to="/recommend">Recommend Books</Link>
       </div>
       <div className="nav-right">
         <div className="nav-search-container">
@@ -141,10 +147,15 @@ function Navbar() {
               src="/images/user.png" // Ảnh mặc định cho người dùng
               alt="User Avatar"
               className="nav-user-avatar"
+              onClick={toggleDropdown} // Thêm onClick để mở/đóng dropdown
+
             />
             <span className="nav-user-name">
               {user.first_name} {user.last_name}
             </span>
+            {isDropdownOpen && (
+              <UserDropdown user={user} handleLogout={handleLogout} /> // Hiển thị dropdown khi isDropdownOpen là true
+            )}
             <button onClick={handleLogout} className="nav-logout-button">
               Logout
             </button>

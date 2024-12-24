@@ -1,48 +1,143 @@
-.category-detail-container h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+/* CategoryDetail.css */
+
+/* Container chính của trang */
+.category-detail-container {
+    padding: 60px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9fb; /* Nền sáng nhẹ */
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Tiêu đề của trang */
+.category-detail-container h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #2c3e50;
+    letter-spacing: 1.5px;
+    text-transform: capitalize;
+    line-height: 1.3;
+    position: relative;
+}
+
+.category-detail-container h1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: #3498db;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Danh sách sách */
 .category-detail-container .book-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
+    justify-content: center;
 }
 
+/* Thẻ thông tin sách */
 .category-detail-container .book-card {
-    min-width: 200px;
-    max-width: 220px;
+    width: 250px;
     background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
     position: relative;
-    transition: transform 0.3s ease;
 }
 
+/* Thẻ sách khi hover */
 .category-detail-container .book-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
+/* Ảnh của sách */
 .category-detail-container .book-image {
     width: 50%;
-    height: 150px;
+    height: 200px;
     object-fit: cover;
-    border-radius: 12px 12px 0 0;
+    border-radius: 16px 16px 0 0;
+    transition: transform 0.4s ease-out;
 }
 
+/* Hiệu ứng zoom ảnh khi hover */
+.category-detail-container .book-card:hover .book-image {
+    transform: scale(1.1);
+}
+
+/* Thông tin sách */
 .category-detail-container .book-info {
-    padding: 15px;
-    text-align: left;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+    border-radius: 0 0 16px 16px;
 }
 
+.category-detail-container .book-card:hover .book-info {
+    background-color: #ecf0f1;
+}
+
+/* Tiêu đề sách */
 .category-detail-container .book-info h3 {
-    font-size: 1.2rem;
-    color: #333;
-    margin: 10px 0;
+    font-size: 1.5rem;
+    color: #34495e;
+    margin-bottom: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
+/* Mô tả sách */
 .category-detail-container .book-info p {
     font-size: 1rem;
-    color: #666;
+    color: #7f8c8d;
+    line-height: 1.5;
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Nút xem thêm (nếu cần) */
+.category-detail-container .book-info .view-more {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #3498db;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.category-detail-container .book-info .view-more:hover {
+    color: #2980b9;
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #888;
+    padding: 60px 0;
+    font-weight: 500;
+}
+
+/* Error */
+.error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    padding: 60px 0;
+    font-weight: 500;
 }

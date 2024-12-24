@@ -137,4 +137,74 @@
 .add-product-button:hover {
     background-color: #79ACD9;
 }
+/* Thanh nhập từ khóa và số lượng */
+.fetch-books-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
+.keyword-input,
+.size-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.size-input {
+  max-width: 120px; /* Giới hạn độ rộng cho trường số lượng */
+}
+
+.fetch-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fetch-button:hover {
+  background-color: #2980b9;
+}
+/* Thanh nhập từ khóa và số lượng */
+.fetch-books-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .keyword-input,
+  .size-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .size-input {
+    max-width: 120px; /* Giới hạn độ rộng cho trường số lượng */
+  }
+  
+  .fetch-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .fetch-button:hover {
+    background-color: #2980b9;
+  }
+  
