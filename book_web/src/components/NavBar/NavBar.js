@@ -19,17 +19,32 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState(""); // Lưu từ khóa tìm kiếm
   const navigate = useNavigate();
   const searchRef = useRef(null); // Dùng để xử lý ẩn kết quả khi click ra ngoài
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen); // Toggle trạng thái dropdown
   };
-  
+
+  // Khôi phục trạng thái đăng nhập từ LocalStorage
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  // Lưu trạng thái user vào LocalStorage khi user thay đổi
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setSearchResults([]); // Ẩn danh sách kết quả khi click ra ngoài
         setShowModal(false); // Ẩn modal nếu đang hiển thị
         setIsDropdownOpen(false); // Đóng dropdown khi click ngoài
-
       }
     };
 
@@ -50,9 +65,10 @@ function Navbar() {
         });
       }
 
-      // Xóa token khỏi LocalStorage
+      // Xóa token và thông tin user khỏi LocalStorage
       localStorage.removeItem("token");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
 
       // Đặt trạng thái đăng xuất
       setUser(null);
@@ -64,17 +80,27 @@ function Navbar() {
         message: "You have successfully logged out!",
         type: "success",
       });
-      setShowModal(true);
+
+      // Sử dụng setTimeout để đảm bảo trạng thái modal hiển thị chính xác
+      setTimeout(() => {
+        setShowModal(true);
+      }, 0);
     } catch (err) {
       console.error("Logout error:", err);
+
+      // Hiển thị modal thông báo lỗi
       setModalContent({
         title: "Error",
         message: "Error occurred during logout. Please try again.",
         type: "error",
       });
-      setShowModal(true);
+
+      // Sử dụng setTimeout để đảm bảo trạng thái modal hiển thị chính xác
+      setTimeout(() => {
+        setShowModal(true);
+      }, 0);
     }
-  };
+};
 
   const handleSearch = async (e) => {
     if (e.key !== "Enter") return; // Chỉ kích hoạt tìm kiếm khi nhấn Enter
@@ -134,7 +160,9 @@ function Navbar() {
             <ul>
               {searchResults.map((book) => (
                 <li key={book.id}>
-                  <Link to={`/book/${book.id}`}>{book.title} by {book.author}</Link>
+                  <Link to={`/book/${book.id}`}>
+                    {book.title} by {book.author}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -148,7 +176,6 @@ function Navbar() {
               alt="User Avatar"
               className="nav-user-avatar"
               onClick={toggleDropdown} // Thêm onClick để mở/đóng dropdown
-
             />
             <span className="nav-user-name">
               {user.first_name} {user.last_name}

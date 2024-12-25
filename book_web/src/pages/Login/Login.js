@@ -35,13 +35,25 @@ const LoginForm = () => {
       setModalMessage("Login successful!");
       setModalType("success");
 
-      // Điều hướng sau 1s
-      setTimeout(() => {
-        setModalMessage("");
-        navigate("/"); // Quay về trang chủ hoặc trang bạn muốn
-      }, 1000);
+      try {
+        const adminResponse = await axios.get("http://localhost:8000/api/admin_dashboard/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setTimeout(() => {
+          setModalMessage("");
+          if (adminResponse.status === 200 && adminResponse.data.message === "Welcome Admin!") {
+            navigate("/admin");
+          }
+        }, 1000);
+      } catch (adminResponse) {
+        if (adminResponse.status == 403) {
+          setTimeout(() => {
+            setModalMessage("");
+          navigate("/");
+          }, 1000);
+        }
+      }
     } catch (err) {
-      // Hiển thị thông báo lỗi khi đăng nhập thất bại
       setModalMessage(err.response?.data?.message || "Login failed. Please try again.");
       setModalType("error");
     }
