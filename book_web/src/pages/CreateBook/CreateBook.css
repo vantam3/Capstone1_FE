@@ -9,12 +9,22 @@
     margin: 0; /* Xóa khoảng cách không cần thiết */
     padding: 0; /* Xóa padding mặc định */
     box-sizing: border-box;
+    margin-top: 50px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.create-book-h1{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #3f6780; 
+    text-align: center;
 }
 
 /* Style cho form */
 form {
     width: 90%;
-    max-width: 500px; /* Giới hạn chiều rộng tối đa */
+    max-width: 800px; /* Giới hạn chiều rộng tối đa */
     background-color: #ffffff; /* Màu nền trắng */
     border-radius: 10px; /* Bo góc nhẹ */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Hiệu ứng đổ bóng */
