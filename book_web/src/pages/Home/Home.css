@@ -495,3 +495,6 @@
   .fp-overflow {
     display: contents;
   }
+  .fp-watermark {
+    display: none !important;
+}
