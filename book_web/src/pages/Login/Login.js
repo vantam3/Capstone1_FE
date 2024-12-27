@@ -12,47 +12,34 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [modalMessage, setModalMessage] = useState("");
   const [modalType, setModalType] = useState(""); 
-  const [showForgotPassword, setShowForgotPassword] = useState(false); // Toggle forgot password form
-  const [forgotEmail, setForgotEmail] = useState(""); // Email for forgot password
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState(""); 
+  const [confirmationCode, setConfirmationCode] = useState(""); 
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState(""); // Added for confirm password
+  const [isCodeSent, setIsCodeSent] = useState(false); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setModalMessage(""); // Reset message
+    setModalMessage(""); 
 
     try {
       const response = await axios.post("http://localhost:8000/api/login/", { email, password });
       const { token, user } = response.data;
 
-      // Lưu token và id vào localStorage
       localStorage.setItem("token", token);
-      localStorage.setItem("user_id", user.id); // Lưu user_id vào localStorage
+      localStorage.setItem("user_id", user.id);
 
-      // Cập nhật thông tin người dùng vào context
       setUser(user);
       setFormLogin(true);
 
-      // Hiển thị thông báo thành công
       setModalMessage("Login successful!");
       setModalType("success");
 
-      try {
-        const adminResponse = await axios.get("http://localhost:8000/api/admin_dashboard/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setTimeout(() => {
-          setModalMessage("");
-          if (adminResponse.status === 200 && adminResponse.data.message === "Welcome Admin!") {
-            navigate("/admin");
-          }
-        }, 1000);
-      } catch (adminResponse) {
-        if (adminResponse.status == 403) {
-          setTimeout(() => {
-            setModalMessage("");
-          navigate("/");
-          }, 1000);
-        }
-      }
+      setTimeout(() => {
+        setModalMessage("");
+        navigate("/");
+      }, 1000);
     } catch (err) {
       setModalMessage(err.response?.data?.message || "Login failed. Please try again.");
       setModalType("error");
@@ -65,15 +52,42 @@ const LoginForm = () => {
     setModalType("success");
 
     try {
-      const response = await axios.post("http://localhost:8000/api/forgot-password/", {
+      await axios.post("http://localhost:8000/api/forgot-password/", {
         email: forgotEmail,
       });
-      setModalMessage("Password reset email sent successfully!");
+      setModalMessage("Confirmation code sent to your email!");
       setModalType("success");
-      setForgotEmail(""); // Clear email field after successful submission
-      setShowForgotPassword(false); // Return to login form
+      setIsCodeSent(true);
     } catch (error) {
-      setModalMessage(error.response?.data?.error || "Failed to send password reset email.");
+      setModalMessage(error.response?.data?.error || "Failed to send confirmation code.");
+      setModalType("error");
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmNewPassword) {
+      setModalMessage("New password and confirmation password do not match!");
+      setModalType("error");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8000/api/reset-password/", {
+        email: forgotEmail,
+        confirmation_code: confirmationCode,
+        new_password: newPassword,
+      });
+      setModalMessage("Password reset successfully!");
+      setModalType("success");
+      setForgotEmail(""); 
+      setConfirmationCode(""); 
+      setNewPassword(""); 
+      setConfirmNewPassword(""); // Clear confirmation password
+      setShowForgotPassword(false); 
+    } catch (error) {
+      setModalMessage(error.response?.data?.error || "Failed to reset password.");
       setModalType("error");
     }
   };
@@ -92,19 +106,62 @@ const LoginForm = () => {
       {showForgotPassword ? (
         <div className="forgot-password-box">
           <h2>Forgot Password</h2>
-          <p>Please enter your email to reset your password:</p>
-          <form onSubmit={handleForgotPasswordSubmit}>
-            <input
-              type="email"
-              value={forgotEmail}
-              onChange={(e) => setForgotEmail(e.target.value)}
-              required
-              placeholder="Email:"
-            />
-            <button type="submit" className="button_forgot">
-              Submit
-            </button>
-          </form>
+          {!isCodeSent ? (
+            <div>
+              <p>Please enter your email to reset your password:</p>
+              <form onSubmit={handleForgotPasswordSubmit}>
+                <input
+                  type="email"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  required
+                  placeholder="Email:"
+                />
+                <button type="submit" className="button_forgot">
+                  Submit
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div>
+              <p>Enter the confirmation code and set a new password:</p>
+              <form onSubmit={handleResetPasswordSubmit}>
+                <div>
+                  <label>Confirmation Code:</label>
+                  <input
+                    type="text"
+                    value={confirmationCode}
+                    onChange={(e) => setConfirmationCode(e.target.value)}
+                    required
+                    placeholder="Confirmation Code:"
+                  />
+                </div>
+                <div>
+                  <label>New Password:</label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    placeholder="New Password:"
+                  />
+                </div>
+                <div>
+                  <label>Confirm New Password:</label>
+                  <input
+                    type="password"
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    required
+                    placeholder="Confirm New Password:"
+                  />
+                </div>
+                <button type="submit" className="button_reset">
+                  Reset Password
+                </button>
+              </form>
+            </div>
+          )}
           <button onClick={() => setShowForgotPassword(false)} className="button_cancel">
             Back to Login
           </button>
