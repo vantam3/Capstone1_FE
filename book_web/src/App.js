@@ -21,6 +21,7 @@ import AdminLayout from './Admin/AdminLayout';
 import AdminDashboard from './Admin/AdminDashboard';
 import ManageUsers from './Admin/ManageUsers';
 import ManageProducts from './Admin/ManageProducts';
+import ManageUserBooks from './Admin/ManageUserBooks';
 import ViewReports from './Admin/ViewReports';
 import Logout from './Admin/Logout';
 
@@ -98,6 +99,7 @@ function App() {
                         <Route path="dashboard" element={<AdminDashboard />} />
                         <Route path="manage-users" element={<ManageUsers />} />
                         <Route path="manage-products" element={<ManageProducts />} />
+                        <Route path="manage-user-books" element={<ManageUserBooks />} />
                         <Route path="view-reports" element={<ViewReports />} />
                         <Route path="logout" element={<Logout />} />
                     </Route>

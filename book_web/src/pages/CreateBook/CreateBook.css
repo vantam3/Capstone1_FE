@@ -11,14 +11,18 @@
     box-sizing: border-box;
     margin-top: 50px;
     animation: fadeIn 1.5s ease-in-out;
+    transform: scale(0.9);
+    transform-origin: center top;
 }
 
 .create-book-h1{
     font-size: 2.5rem;
     margin-bottom: 20px;
-    font-size: 2.5rem;
     color: #3f6780; 
     text-align: center;
+}
+.create-book-description{
+    margin-top: 0;
 }
 
 /* Style cho form */
@@ -87,6 +91,7 @@ form textarea {
 
 /* Style cho nút bấm */
 form button {
+    display: block;
     background-color: #007bff; /* Màu xanh dương nổi bật */
     color: white;
     border: none;
@@ -96,6 +101,7 @@ form button {
     border-radius: 5px; /* Bo góc nhẹ */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px auto;
 }
 
 /* Hiệu ứng khi hover nút */
@@ -124,3 +130,11 @@ form button:hover {
         font-size: 0.9rem;
     }
 }
+.image-preview {
+    display: block; /* Chuyển ảnh thành khối */
+    max-width: 100%; /* Giới hạn chiều rộng để không vượt quá khung */
+    max-height: 300px; /* Giới hạn chiều cao */
+    margin: 10px auto; /* Căn giữa ảnh */
+    border: 2px solid #ddd; /* Thêm viền nếu cần */
+    object-fit: contain; /* Đảm bảo toàn bộ ảnh hiển thị */
+  }
