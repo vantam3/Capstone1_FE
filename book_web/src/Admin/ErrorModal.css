@@ -31,6 +31,7 @@
   color: #333;
 }
 
+/* Shared button styles */
 .error-modal-button {
   background-color: #007bff;
   color: #fff;
@@ -44,4 +45,19 @@
 
 .error-modal-button:hover {
   background-color: #0056b3;
+}
+
+/* Container for buttons */
+.error-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Space between buttons */
+}
+
+.error-modal-button.close {
+  background-color: #dc3545; /* Red for Close button */
+}
+
+.error-modal-button.close:hover {
+  background-color: #b52a3a;
 }

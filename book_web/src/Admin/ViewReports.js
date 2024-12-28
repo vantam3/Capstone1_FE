@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import './ViewReports.css';
+import React, { useState, useEffect } from "react";
+import "./ViewReports.css";
+import "./ManageProducts.css";
+import Modal from "../components/Modal/Modal";
+import ErrorModal from "./ErrorModal";
 
 const ViewReport = () => {
     const [filters, setFilters] = useState({ category: '', startDate: '', endDate: '' });
@@ -7,20 +10,18 @@ const ViewReport = () => {
         { category: 'active-users', metric: 'Active Users', value: 120, date: '2024-11-01' },
         { category: 'book-ratings', metric: 'Average Ratings', value: 4.5, date: '2024-11-02' },
         { category: 'interaction-rates', metric: 'Interaction Rate', value: 75, date: '2024-11-03' },
-        { category: 'revenue-statistics', metric: 'Total Revenue', value: 1500, date: '2024-11-04' },
+        { category: 'top-read-books', metric: 'Top Read Books', value: 'Book A, Book B', date: '2024-11-04' },
+        { category: 'inactive-users', metric: 'Inactive Users', value: 30, date: '2024-11-05' },
     ]);
 
     const categories = [
         { id: 'active-users', name: 'Active Users' },
         { id: 'book-ratings', name: 'Book Ratings' },
         { id: 'interaction-rates', name: 'Interaction Rates' },
-        { id: 'revenue-statistics', name: 'Revenue Statistics' },
-        { id: 'top-borrowed-books', name: 'Top Borrowed Books' },
+        { id: 'top-read-books', name: 'Top Read Books' },
         { id: 'inactive-users', name: 'Inactive Users' },
-        { id: 'feedback-suggestions', name: 'Feedback and Suggestions' },
     ];
 
-    // Filter reports based on filters
     const filteredReports = reports.filter((report) => {
         const matchesCategory = filters.category ? report.category === filters.category : true;
         const matchesStartDate = filters.startDate
@@ -35,6 +36,67 @@ const ViewReport = () => {
 
     const clearFilters = () => {
         setFilters({ category: '', startDate: '', endDate: '' });
+    };
+
+    const [books, setBooks] = useState([]);
+    const [message, setMessage] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalType, setModalType] = useState('success');
+    const [errorVisible, setErrorVisible] = useState(false);
+
+    useEffect(() => {
+        fetchBooks();
+    }, []);
+
+    const fetchBooks = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/list-user-books/', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setBooks(data);
+            } else {
+                setMessage('Failed to fetch books.');
+                setErrorVisible(true);
+            }
+        } catch (error) {
+            setMessage('An error occurred while fetching books.');
+            setErrorVisible(true);
+        }
+    };
+
+    const handleApprove = async (id) => {
+        const confirmed = window.confirm("Are you sure you want to approve this book?");
+        if (confirmed) {
+            try {
+                const response = await fetch(`http://localhost:8000/api/approve-user-book/${id}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+
+                if (response.ok) {
+                    setModalType('success');
+                    setMessage('Book approved successfully!');
+                    setModalVisible(true);
+                    setTimeout(() => setModalVisible(false), 3000); // Auto-close modal after 3 seconds
+                    fetchBooks();
+                } else {
+                    setModalType('error');
+                    setMessage('Failed to approve book.');
+                    setModalVisible(true);
+                }
+            } catch (error) {
+                setModalType('error');
+                setMessage('An error occurred while approving the book.');
+                setModalVisible(true);
+            }
+        }
     };
 
     return (
@@ -94,6 +156,56 @@ const ViewReport = () => {
                 ) : (
                     <p className="no-results">No reports found for the selected filters.</p>
                 )}
+            </div>
+
+            <div className="manage-products-container">
+                <h2>Manage User's Books</h2>
+                <p>Review and approve books created by users.</p>
+                {errorVisible && (
+                    <ErrorModal
+                        message={message}
+                        onClose={() => setErrorVisible(false)} // Add close button functionality
+                    />
+                )}
+                {modalVisible && (
+                    <Modal
+                        title={modalType === 'success' ? 'Success' : 'Error'}
+                        message={message}
+                        type={modalType}
+                        onClose={() => setModalVisible(false)} // Add close button functionality
+                    />
+                )}
+                <table className="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Genre</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {books.map((book) => (
+                            <tr key={book.id}>
+                                <td>{book.id}</td>
+                                <td>{book.title}</td>
+                                <td>{book.author}</td>
+                                <td>{book.genre}</td>
+                                <td>{book.description}</td>
+                                <td>
+                                    <button
+                                        className="edit-button"
+                                        onClick={() => handleApprove(book.id)}
+                                    >
+                                        Approve
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

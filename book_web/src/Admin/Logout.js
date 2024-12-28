@@ -13,7 +13,6 @@ const Logout = () => {
     return (
         <div className="logout-container">
             <h2>Log Out</h2>
-            <p>You have successfully logged out.</p>
             <button
                 className="logout-button"
                 onClick={() => setShowConfirm(true)}

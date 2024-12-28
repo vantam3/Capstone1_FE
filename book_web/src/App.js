@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/NavBar/NavBar';
 import Home from './pages/Home/Home';
 import Library from './pages/Library/Library';
@@ -16,17 +16,39 @@ import Profile from "./pages/Profile/Profile";
 import ReadingHistory from "./pages/ReadingHistory/ReadingHistory";
 import FavoriteBooks from "./pages/FavoriteBooks/Favorite";
 
-// Import Admin layout và các trang admin
+// Import Admin layout and pages
 import AdminLayout from './Admin/AdminLayout';
 import AdminDashboard from './Admin/AdminDashboard';
 import ManageUsers from './Admin/ManageUsers';
 import ManageProducts from './Admin/ManageProducts';
-import ManageUserBooks from './Admin/ManageUserBooks';
 import ViewReports from './Admin/ViewReports';
 import Logout from './Admin/Logout';
 
-// Import Modal cho thông báo lỗi
-import ErrorModal from './Admin/ErrorModal';
+function UnauthorizedModal({ message }) {
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            window.location.href = '/'; // Redirect to home after 5 seconds
+        }, 5000);
+        return () => clearTimeout(timeout); // Cleanup timeout on component unmount
+    }, []);
+
+    return (
+        <div className="error-modal-overlay">
+            <div className="error-modal">
+                <h2>Access Denied</h2>
+                <p>{message}</p>
+                <button
+                    className="error-modal-button"
+                    onClick={() => {
+                        window.location.href = '/'; // Redirect immediately on button click
+                    }}
+                >
+                    Go Home
+                </button>
+            </div>
+        </div>
+    );
+}
 
 function App() {
     const [isSuperuser, setIsSuperuser] = useState(false);
@@ -36,7 +58,7 @@ function App() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            // Gửi yêu cầu kiểm tra quyền admin
+            // Check admin permissions
             fetch('http://localhost:8000/api/admin_dashboard/', {
                 method: 'GET',
                 headers: { Authorization: `Bearer ${token}` },
@@ -58,7 +80,7 @@ function App() {
     }, []);
 
     if (!authChecked) {
-        return null; 
+        return null; // Wait until authentication check is complete
     }
     
     return (
@@ -66,10 +88,10 @@ function App() {
             <Navbar />
             <div className="app-container">
                 <Routes>
-                    {/* Các route chính */}
+                    {/* Main routes */}
                     <Route path="/" element={<Home />} />
                     <Route path="/library" element={<Library />} />
-                    <Route path="/Recommendations" element={<Recommend />} />
+                    <Route path="/recommendations" element={<Recommend />} />
                     <Route path="/create" element={<CreateBook />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/recover" element={<Recover />} />
@@ -82,16 +104,15 @@ function App() {
                     <Route path="/user-profile" element={<Profile />} />
                     <Route path="/reading-history" element={<ReadingHistory />} />
                     <Route path="/favorite-books" element={<FavoriteBooks />} />
-                    {/* Route admin */}
+                    {/* Admin routes */}
                     <Route
                         path="/admin/*"
                         element={
                             isSuperuser ? (
                                 <AdminLayout />
                             ) : (
-                                <ErrorModal
+                                <UnauthorizedModal
                                     message={errorMessage || 'You are not authorized to access the admin area.'}
-                                    redirectTo="/"
                                 />
                             )
                         }
@@ -99,7 +120,6 @@ function App() {
                         <Route path="dashboard" element={<AdminDashboard />} />
                         <Route path="manage-users" element={<ManageUsers />} />
                         <Route path="manage-products" element={<ManageProducts />} />
-                        <Route path="manage-user-books" element={<ManageUserBooks />} />
                         <Route path="view-reports" element={<ViewReports />} />
                         <Route path="logout" element={<Logout />} />
                     </Route>
