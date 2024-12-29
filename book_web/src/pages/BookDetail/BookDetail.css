@@ -48,7 +48,7 @@
 }
 
 .read-now-button {
-    background-color: #3498db;
+    background-color: #007bff;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -60,11 +60,11 @@
 }
 
 .read-now-button:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
 }
 
 .reviews-section {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .review-form {
@@ -74,45 +74,74 @@
 .rating-stars-input {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 15px;
 }
 
 .star {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     cursor: pointer;
     color: #bbb;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.star:hover {
+    color: #f39c12;
+    transform: scale(1.2);
 }
 
 .star.filled {
     color: #f39c12;
+    transform: scale(1.1);
+}
+
+.review-form {
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto 30px; 
+    padding: 20px;
+    background: #ffffff; 
+    border-radius: 16px; 
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1); 
 }
 
 .review-textarea {
-    width: 100%;
-    height: 120px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    margin-bottom: 20px;
+    width: 100%; 
+    height: 150px; 
+    padding: 15px; 
+    border-radius: 12px; 
+    border: 1px solid #ccc; 
+    font-size: 1rem; 
+    margin-bottom: 20px; 
+    box-sizing: border-box; 
+    transition: border-color 0.3s ease; 
+}
+
+.review-textarea:focus {
+    outline: none;
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); 
 }
 
 .submit-button {
-    background-color: #3498db;
+    background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block; 
+    margin: 20px auto 0; 
+    text-align: center; 
 }
 
 .submit-button:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
+
 
 .reviews-list {
     margin-top: 30px;

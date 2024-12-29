@@ -42,7 +42,7 @@ const LoginForm = () => {
         setTimeout(() => {
           setModalMessage("");
           if (adminResponse.status === 200 && adminResponse.data.message === "Welcome Admin!") {
-            navigate("/admin");
+            navigate("/admin/dashboard");
           }
         }, 1000);
       } catch (adminResponse) {
@@ -83,7 +83,7 @@ const LoginForm = () => {
       {modalMessage && (
         <Modal
           title={modalType === "success" ? "Success" : "Error"}
-          message={modalMessage}
+message={modalMessage}
           onClose={() => setModalMessage("")}
           type={modalType}
         />

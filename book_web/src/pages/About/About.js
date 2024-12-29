@@ -31,13 +31,11 @@ const About = () => {
 
             <div className="project-section">
                 <div className="project-members">
-                    <h2>BookQuest Project Members</h2>
+                    <h2>Contact</h2>
                     <ul className="member-list">
-                        <li><strong>Tran Van Tam</strong> - ID: 27211202895 - Project Leader</li>
-                        <li><strong>Le Vu Gia Bao</strong> - ID: 27211241330 - Team Member</li>
-                        <li><strong>Nguyen Ha Long</strong> - ID: 27211237844 - Team Member</li>
-                        <li><strong>Le Truc Phuong Quynh</strong> - ID: 27201238931 - Team Member</li>
-                        <li><strong>Vo Duy Nhut</strong> - ID: 27211438669 - Team Member</li>
+                        <li>We're here to help! If you're having issues, contact support via:</li>
+                        <li>Email: bookquest.system@gmail.com</li>
+                        <li>Phone: 0833096343</li>
                     </ul>
                 </div>
 

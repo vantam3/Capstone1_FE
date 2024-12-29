@@ -1,14 +1,73 @@
-/* .read-book-container .book-content {
-    font-size: 1.1rem;
-    line-height: 1.6;
+/* Định dạng container chính */
+.read-book-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Georgia', serif;
+    line-height: 1.8;
     color: #333;
-    white-space: pre-wrap;
 }
 
+/* Định dạng cho nội dung sách */
+.read-book-content {
+    font-size: 16px;
+    text-align: justify;
+    word-wrap: break-word;
+    color: #444;
+}
 
-.book-content {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
-    white-space: pre-wrap;
-} */
+/* Định dạng hình ảnh trong nội dung */
+.read-book-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Định dạng liên kết trong nội dung */
+.read-book-content a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-book-content a:hover {
+    text-decoration: underline;
+}
+
+/* Định dạng đoạn văn */
+.read-book-content p {
+    margin-bottom: 20px;
+}
+
+/* Định dạng cho tiêu đề (nếu có) */
+.read-book-content h1,
+.read-book-content h2,
+.read-book-content h3 {
+    margin: 20px 0;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Loading và Error thông báo */
+.read-book-loading,
+.read-book-error {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Responsive - Đảm bảo hiển thị tốt trên các thiết bị nhỏ hơn */
+@media screen and (max-width: 768px) {
+    .read-book-container {
+        padding: 15px;
+    }
+
+    .read-book-content {
+        font-size: 14px;
+    }
+}

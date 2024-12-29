@@ -12,8 +12,8 @@ function ReadingHistory() {
 
   const token = localStorage.getItem("token"); // Lấy token từ localStorage
 
-  // Hàm quay lại trang trước
-  const handleBack = () => {
+  // Đóng modal
+  const handleClose = () => {
     setShowModal(false);
     navigate(-1); // Quay lại trang trước đó
   };
@@ -57,9 +57,6 @@ function ReadingHistory() {
       {showModal && (
         <div className="overlay">
           <div className="modal">
-            <button className="back-button" onClick={handleBack}>
-              <span className="chevron-left">←</span> Back
-            </button>
             <h2>Reading History</h2>
 
             {loading ? (
@@ -84,6 +81,9 @@ function ReadingHistory() {
                 ))}
               </ul>
             )}
+            <button onClick={handleClose} className="cancel-button">
+              Close
+            </button>
           </div>
         </div>
       )}

@@ -5,8 +5,6 @@ import './ReadBook.css';
 
 function ReadBook() {
     const { bookId } = useParams();
-    console.log("bookId from URL:", bookId);
-
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,7 +13,6 @@ function ReadBook() {
         const fetchBookContent = async () => {
             try {
                 const response = await axios.get(`http://localhost:8000/api/books/${bookId}/content/`);
-                console.log("API response:", response.data);
                 if (response.data.content) {
                     setContent(response.data.content); // Lưu nội dung HTML vào state
                 } else {
@@ -23,7 +20,6 @@ function ReadBook() {
                 }
                 setLoading(false);
             } catch (err) {
-                console.error("Axios error:", err.response || err.message);
                 setError("Content not found for this book.");
                 setLoading(false);
             }
@@ -33,18 +29,16 @@ function ReadBook() {
     }, [bookId]);
 
     if (loading) {
-        return <p>Loading content...</p>;
+        return <p className="read-book-loading">Loading content...</p>;
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return <p className="read-book-error">{error}</p>;
     }
 
     return (
         <div className="read-book-container">
-            {/* <h1>Book Content</h1> */}
-            <br></br>
-            <div className="book-content1" dangerouslySetInnerHTML={{ __html: content }}></div>
+            <div className="read-book-content" dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
     );
 }

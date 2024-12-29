@@ -7,20 +7,49 @@ const RecommendationsPage = () => {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [topBooks, setTopBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  // Regex chỉ cho phép tiếng Anh
+  const isValidEnglishInput = (input) => {
+    const englishRegex = /^[a-zA-Z0-9\s.,!?'\’\-]*$/;
+    return englishRegex.test(input);
+  };
+
+  // Kiểm tra tần suất ký tự lặp lại (phòng tránh spam)
+  const isNotSpam = (text) => {
+    const spamRegex = /(.)\1{4,}/; // Tìm các ký tự lặp lại nhiều hơn 4 lần
+    return !spamRegex.test(text);
+  };
+
+  // Kiểm tra tính hợp lệ của từ vựng (dựa trên từ điển cơ bản hoặc logic)
+  const isValidText = (text) => {
+    const words = text.split(/\s+/); // Tách thành từ
+    if (words.length === 0) return false;
+    const validWords = words.filter(word => /^[a-zA-Z0-9]+$/.test(word)); // Kiểm tra các từ hợp lệ
+    return validWords.length / words.length >= 0.7; // Ít nhất 70% từ hợp lệ
+  };
+
+  // Hàm tổng hợp kiểm tra tính hợp lệ
+  const validateInput = (text) => {
+    if (text.trim() === "") return "Vui lòng nhập sở thích của bạn.";
+    if (!isValidEnglishInput(text)) return "Đầu vào bắt buộc là tiếng anh.";
+    if (!isNotSpam(text)) return "Đầu vào có vẻ là spam.";
+    if (!isValidText(text)) return "Đầu vào không có vẻ hợp lý.";
+    return null; // Hợp lệ
+  };
 
   // Fetch top books on page load
   useEffect(() => {
     const fetchTopBooks = async () => {
       try {
-        const response = await fetch("/api/top-books"); //top sach yeu thich nhat
+        const response = await fetch("/api/top-books");
         const data = await response.json();
         setTopBooks(data);
       } catch (error) {
-        console.error("Failed to fetch top favorite books:", error);
+        console.error("Không thể lấy danh sách sách yêu thích hàng đầu:", error);
       }
     };
-  
 
     fetchTopBooks();
   }, []);
@@ -28,30 +57,40 @@ const RecommendationsPage = () => {
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
       setFilteredBooks([]);
+      setErrorMessage("Vui lòng nhập sở thích của bạn.");
+      return;
+    }
+
+    const validationError = validateInput(searchTerm);
+    if (validationError) {
+      setErrorMessage(validationError);
+      setFilteredBooks([]); // Xóa kết quả trước đó
       return;
     }
 
     setIsLoading(true);
+    setErrorMessage("");
 
     try {
-      // Gửi POST request tới API backend
       const response = await fetch("http://localhost:8000/api/recommend_books/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: searchTerm }), // Gửi searchTerm trong trường query
+        body: JSON.stringify({ query: searchTerm }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch recommendations.");
+        throw new Error("Không thể lấy gợi ý sách.");
       }
 
       const data = await response.json();
-      setFilteredBooks(data); // Cập nhật danh sách sách gợi ý
-      localStorage.setItem("recommendations", JSON.stringify(data)); // Lưu vào localStorage
+      setFilteredBooks(data);
+      localStorage.setItem("recommendations", JSON.stringify(data));
     } catch (error) {
-      console.error("Failed to fetch recommended books:", error);
+      console.error("Không thể lấy sách được gợi ý:", error);
+      setErrorMessage("Đã xảy ra lỗi khi lấy gợi ý sách.");
+      setFilteredBooks([]); // Xóa kết quả trước đó khi có lỗi
     } finally {
       setIsLoading(false);
     }
@@ -61,26 +100,45 @@ const RecommendationsPage = () => {
     navigate(`/book/${id}`);
   };
 
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    setSearchTerm(input); // Luôn luôn cập nhật searchTerm
+
+    const validationError = validateInput(input);
+    if (validationError) {
+      setErrorMessage(validationError);
+      setFilteredBooks([]); // Xóa kết quả khi đầu vào không hợp lệ
+    } else {
+      setErrorMessage("");
+    }
+  };
+
   return (
     <div className="recommendations__container">
-      <h1 className="recommendations__title">Find Books Based on Your Preferences</h1>
-      <p className="recommendations__p">Describe your preferences, and we'll find books you'll love!</p>
+      <h1 className="recommendations__title">Tìm Sách Dựa Trên Sở Thích Của Bạn</h1>
+      <p className="recommendations__p">Mô tả sở thích của bạn, chúng tôi sẽ tìm những cuốn sách bạn yêu thích!</p>
 
-      {/* Search Bar */}
+      {/* Thanh Tìm Kiếm */}
       <div className="search__bar">
         <textarea
-          placeholder="Enter your preferences..."
+          placeholder="Nhập sở thích của bạn..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleInputChange}
           rows="4"
         />
-        <button onClick={handleSearch}>Find Books</button>
+        <button onClick={handleSearch} disabled={!!errorMessage || isLoading}>
+          Tìm Sách
+        </button>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
 
-      {/* Book List */}
+      {/* Danh Sách Sách Gợi Ý */}
       <div className="book__list">
         {isLoading ? (
-          <p>Loading recommendations...</p>
+          <p>Đang tải gợi ý sách...</p>
+        ) : errorMessage ? (
+          // Nếu có lỗi, không hiển thị danh sách sách
+          null
         ) : filteredBooks.length > 0 ? (
           filteredBooks.map((book) => (
             <div key={book.id} className="book-card">
@@ -94,27 +152,21 @@ const RecommendationsPage = () => {
               <div className="book-card__info">
                 <h3>{book.title}</h3>
                 <p>
-                  <strong>Author:</strong> {book.author}
+                  <strong>Tác giả:</strong> {book.author}
                 </p>
-                
                 <p>
-                  <strong>Similarity:</strong> {(book.similarity * 100).toFixed(2)}%
+                  <strong>Độ tương đồng:</strong> {(book.similarity * 100).toFixed(2)}%
                 </p>
               </div>
             </div>
           ))
         ) : (
-          <p>No books found. Try describing your preferences differently.</p>
+          <p>Hãy mô tả sở thích của bạn...</p>
         )}
       </div>
 
-      {/* Top Favorite Books */}
+      {/* Sách Yêu Thích Hàng Đầu */}
       <div className="top-favorites__container">
-        <h1 className="top-favorites__title">Top Favorite Books</h1>
-        <p className="top-favorites__introduction">
-          This section highlights the most loved books by readers. These books are highly rated for their exceptional content and impact. Explore the top-rated books and discover your next favorite read!
-        </p>
-
         <div className="book-carousel__wrapper">
           <div className="book-carousel">
             {topBooks.map((book) => (
@@ -127,7 +179,7 @@ const RecommendationsPage = () => {
                 <div className="book-card__info">
                   <h3>{book.title}</h3>
                   <p>{book.description}</p>
-                  <span className="book-card__rating">Rating: {book.rating}/5</span>
+                  <span className="book-card__rating">Đánh giá: {book.rating}/5</span>
                 </div>
               </div>
             ))}

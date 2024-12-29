@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../../components/Modal/Modal'; // Import the modal
+import Swal from 'sweetalert2'; // Import SweetAlert2
 import './CreateBook.css';
 
 const CreateBook = () => {
@@ -12,7 +12,7 @@ const CreateBook = () => {
     text: ""  // Add field for book text
   });
 
-  const [modal, setModal] = useState({ visible: false, title: "", message: "", type: "success" }); // Modal state
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
   const navigate = useNavigate(); 
 
   const handleChange = (e) => {
@@ -33,7 +33,17 @@ const CreateBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // Validate input fields
+    if (!book.title || !book.genre || !book.description || !book.text) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please fill in all required fields.'
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append('title', book.title);
     formData.append('genre', book.genre);
@@ -42,7 +52,8 @@ const CreateBook = () => {
     if (book.coverImage) {
       formData.append('cover_image', book.coverImage);
     }
-  
+
+    setIsLoading(true); // Set loading state to true
     try {
       const response = await fetch('http://localhost:8000/api/create-user-book/', {
         method: 'POST',
@@ -51,40 +62,40 @@ const CreateBook = () => {
         },
         body: formData,
       });
-  
+
       const result = await response.json();  
-  
+
       if (response.ok) {
         console.log("Book created:", result);
-        setModal({
-          visible: true,
-          title: "Success",
-          message: "Book created successfully!",
-          type: "success"
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Book created successfully!'
+        }).then(() => {
+          navigate('/create', { state: { book: result } });
         });
-        navigate('/bookcreated', { state: { book: result } });
       } else {
         let errorMessage = "Failed to create book.";
         if (result && result.detail) {
           errorMessage = result.detail;
         }
-        setModal({
-          visible: true,
-          title: "Error",
-          message: errorMessage,
-          type: "error"
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessage
         });
       }
     } catch (error) {
       console.error("Error creating book:", error);
-      setModal({
-        visible: true,
-        title: "Error",
-        message: "An error occurred while creating the book.",
-        type: "error"
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred while creating the book.'
       });
+    } finally {
+      setIsLoading(false); // Set loading state to false
     }
-  
+
     setBook({
       title: "",
       genre: "fiction", 
@@ -94,16 +105,12 @@ const CreateBook = () => {
     });
   };
 
-  
-
-  const closeModal = () => {
-    setModal({ visible: false, title: "", message: "", type: "success" }); // Close modal
-  };
-
   return (
     <div className="create-book-container">
       <h1 className="create-book-h1">CREATE YOUR BOOK</h1>
       <p className="create-book-description">Fill in the details below to create your book.</p>
+
+      {isLoading && <div className="loading">Submitting your book...</div>} {/* Add loading indicator */}
       
       <form className="create-book" onSubmit={handleSubmit}>
         <label>Book Title</label>
@@ -127,6 +134,7 @@ const CreateBook = () => {
           <option value="fantasy">Fantasy</option>
           <option value="science">Science</option>
           <option value="history">History</option>
+          <option value="other">Other</option>
         </select>
 
         <label>Description</label>
@@ -168,19 +176,10 @@ const CreateBook = () => {
           </div>
         )}
 
-        <button type="submit" className="create-book-submit">
-          Create Book
+        <button type="submit" className="create-book-submit" disabled={isLoading}>
+          {isLoading ? "Creating..." : "Create Book"}
         </button>
       </form>
-
-      {modal.visible && (
-        <Modal 
-          title={modal.title}
-          message={modal.message}
-          onClose={closeModal}
-          type={modal.type}
-        />
-      )}
     </div>
   );
 };

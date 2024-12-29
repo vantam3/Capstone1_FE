@@ -45,15 +45,17 @@ const ManageUserBooks = () => {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     },
                 });
-
+    
                 if (response.ok) {
+                    const result = await response.json();
                     setModalType('success');
-                    setMessage('Book approved successfully!');
+                    setMessage(result.message || 'Book approved successfully!');
                     setModalVisible(true);
-                    fetchBooks();
+                    fetchBooks(); // Cập nhật lại danh sách
                 } else {
+                    const errorData = await response.json();
                     setModalType('error');
-                    setMessage('Failed to approve book.');
+                    setMessage(errorData.message || 'Failed to approve book.');
                     setModalVisible(true);
                 }
             } catch (error) {
@@ -63,6 +65,7 @@ const ManageUserBooks = () => {
             }
         }
     };
+    
 
     return (
         <div className="manage-products-container">

@@ -28,6 +28,7 @@
 .library-sort-container label {
     font-size: 1.2rem;
     margin-right: 10px;
+    color: #3f6780; /* Màu xanh giống tiêu đề */
 }
 
 .library-genre-select {
@@ -55,7 +56,7 @@
 
 .library-genre-title {
     font-size: 1.8rem;
-    color: #3812e1;
+    color: #3f6780; /* Màu xanh giống tiêu đề */
     text-align: left;
     margin: 10px 0 20px 0;
     padding-left: 15px;

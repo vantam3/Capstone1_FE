@@ -16,9 +16,20 @@ function Library() {
     const token = localStorage.getItem('token'); // Lấy token từ localStorage
 
     useEffect(() => {
-        const storedFavorites = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
-        setFavorites(storedFavorites);
-    }, []);
+        const fetchFavorites = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/favorites/', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setFavorites(response.data.map((book) => book.id)); // Lưu danh sách ID sách yêu thích
+            } catch (error) {
+                console.error("Error fetching favorites:", error);
+            }
+        };
+    
+        if (token) fetchFavorites();
+    }, [token]);
+    
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -93,7 +104,7 @@ function Library() {
                     { book_id: bookId },
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
-                setFavorites(favorites.filter((id) => id !== bookId));  // Cập nhật lại danh sách yêu thích
+                setFavorites(favorites.filter((id) => id !== bookId)); // Cập nhật state
                 Swal.fire({
                     icon: 'success',
                     title: 'Book removed from favorites!',
@@ -130,8 +141,8 @@ function Library() {
     }
 
     return (
-        <div className="library-container">
-            <h1 className="library-h1">Explore Book Genres</h1>
+        <div className="library-container">     
+            <h1 className="library-title">Explore Book Categories</h1>
 
             <div className="library-sort-container">
                 <label htmlFor="genre-sort">Sort by Genre: </label>
@@ -164,8 +175,8 @@ function Library() {
                                     className={`favorite-icon ${favorites.includes(book.id) ? 'favorited' : ''}`}
                                     onClick={(e) => toggleFavorite(book.id, e)}
                                 >
-                                    {favorites.includes(book.id) ? '❤️' : '🤍'}
-                                </div>
+                                {Array.isArray(favorites) && favorites.includes(book.id) ? '❤️' : '🤍'}
+                            </div>
 
                                 {book.image ? (
                                     <img src={book.image} alt={book.title} className="library-book-image" />

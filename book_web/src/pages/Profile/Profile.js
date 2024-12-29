@@ -95,11 +95,6 @@ function Profile() {
     }
   };
 
-  // Quay lại trang trước đó
-  const handleBack = () => {
-    setShowModal(false); // Tắt modal khi quay lại
-    navigate(-1); // Quay lại trang trước
-  };
 
   // Xử lý thay đổi thông tin người dùng
   const handleChange = (e) => {
@@ -184,9 +179,6 @@ function Profile() {
       {showModal && (
         <div className="overlay">
           <div className="modal">
-            <button className="back-button" onClick={handleBack}>
-              <span className="chevron-left">←</span> Back
-            </button>
             <h2>User Profile</h2>
             <div className="profile-info">
               <div>

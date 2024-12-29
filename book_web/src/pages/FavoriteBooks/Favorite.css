@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 1000;
 }
 
 /* Modal chính */
@@ -23,6 +23,7 @@
   overflow-y: auto; /* Thanh cuộn khi nội dung quá dài */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
+  z-index: 1100;
 }
 
 .modal h2 {
@@ -121,4 +122,66 @@
 
 .cancel-button:hover {
   background-color: #5a6268;
+}
+/* Remove Button */
+.remove-button {
+  background-color: #ff4d4f; /* Màu đỏ để nhấn mạnh xóa */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+  background-color: #d9363e; /* Màu đậm hơn khi hover */
+}
+
+/* Back Button */
+.back-button {
+  background-color: #007bff; /* Màu xanh dương để tạo sự nổi bật */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3; /* Màu đậm hơn khi hover */
+}
+
+/* Chevron Left Icon for Back Button */
+.back-button .chevron-left {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* Cancel Button */
+.cancel-button {
+  background-color: #6c757d; /* Màu xám nhẹ */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268; /* Màu đậm hơn khi hover */
+}
+.swal2-custom-popup {
+  z-index: 9999 !important; /* Đảm bảo hiển thị trên mọi thành phần */
 }

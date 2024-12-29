@@ -16,13 +16,12 @@ function BookDetail() {
 
     const token = localStorage.getItem('token');
 
-    // Fetch book details and reviews
+    // Fetch book details
     useEffect(() => {
         const fetchBookDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:8000/api/books/${bookId}/`);
                 setBook(response.data);
-                setReviews(response.data.reviews || []);
             } catch (error) {
                 console.error("Error fetching book details:", error);
                 setError("Failed to load book details.");
@@ -30,7 +29,19 @@ function BookDetail() {
                 setLoading(false);
             }
         };
+
+        const fetchReviews = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/api/books/${bookId}/reviews/`);
+                setReviews(response.data);
+            } catch (error) {
+                console.error("Error fetching reviews:", error);
+                setError("Failed to load reviews.");
+            }
+        };
+
         fetchBookDetails();
+        fetchReviews();
     }, [bookId]);
 
     // Gửi lịch sử đọc sách đến backend
@@ -74,33 +85,65 @@ function BookDetail() {
     };
 
     // Thêm review mới
-    const handleAddReview = async (e) => {
-        e.preventDefault();
+const handleAddReview = async (e) => {
+    e.preventDefault();
 
-        if (!newReview.rating || !newReview.comment) {
-            alert("Please provide a rating and a comment.");
-            return;
-        }
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (!token) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'You need to log in to add a review!',
+            text: 'Please log in to share your thoughts on this book.',
+            confirmButtonText: 'Log In',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate('/login'); // Điều hướng đến trang đăng nhập
+            }
+        });
+        return; // Dừng xử lý tiếp
+    }
 
-        try {
-            const response = await axios.post(
-                `http://localhost:8000/api/books/${bookId}/add_review/`,
-                newReview,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                }
-            );
+    if (!newReview.rating || !newReview.comment) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Incomplete Review',
+            text: 'Please provide both a rating and a comment before submitting.',
+            confirmButtonText: 'OK',
+        });
+        return; // Dừng xử lý nếu thông tin không đầy đủ
+    }
+    
 
-            setReviews((prevReviews) => [...prevReviews, response.data]);
-            setNewReview({ rating: '', comment: '' });
-        } catch (error) {
-            console.error("Error adding review:", error.response?.data || error.message);
-            alert("Failed to add review. Please try again.");
-        }
-    };
+    try {
+        const response = await axios.post(
+            `http://localhost:8000/api/books/${bookId}/add_review/`,
+            newReview,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            }
+        );
+
+        setReviews((prevReviews) => [...prevReviews, response.data]);
+        setNewReview({ rating: '', comment: '' });
+        Swal.fire({
+            icon: 'success',
+            title: 'Thank you for your review!',
+            text: 'Your review has been added successfully.',
+            timer: 1500,
+            showConfirmButton: false,
+        });
+    } catch (error) {
+        console.error("Error adding review:", error.response?.data || error.message);
+        Swal.fire({
+            icon: 'error',
+            title: 'Failed to add review',
+            text: 'Please try again later.',
+        });
+    }
+};
 
     const renderStars = (rating) => {
         return [1, 2, 3, 4, 5].map((star) => (
@@ -170,13 +213,21 @@ function BookDetail() {
                     ) : (
                         reviews.map((review, index) => (
                             <div key={index} className="review-item">
-                                <div className="review-rating">{renderStars(review.rating)}</div>
-                                <p className="review-comment">{review.comment}</p>
-                                <p className="review-date">{new Date(review.createdAt).toLocaleDateString()}</p>
-                            </div>
-                        ))
-                    )}
-                </div>
+                                <div className="review-header">
+                                    <strong>{review.user}</strong> {/* Hiển thị tên người dùng */}
+                                    <span className="review-date">
+                                        {isNaN(new Date(review.createdAt).getTime()) 
+                                            ? 'Unknown Date' 
+                                            : `${new Date(review.createdAt).toLocaleDateString()} - ${new Date(review.createdAt).toLocaleTimeString()}`}
+                                    </span>
+                             </div>
+                            <div className="review-rating">{renderStars(review.rating)}</div>
+                    <p className="review-comment">{review.comment}</p>
+            </div>
+        ))
+    )}
+</div>
+
             </div>
         </div>
     );
