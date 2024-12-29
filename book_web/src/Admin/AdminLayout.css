@@ -78,3 +78,19 @@
     background-color: #9DBAD5; /* Match active styles */
     color: #fff;
 }
+/* Đảm bảo AdminLayout không bị đẩy xuống */
+.admin-layout {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* Sử dụng toàn bộ chiều cao cửa sổ */
+    margin: 0;
+    padding: 0;
+}
+
+/* Đảm bảo nội dung admin lấp đầy vùng hiển thị */
+.admin-content {
+    flex: 1;
+    overflow-y: auto; /* Thêm cuộn dọc nếu nội dung quá lớn */
+    margin: 0;
+    padding: 20px;
+}

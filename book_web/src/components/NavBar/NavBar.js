@@ -1,28 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./NavBar.css";
-import { useGlobalContextLogin } from "../../layouts/useContext"; // Import context để quản lý trạng thái đăng nhập
-import axios from "axios"; // Import axios để gọi API
-import Modal from "../../components/Modal/Modal"; // Import Modal
-import UserDropdown from "../../components/UserDropdown/UserDropdown"; // Thêm dòng này
+import { useGlobalContextLogin } from "../../layouts/useContext";
+import axios from "axios";
+import Modal from "../../components/Modal/Modal";
+import UserDropdown from "../../components/UserDropdown/UserDropdown";
 
 function Navbar() {
-  const { user, setFormLogin, setUser } = useGlobalContextLogin(); // Lấy thông tin từ context
-  const [showModal, setShowModal] = useState(false); // Trạng thái hiển thị modal
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Thêm dòng này
+  const { user, setFormLogin, setUser } = useGlobalContextLogin();
+  const [showModal, setShowModal] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
     title: "",
     message: "",
     type: "success",
-  }); // Nội dung của modal
-  const [searchResults, setSearchResults] = useState([]); // Lưu kết quả tìm kiếm
-  const [searchQuery, setSearchQuery] = useState(""); // Lưu từ khóa tìm kiếm
+  });
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  const searchRef = useRef(null); // Dùng để xử lý ẩn kết quả khi click ra ngoài
+  const searchRef = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen); // Toggle trạng thái dropdown
-  };
+  // Kiểm tra nếu đang ở trang admin
+  const isAdminRoute = window.location.pathname.startsWith('/admin');
 
   // Khôi phục trạng thái đăng nhập từ LocalStorage
   useEffect(() => {
@@ -42,9 +41,9 @@ function Navbar() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setSearchResults([]); // Ẩn danh sách kết quả khi click ra ngoài
-        setShowModal(false); // Ẩn modal nếu đang hiển thị
-        setIsDropdownOpen(false); // Đóng dropdown khi click ngoài
+        setSearchResults([]);
+        setShowModal(false);
+        setIsDropdownOpen(false);
       }
     };
 
@@ -57,7 +56,6 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      // Gọi API logout tới backend
       const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
         await axios.post("http://localhost:8000/api/logout/", {
@@ -65,45 +63,40 @@ function Navbar() {
         });
       }
 
-      // Xóa token và thông tin user khỏi LocalStorage
       localStorage.removeItem("token");
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
 
-      // Đặt trạng thái đăng xuất
       setUser(null);
       setFormLogin(false);
 
-      // Hiển thị modal thông báo đăng xuất thành công
       setModalContent({
         title: "Success",
         message: "You have successfully logged out!",
         type: "success",
       });
 
-      // Sử dụng setTimeout để đảm bảo trạng thái modal hiển thị chính xác
       setTimeout(() => {
         setShowModal(true);
+        navigate("/login");
       }, 0);
     } catch (err) {
       console.error("Logout error:", err);
 
-      // Hiển thị modal thông báo lỗi
       setModalContent({
         title: "Error",
         message: "Error occurred during logout. Please try again.",
         type: "error",
       });
 
-      // Sử dụng setTimeout để đảm bảo trạng thái modal hiển thị chính xác
       setTimeout(() => {
         setShowModal(true);
       }, 0);
     }
-};
+  };
 
   const handleSearch = async (e) => {
-    if (e.key !== "Enter") return; // Chỉ kích hoạt tìm kiếm khi nhấn Enter
+    if (e.key !== "Enter") return;
     e.preventDefault();
 
     if (!searchQuery.trim()) {
@@ -120,7 +113,7 @@ function Navbar() {
       const response = await axios.get(
         `http://localhost:8000/api/search-books/?q=${searchQuery}`
       );
-      setSearchResults(response.data); // Lưu kết quả tìm kiếm
+      setSearchResults(response.data);
     } catch (error) {
       setModalContent({
         title: "Not Found",
@@ -128,9 +121,14 @@ function Navbar() {
         type: "error",
       });
       setShowModal(true);
-      setSearchResults([]); // Đặt kết quả tìm kiếm rỗng nếu không tìm thấy
+      setSearchResults([]);
     }
   };
+
+  // Không render Navbar nếu đang ở trang admin
+  if (isAdminRoute) {
+    return null;
+  }
 
   return (
     <nav className="navbar" ref={searchRef}>
@@ -152,7 +150,7 @@ function Navbar() {
             placeholder="Search books or authors..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleSearch} // Xử lý tìm kiếm khi nhấn Enter
+            onKeyDown={handleSearch}
           />
         </div>
         {searchResults.length > 0 && (
@@ -169,26 +167,24 @@ function Navbar() {
           </div>
         )}
         {user ? (
-          // Khi đã đăng nhập, hiển thị thông tin người dùng và nút Logout
           <div className="nav-user-info">
             <img
-              src="/images/user.png" // Ảnh mặc định cho người dùng
+              src="/images/user.png"
               alt="User Avatar"
               className="nav-user-avatar"
-              onClick={toggleDropdown} // Thêm onClick để mở/đóng dropdown
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             />
             <span className="nav-user-name">
               {user.first_name} {user.last_name}
             </span>
             {isDropdownOpen && (
-              <UserDropdown user={user} handleLogout={handleLogout} /> // Hiển thị dropdown khi isDropdownOpen là true
+              <UserDropdown user={user} handleLogout={handleLogout} />
             )}
             <button onClick={handleLogout} className="nav-logout-button">
               Logout
             </button>
           </div>
         ) : (
-          // Khi chưa đăng nhập, hiển thị nút Sign In và Sign Up
           <>
             <Link to="/login" className="nav-sign">Sign In</Link>
             <Link to="/register" className="nav-sign">Sign Up</Link>
@@ -196,7 +192,6 @@ function Navbar() {
         )}
       </div>
 
-      {/* Sử dụng Modal */}
       {showModal && (
         <Modal
           title={modalContent.title}

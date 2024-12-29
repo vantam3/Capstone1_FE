@@ -9,6 +9,8 @@ const AdminSidebar = () => {
     const handleLogout = () => {
         // Simulate logout action
         localStorage.removeItem('token'); // Remove token from storage
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("user");
         setShowConfirm(false); // Close confirmation dialog
         window.location.href = '/'; // Redirect to home page
     };
