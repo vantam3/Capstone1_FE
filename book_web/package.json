@@ -8,9 +8,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
+    "bad-words": "^4.0.0",
     "chart.js": "^4.4.6",
+    "dictionary-en": "^4.0.0",
     "dompurify": "^3.2.3",
     "fullpage.js": "^4.0.30",
+    "nspell": "^2.1.5",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
@@ -21,9 +24,11 @@
     "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.6",
+    "spelling": "^2.0.2",
     "sweetalert2": "^11.14.5",
     "swiper": "^11.1.14",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "wordlist-english": "^1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
