@@ -14,6 +14,10 @@ const LoginForm = () => {
   const [modalType, setModalType] = useState(""); 
   const [showForgotPassword, setShowForgotPassword] = useState(false); // Toggle forgot password form
   const [forgotEmail, setForgotEmail] = useState(""); // Email for forgot password
+  const [isCodeSent, setIsCodeSent] = useState(false); // Track if code is sent
+  const [confirmationCode, setConfirmationCode] = useState(""); // Confirmation code
+  const [newPassword, setNewPassword] = useState(""); // New password
+  const [confirmNewPassword, setConfirmNewPassword] = useState(""); // Confirm new password
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,15 +69,43 @@ const LoginForm = () => {
     setModalType("success");
 
     try {
-      const response = await axios.post("http://localhost:8000/api/forgot-password/", {
+      await axios.post("http://localhost:8000/api/forgot-password/", {
         email: forgotEmail,
       });
-      setModalMessage("Password reset email sent successfully!");
+      setModalMessage("Confirmation code sent to your email!");
       setModalType("success");
-      setForgotEmail(""); // Clear email field after successful submission
-      setShowForgotPassword(false); // Return to login form
+      setIsCodeSent(true);
     } catch (error) {
-      setModalMessage(error.response?.data?.error || "Failed to send password reset email.");
+      setModalMessage(error.response?.data?.error || "Failed to send confirmation code.");
+      setModalType("error");
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmNewPassword) {
+      setModalMessage("Passwords do not match!");
+      setModalType("error");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8000/api/reset-password/", {
+        email: forgotEmail,
+        confirmation_code: confirmationCode,
+        new_password: newPassword,
+      });
+      setModalMessage("Password reset successfully!");
+      setModalType("success");
+      setForgotEmail(""); 
+      setConfirmationCode(""); 
+      setNewPassword(""); 
+      setConfirmNewPassword(""); // Clear fields
+      setShowForgotPassword(false); 
+      setIsCodeSent(false); 
+    } catch (error) {
+      setModalMessage(error.response?.data?.error || "Failed to reset password.");
       setModalType("error");
     }
   };
@@ -83,7 +115,7 @@ const LoginForm = () => {
       {modalMessage && (
         <Modal
           title={modalType === "success" ? "Success" : "Error"}
-message={modalMessage}
+          message={modalMessage}
           onClose={() => setModalMessage("")}
           type={modalType}
         />
@@ -92,19 +124,55 @@ message={modalMessage}
       {showForgotPassword ? (
         <div className="forgot-password-box">
           <h2>Forgot Password</h2>
-          <p>Please enter your email to reset your password:</p>
-          <form onSubmit={handleForgotPasswordSubmit}>
-            <input
-              type="email"
-              value={forgotEmail}
-              onChange={(e) => setForgotEmail(e.target.value)}
-              required
-              placeholder="Email:"
-            />
-            <button type="submit" className="button_forgot">
-              Submit
-            </button>
-          </form>
+          {!isCodeSent ? (
+            <form onSubmit={handleForgotPasswordSubmit}>
+              <p>Please enter your email to reset your password:</p>
+              <input
+                type="email"
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
+                required
+                placeholder="Email:"
+              />
+              <button type="submit" className="button_forgot">
+                Submit
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleResetPasswordSubmit}>
+              <p>Enter the confirmation code and set a new password:</p>
+              <div>
+                <input
+                  type="text"
+                  value={confirmationCode}
+                  onChange={(e) => setConfirmationCode(e.target.value)}
+                  required
+                  placeholder="Confirmation Code:"
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                  placeholder="New Password:"
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  required
+                  placeholder="Confirm New Password:"
+                />
+              </div>
+              <button type="submit" className="button_reset">
+                Reset Password
+              </button>
+            </form>
+          )}
           <button onClick={() => setShowForgotPassword(false)} className="button_cancel">
             Back to Login
           </button>
