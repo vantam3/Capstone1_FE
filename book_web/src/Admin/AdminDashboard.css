@@ -66,3 +66,18 @@
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+/* Khi ở trang admin, loại bỏ hoàn toàn ảnh hưởng của Navbar */
+.admin-page .navbar {
+    display: none; /* Ẩn Navbar */
+    height: 0; /* Đảm bảo không có chiều cao */
+    margin: 0; /* Loại bỏ margin */
+    padding: 0; /* Loại bỏ padding */
+}
+
+/* Đảm bảo vùng nội dung không bị đẩy xuống */
+.admin-page .app-container {
+    margin: 0;
+    padding: 0;
+    top: 0;
+    position: relative; /* Đặt nội dung sát cạnh trên */
+}

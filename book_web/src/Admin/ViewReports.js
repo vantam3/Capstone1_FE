@@ -1,102 +1,185 @@
-import React, { useState } from 'react';
-import './ViewReports.css';
+import React, { useState, useEffect } from "react";
+import "./ViewReports.css";
+import "./ManageProducts.css";
+import Modal from "../components/Modal/Modal";
+import ErrorModal from "./ErrorModal";
 
 const ViewReport = () => {
-    const [filters, setFilters] = useState({ category: '', startDate: '', endDate: '' });
-    const [reports] = useState([
-        { category: 'active-users', metric: 'Active Users', value: 120, date: '2024-11-01' },
-        { category: 'book-ratings', metric: 'Average Ratings', value: 4.5, date: '2024-11-02' },
-        { category: 'interaction-rates', metric: 'Interaction Rate', value: 75, date: '2024-11-03' },
-        { category: 'revenue-statistics', metric: 'Total Revenue', value: 1500, date: '2024-11-04' },
-    ]);
+  // Trạng thái cho báo cáo tổng quan
+  const [reportData, setReportData] = useState({
+    total_books: 0,
+    total_reads: 0,
+    most_read_book: {
+      id: 0,
+      title: "",
+      author: "",
+      read_count: 0,
+    },
+    total_users: 0,
+    total_reviews: 0,
+    average_rating: 0,
+  });
 
-    const categories = [
-        { id: 'active-users', name: 'Active Users' },
-        { id: 'book-ratings', name: 'Book Ratings' },
-        { id: 'interaction-rates', name: 'Interaction Rates' },
-        { id: 'revenue-statistics', name: 'Revenue Statistics' },
-        { id: 'top-borrowed-books', name: 'Top Borrowed Books' },
-        { id: 'inactive-users', name: 'Inactive Users' },
-        { id: 'feedback-suggestions', name: 'Feedback and Suggestions' },
-    ];
+  // Trạng thái cho quản lý sách người dùng
+  const [books, setBooks] = useState([]);
+  const [message, setMessage] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalType, setModalType] = useState('success');
+  const [errorVisible, setErrorVisible] = useState(false);
 
-    // Filter reports based on filters
-    const filteredReports = reports.filter((report) => {
-        const matchesCategory = filters.category ? report.category === filters.category : true;
-        const matchesStartDate = filters.startDate
-            ? new Date(report.date) >= new Date(filters.startDate)
-            : true;
-        const matchesEndDate = filters.endDate
-            ? new Date(report.date) <= new Date(filters.endDate)
-            : true;
+  // Fetch báo cáo và sách người dùng khi component mount
+  useEffect(() => {
+    fetchReportData();
+    fetchBooks();
+  }, []);
 
-        return matchesCategory && matchesStartDate && matchesEndDate;
-    });
+  // Hàm fetch dữ liệu báo cáo từ backend
+  const fetchReportData = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/report-statistics/', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
 
-    const clearFilters = () => {
-        setFilters({ category: '', startDate: '', endDate: '' });
-    };
+      if (response.ok) {
+        const data = await response.json();
+        setReportData(data);
+      } else {
+        setMessage('Failed to fetch report data.');
+        setErrorVisible(true);
+      }
+    } catch (error) {
+      setMessage('An error occurred while fetching report data.');
+      setErrorVisible(true);
+    }
+  };
 
-    return (
-        <div className="view-report">
-            <h2>View Reports</h2>
-            <div className="filters">
-                <label>
-                    Category:
-                    <select
-                        name="category"
-                        value={filters.category}
-                        onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                        aria-label="Filter by category"
-                    >
-                        <option value="">Select a category</option>
-                        {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
-                                {category.name}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                <label>
-                    Start Date:
-                    <input
-                        type="date"
-                        name="startDate"
-                        value={filters.startDate}
-                        onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-                        aria-label="Filter by start date"
-                    />
-                </label>
-                <label>
-                    End Date:
-                    <input
-                        type="date"
-                        name="endDate"
-                        value={filters.endDate}
-                        onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-                        aria-label="Filter by end date"
-                    />
-                </label>
-                <button onClick={clearFilters} className="clear-filters">
-                    Clear Filters
-                </button>
-            </div>
+  // Hàm fetch sách người dùng từ backend
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/list-user-books/', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
 
-            <div className="report-results">
-                {filteredReports.length > 0 ? (
-                    <ul>
-                        {filteredReports.map((report, index) => (
-                            <li key={index} className="report-item">
-                                <strong>{report.metric}</strong>: {report.value} ({report.date})
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="no-results">No reports found for the selected filters.</p>
-                )}
-            </div>
-        </div>
-    );
+      if (response.ok) {
+        const data = await response.json();
+        setBooks(data);
+      } else {
+        setMessage('Failed to fetch books.');
+        setErrorVisible(true);
+      }
+    } catch (error) {
+      setMessage('An error occurred while fetching books.');
+      setErrorVisible(true);
+    }
+  };
+
+  // Hàm xử lý duyệt sách
+  const handleApprove = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to approve this book?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:8000/api/approve-user-book/${id}/`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setModalType('success');
+          setMessage(result.message || 'Book approved successfully!');
+          setModalVisible(true);
+          fetchBooks(); // Cập nhật lại danh sách
+        } else {
+          const errorData = await response.json();
+          setModalType('error');
+          setMessage(errorData.message || 'Failed to approve book.');
+          setModalVisible(true);
+        }
+      } catch (error) {
+        setModalType('error');
+        setMessage('An error occurred while approving the book.');
+        setModalVisible(true);
+      }
+    }
+  };
+
+  return (
+    <div className="view-report">
+      <h2>View Reports</h2>
+
+      {/* Thông tin tổng quan */}
+      <div className="report-overview">
+        <p><strong>Total Books:</strong> {reportData.total_books}</p>
+        <p><strong>Total Reads:</strong> {reportData.total_reads}</p>
+        <p><strong>Most Read Book:</strong></p>
+        <ul>
+          <li><strong>Title:</strong> {reportData.most_read_book.title}</li>
+          <li><strong>Author:</strong> {reportData.most_read_book.author}</li>
+          <li><strong>Read Count:</strong> {reportData.most_read_book.read_count}</li>
+        </ul>
+        <p><strong>Total Users:</strong> {reportData.total_users}</p>
+        <p><strong>Total Reviews:</strong> {reportData.total_reviews}</p>
+        <p><strong>Average Rating:</strong> {reportData.average_rating.toFixed(1)}</p>
+      </div>
+
+      {/* Quản lý sách người dùng */}
+      <div className="manage-products-container">
+        <h2>Manage User's Books</h2>
+        <p>Review and approve books created by users.</p>
+        {errorVisible && (
+          <ErrorModal
+            message={message}
+            onClose={() => setErrorVisible(false)} // Thêm chức năng đóng modal
+          />
+        )}
+        {modalVisible && (
+          <Modal
+            title={modalType === 'success' ? 'Success' : 'Error'}
+            message={message}
+            type={modalType}
+            onClose={() => setModalVisible(false)} // Thêm chức năng đóng modal
+          />
+        )}
+        <table className="products-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Genre</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {books.map((book) => (
+              <tr key={book.id}>
+                <td>{book.id}</td>
+                <td>{book.title}</td>
+                <td>{book.author}</td>
+                <td>{book.genre}</td>
+                <td>{book.description}</td>
+                <td>
+                  <button
+                    className="edit-button"
+                    onClick={() => handleApprove(book.id)}
+                  >
+                    Approve
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default ViewReport;
