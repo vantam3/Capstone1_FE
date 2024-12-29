@@ -1,18 +1,58 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './AdminLayout.css';
 import './Logout.css'; // Import the Logout CSS for confirmation dialog
+import { useGlobalContextLogin } from "../layouts/useContext";
+import axios from "axios";
+import Modal from "../components/Modal/Modal";
 
 const AdminSidebar = () => {
     const [showConfirm, setShowConfirm] = useState(false); // Manage logout confirmation dialog
+    const [modalVisible, setModalVisible] = useState(false); // Manage modal visibility
+    const [modalContent, setModalContent] = useState({ title: "", message: "", type: "info" });
+    const { user, setFormLogin, setUser } = useGlobalContextLogin();
+    const navigate = useNavigate();
 
-    const handleLogout = () => {
-        // Simulate logout action
-        localStorage.removeItem('token'); // Remove token from storage
-        localStorage.removeItem("refresh_token");
-        localStorage.removeItem("user");
-        setShowConfirm(false); // Close confirmation dialog
-        window.location.href = '/'; // Redirect to home page
+    const handleLogout = async () => {
+        try {
+            const refreshToken = localStorage.getItem("refresh_token");
+            if (refreshToken) {
+                await axios.post("http://localhost:8000/api/logout/", {
+                    refresh_token: refreshToken,
+                });
+            }
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("user");
+
+            setUser(null);
+            setFormLogin(false);
+
+            setModalContent({
+                title: "Success",
+                message: "You have successfully logged out!",
+                type: "success",
+            });
+
+            setModalVisible(true);
+
+            setTimeout(() => {
+                navigate("/");
+            }, 1000); 
+        } catch (err) {
+            console.error("Logout error:", err);
+
+            setModalContent({
+                title: "Error",
+                message: "Error occurred during logout. Please try again.",
+                type: "error",
+            });
+
+            setModalVisible(true);
+        } finally {
+            setShowConfirm(false); // Close confirmation dialog
+        }
     };
 
     return (
@@ -32,6 +72,7 @@ const AdminSidebar = () => {
                 </button>
             </nav>
 
+            {/* Confirmation Dialog */}
             {showConfirm && (
                 <div className="confirm-dialog">
                     <div className="dialog-content">
@@ -59,6 +100,16 @@ const AdminSidebar = () => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Modal for Logout Result */}
+            {modalVisible && (
+                <Modal
+                    title={modalContent.title}
+                    message={modalContent.message}
+                    type={modalContent.type}
+                    onClose={() => setModalVisible(false)}
+                />
             )}
         </div>
     );
