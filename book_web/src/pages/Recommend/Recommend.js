@@ -79,7 +79,7 @@ const RecommendationsPage = () => {
       localStorage.setItem("recommendations", JSON.stringify(data));
     } catch (error) {
       console.error("Error:", error.message);
-      setErrorMessage(`An error occurred: ${error.message}`);
+      setErrorMessage(` ${error.message}`);
       setFilteredBooks([]);
     } finally {
       setIsLoading(false);
@@ -148,7 +148,7 @@ const RecommendationsPage = () => {
 
       {/* Top Favorite Books */}
       <div className="top-favorites__container">
-        <h2 className="top-favorites__title">Top Favorite Books</h2>
+        {/* <h2 className="top-favorites__title">Top Favorite Books</h2> */}
         <div className="book-carousel__wrapper">
           <div className="book-carousel">
             {topBooks.map((book) => (

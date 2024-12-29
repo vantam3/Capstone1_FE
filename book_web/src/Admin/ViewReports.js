@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import "./ViewReports.css";
 import Modal from "../components/Modal/Modal";
 
@@ -18,9 +19,6 @@ const ViewReport = () => {
   });
 
   const [books, setBooks] = useState([]);
-  const [message, setMessage] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalType, setModalType] = useState("info");
   const [previewText, setPreviewText] = useState(""); // Nội dung sách
   const [previewVisible, setPreviewVisible] = useState(false); // Modal preview
 
@@ -41,10 +39,10 @@ const ViewReport = () => {
         const data = await response.json();
         setReportData(data);
       } else {
-        showError("Failed to fetch report data.");
+        Swal.fire("Error", "Failed to fetch report data.", "error");
       }
     } catch (error) {
-      showError("An error occurred while fetching report data.");
+      Swal.fire("Error", "An error occurred while fetching report data.", "error");
     }
   };
 
@@ -60,22 +58,24 @@ const ViewReport = () => {
         const data = await response.json();
         setBooks(data);
       } else {
-        showError("Failed to fetch books.");
+        Swal.fire("Error", "Failed to fetch books.", "error");
       }
     } catch (error) {
-      showError("An error occurred while fetching books.");
+      Swal.fire("Error", "An error occurred while fetching books.", "error");
     }
   };
 
-  const showError = (errorMessage) => {
-    setMessage(errorMessage);
-    setModalType("error");
-    setModalVisible(true);
-  };
-
   const handleApprove = async (id) => {
-    const confirmed = window.confirm("Are you sure you want to approve this book?");
-    if (confirmed) {
+    const result = await Swal.fire({
+      title: "Approve Book?",
+      text: "Are you sure you want to approve this book?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, approve it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
       try {
         const response = await fetch(`http://localhost:8000/api/approve-user-book/${id}/`, {
           method: "PUT",
@@ -86,23 +86,29 @@ const ViewReport = () => {
 
         if (response.ok) {
           const result = await response.json();
-          setModalType("success");
-          setMessage(result.message || "Book approved successfully!");
-          setModalVisible(true);
+          Swal.fire("Approved!", result.message || "Book approved successfully!", "success");
           fetchBooks();
         } else {
           const errorData = await response.json();
-          showError(errorData.message || "Failed to approve book.");
+          Swal.fire("Error", errorData.message || "Failed to approve book.", "error");
         }
       } catch (error) {
-        showError("An error occurred while approving the book.");
+        Swal.fire("Error", "An error occurred while approving the book.", "error");
       }
     }
   };
 
   const handleReject = async (id) => {
-    const confirmed = window.confirm("Are you sure you want to reject and delete this book?");
-    if (confirmed) {
+    const result = await Swal.fire({
+      title: "Reject and Delete Book?",
+      text: "Are you sure you want to reject and delete this book?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, reject it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
       try {
         const response = await fetch(`http://localhost:8000/api/reject-delete-book/${id}/`, {
           method: "DELETE",
@@ -113,16 +119,14 @@ const ViewReport = () => {
 
         if (response.ok) {
           const result = await response.json();
-          setModalType("success");
-          setMessage(result.message || "Book rejected and deleted successfully!");
-          setModalVisible(true);
+          Swal.fire("Deleted!", result.message || "Book rejected and deleted successfully!", "success");
           fetchBooks();
         } else {
           const errorData = await response.json();
-          showError(errorData.message || "Failed to reject and delete the book.");
+          Swal.fire("Error", errorData.message || "Failed to reject and delete the book.", "error");
         }
       } catch (error) {
-        showError("An error occurred while rejecting and deleting the book.");
+        Swal.fire("Error", "An error occurred while rejecting and deleting the book.", "error");
       }
     }
   };
@@ -136,37 +140,34 @@ const ViewReport = () => {
     <div className="view-report-container">
       <h2>View Reports</h2>
 
-      {/* Tổng quan báo cáo */}
       <div className="view-report-overview">
-        <p>
-          <strong>Total Books:</strong> {reportData.total_books}
-        </p>
-        <p>
-          <strong>Total Reads:</strong> {reportData.total_reads}
-        </p>
-        <p>
-          <strong>Most Read Book:</strong>
-        </p>
-        <ul>
-          <li>
-            <strong>Title:</strong> {reportData.most_read_book.title}
-          </li>
-          <li>
-            <strong>Author:</strong> {reportData.most_read_book.author}
-          </li>
-          <li>
-            <strong>Read Count:</strong> {reportData.most_read_book.read_count}
-          </li>
-        </ul>
-        <p>
-          <strong>Total Users:</strong> {reportData.total_users}
-        </p>
-        <p>
-          <strong>Total Reviews:</strong> {reportData.total_reviews}
-        </p>
-        <p>
-          <strong>Average Rating:</strong> {reportData.average_rating.toFixed(1)}
-        </p>
+        <div className="report-grid">
+          <div className="report-card card-1">
+            <h3>Total Books</h3>
+            <p>{reportData.total_books}</p>
+          </div>
+          <div className="report-card card-2">
+            <h3>Total Reads</h3>
+            <p>{reportData.total_reads}</p>
+          </div>
+          <div className="report-card card-3">
+            <h3>The best-selling author</h3>
+            <p><strong>Author:</strong> {reportData.most_read_book.author}</p>
+            <p><strong>Read Count:</strong> {reportData.most_read_book.read_count}</p>
+          </div>
+          <div className="report-card card-4">
+            <h3>Total Users</h3>
+            <p>{reportData.total_users}</p>
+          </div>
+          <div className="report-card card-5">
+            <h3>Total Reviews</h3>
+            <p>{reportData.total_reviews}</p>
+          </div>
+          <div className="report-card card-6">
+            <h3>Average Rating</h3>
+            <p>{reportData.average_rating.toFixed(1)}</p>
+          </div>
+        </div>
       </div>
 
       {/* Modal Preview */}
@@ -176,16 +177,6 @@ const ViewReport = () => {
           message={previewText}
           type="info"
           onClose={() => setPreviewVisible(false)} // Đóng modal preview
-        />
-      )}
-
-      {/* Modal Errors */}
-      {modalVisible && (
-        <Modal
-          title={modalType === "success" ? "Success" : "Error"}
-          message={message}
-          type={modalType}
-          onClose={() => setModalVisible(false)}
         />
       )}
 
@@ -214,13 +205,22 @@ const ViewReport = () => {
                 <td>{book.description}</td>
                 <td>
                   <div className="view-report-action-buttons">
-                    <button className="view-report-preview-button" onClick={() => handlePreview(book.content)}>
+                    <button
+                      className="view-report-preview-button"
+                      onClick={() => handlePreview(book.content)}
+                    >
                       Preview
                     </button>
-                    <button className="view-report-edit-button" onClick={() => handleApprove(book.id)}>
+                    <button
+                      className="view-report-edit-button"
+                      onClick={() => handleApprove(book.id)}
+                    >
                       Approve
                     </button>
-                    <button className="view-report-reject-button" onClick={() => handleReject(book.id)}>
+                    <button
+                      className="view-report-reject-button"
+                      onClick={() => handleReject(book.id)}
+                    >
                       Reject
                     </button>
                   </div>

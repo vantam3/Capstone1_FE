@@ -1,115 +1,207 @@
-/* View Report Container */
+/* Updated ViewReports.css */
+
 .view-report-container {
-    background: #f4f6f9;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f6f8;
+    color: #34495e;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     margin: 20px auto;
-    max-width: 1100px;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Title Styling */
-.view-report-container h2 {
-    text-align: center;
-    color: #1d3557;
-    font-size: 26px;
+    max-width: 1000px;
+  }
+  
+  .view-report-container h2 {
+    font-size: 28px;
     font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+  
+  .view-report-overview {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 25px;
-}
-
-/* Manage Books Table */
-.view-report-products-table {
+  }
+  
+  .view-report-overview p,
+  .view-report-overview ul {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .view-report-overview ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .view-report-overview ul li {
+    margin: 5px 0;
+  }
+  
+  .view-report-manage-books-container {
+    margin-top: 30px;
+  }
+  
+  .view-report-manage-books-container table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background: #ffffff;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.view-report-products-table thead {
-    background-color: #0B0340;
-    color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .view-report-manage-books-container th,
+  .view-report-manage-books-container td {
     text-align: left;
-}
-
-.view-report-products-table th, 
-.view-report-products-table td {
-    padding: 12px 15px;
-    border: 1px solid #dee2e6;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.view-report-products-table tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-.view-report-products-table tbody tr:hover {
-    background-color: #f1f3f5;
-}
-
-/* Action Buttons */
-.view-report-action-buttons {
+    padding: 12px 20px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .view-report-manage-books-container th {
+    background-color: #34495e;
+    color: #ffffff;
+    font-size: 16px;
+  }
+  
+  .view-report-manage-books-container td {
+    font-size: 14px;
+  }
+  
+  .view-report-manage-books-container tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .view-report-action-buttons {
     display: flex;
-    justify-content: center;
     gap: 10px;
-}
-
-.view-report-preview-button {
-    background-color: #ffc107;
-    color: white;
-    padding: 5px 10px;
+  }
+  
+  .view-report-action-buttons button {
+    padding: 8px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
     transition: all 0.3s ease;
-}
-
-.view-report-preview-button:hover {
-    background-color: #e0a800;
-}
-
-.view-report-edit-button {
-    background-color: #28a745;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.view-report-edit-button:hover {
-    background-color: #218838;
-}
-
-.view-report-reject-button {
-    background-color: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.view-report-reject-button:hover {
-    background-color: #c82333;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .view-report-products-table th, 
-    .view-report-products-table td {
-        font-size: 14px;
-        padding: 8px 10px;
-    }
-
-    .view-report-action-buttons {
-        flex-direction: column;
-        gap: 5px;
-    }
-}
+  }
+  
+  .view-report-preview-button {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .view-report-preview-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .view-report-edit-button {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+  
+  .view-report-edit-button:hover {
+    background-color: #27ae60;
+  }
+  
+  .view-report-reject-button {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  
+  .view-report-reject-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Sidebar improvements */
+  .sidebar {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .sidebar a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 15px;
+    display: block;
+  }
+  
+  .sidebar a:hover {
+    color: #3498db;
+  }
+  /* Tổng quan báo cáo - Grid */
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr)); /* Cân đối các cột */
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Định kiểu chung cho các thẻ */
+  .report-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 180px; /* Chiều cao cố định */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+    align-items: center; /* Căn giữa nội dung theo chiều ngang */
+  }
+  
+  .report-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .report-card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Hiệu ứng hover */
+  .report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Định màu nền riêng cho từng thẻ */
+  .card-1 {
+    background-color: #3498db; /* Xanh lam */
+  }
+  
+  .card-2 {
+    background-color: #e67e22; /* Cam */
+  }
+  
+  .card-3 {
+    background-color: #2ecc71; /* Xanh lá */
+  }
+  
+  .card-4 {
+    background-color: #9b59b6; /* Tím */
+  }
+  
+  .card-5 {
+    background-color: #e74c3c; /* Đỏ */
+  }
+  
+  .card-6 {
+    background-color: #f1c40f; /* Vàng */
+  }
+  

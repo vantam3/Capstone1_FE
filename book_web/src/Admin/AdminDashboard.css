@@ -81,3 +81,29 @@
     top: 0;
     position: relative; /* Đặt nội dung sát cạnh trên */
 }
+.dashboard-card {
+    flex: 1;
+    max-width: 300px;
+    min-width: 250px; /* Đảm bảo thẻ có độ rộng phù hợp trên thiết bị nhỏ */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    display: flex; /* Sử dụng Flexbox */
+    flex-direction: column; /* Căn dọc */
+    justify-content: space-between; /* Đẩy nút xuống dưới cùng */
+}
+
+.dashboard-card button {
+    margin-top: auto; /* Đẩy nút xuống dưới cùng */
+    background-color: #0B0340;
+    color: white;
+    border: none;
+    padding: 15x 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

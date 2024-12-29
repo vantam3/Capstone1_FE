@@ -167,14 +167,14 @@ const handleAddReview = async (e) => {
                     <h1>{book.title}</h1>
                     <p><strong>Author:</strong> {book.author}</p>
                     <p><strong>Genres:</strong> {book.genres.join(', ')}</p>
-                    <p><strong>Views:</strong> {book.views}</p>
+                    {/* <p><strong>Views:</strong> {book.views}</p> */}
                     <p><strong>Rating:</strong>
                         <span className="rating-stars">
                             {renderStars(book.average_rating)}
                         </span>
                         ({book.average_rating}/5)
                     </p>
-                    <p className="book-description"><strong>Description:</strong> {book.description}</p>
+                    {/* <p className="book-description"><strong>Description:</strong> {book.description}</p> */}
 
                     <button className="read-now-button" onClick={handleReadNow}>
                         Read Now
