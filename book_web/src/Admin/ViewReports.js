@@ -111,33 +111,13 @@ const ViewReport = () => {
                         onChange={(e) => setFilters({ ...filters, category: e.target.value })}
                         aria-label="Filter by category"
                     >
-                        <option value="">Select a category</option>
+                        <option value="">All</option>
                         {categories.map((category) => (
                             <option key={category.id} value={category.id}>
                                 {category.name}
                             </option>
                         ))}
                     </select>
-                </label>
-                <label>
-                    Start Date:
-                    <input
-                        type="date"
-                        name="startDate"
-                        value={filters.startDate}
-                        onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-                        aria-label="Filter by start date"
-                    />
-                </label>
-                <label>
-                    End Date:
-                    <input
-                        type="date"
-                        name="endDate"
-                        value={filters.endDate}
-                        onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-                        aria-label="Filter by end date"
-                    />
                 </label>
                 <button onClick={clearFilters} className="clear-filters">
                     Clear Filters

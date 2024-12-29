@@ -48,3 +48,33 @@
     background-color: #f5f5f5; /* Nền xám nhạt */
     overflow-y: auto; /* Cuộn dọc nếu nội dung quá dài */
 }
+/* Logout button styled like NavLink */
+.logout-navlink {
+    background-color: transparent; /* Match initial NavLink background */
+    color: #ccc; /* Match NavLink text color */
+    border: none;
+    text-align: left; /* Align text like NavLink */
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    display: block; /* Ensure full block like NavLink */
+    font-size: 16px; /* Match NavLink font size */
+    font-family: inherit; /* Match font family */
+    line-height: 1.5; /* Match line height */
+}
+
+.logout-navlink:hover {
+    background-color: #9DBAD5; /* Match hover styles */
+    color: #fff;
+}
+
+.logout-navlink:focus {
+    outline: none;
+}
+
+.logout-navlink.active-link {
+    background-color: #9DBAD5; /* Match active styles */
+    color: #fff;
+}

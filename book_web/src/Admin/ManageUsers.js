@@ -101,13 +101,7 @@ const ManageUsers = () => {
     return (
         <div className="manage-users-container">
             <h2 className="manage-users-header">Manage Users</h2>
-            <p className="manage-users-description">Here you can view, edit, add, or delete users.</p>
-            <button
-                className="manage-users-add-button"
-                onClick={() => Swal.fire('Info', 'Add User functionality not implemented yet.', 'info')}
-            >
-                Add User
-            </button>
+            <p className="manage-users-description">Here you can view, edit or delete users.</p>
             <table className="manage-users-table">
                 <thead>
                     <tr>
